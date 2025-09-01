@@ -31,7 +31,7 @@ while True:
     # Prompt for user input  
     command = input("% ")
     
-    if command is "exit":
+    if command == "exit":
         break
     
     # Split the command into tokens and parse
@@ -57,7 +57,7 @@ while True:
     
     
     # Help command for each command
-    if args[0] is "--help" and len(args) == 1:
+    if args[0] == "--help" and len(args) == 1:
         if cmd == "ls":
             print("ls: list directory contents")
             print("Usage: ls [OPTION]... [FILE]...")
