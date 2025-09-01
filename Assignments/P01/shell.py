@@ -32,18 +32,22 @@ init(autoreset=True)
 
 
 # Welcome message
-print(f"{Fore.GREEN}Welcome to the Simple Shell! Type 'exit' to quit.")
-print(f"{Fore.GREEN}Type '<command> --help' for information on a specific command.")
+print()
+print(f"{Fore.GREEN}Welcome to the Simple Shell!")
+print("-----------------------------------------")
 print(f"{Fore.GREEN}Available commands: ls, mkdir, cd, pwd, cp, mv, rm, cat, head, tail, grep, wc, chmod, history, !x")
+print(f"{Fore.GREEN}Type '<command> --help' for information on a specific command.")
+print(f"{Fore.GREEN}Type 'exit' to quit.")
 print(f"{Fore.GREEN}Designed and implemented by Tim Haxton and Cooper Wolf.")
 print(f"{Fore.GREEN}Don't steal our code, we'll sue.")
+print("-----------------------------------------")
 print()
 
 # Loop to continuously prompt for user input
 # can remove this true condition with while command != "exit" or "quit"
 while True:
     # Prompt for user input  
-    command = input(f"{Fore.GREEN}{os.getcwd()}{Style.RESET_ALL}% ")
+    command = input(f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}% ")
     
     if command == "exit":
         print(f"{Fore.GREEN}Exiting the Simple Shell. Goodbye!")
@@ -69,10 +73,10 @@ while True:
     
     # Running commands that have arguments
     # if args is not None:
-    if args != []:
+    if args != [] and args[0] != "--help":
         
         # change directory command with arguments
-        if cmd == "cd":
+        if cmd == "cd" and len(args) == 1:
             
             # Go back a directory if ".." is the argument
             if args[0] == "..":
@@ -84,6 +88,8 @@ while True:
                     os.chdir(args[0])
                 else:
                     print(f"cd: no such file or directory: {args[0]}")
+        else:
+            print(f"cd: too many arguments")
         
         
     # If command is not recognized
