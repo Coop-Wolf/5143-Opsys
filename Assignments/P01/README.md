@@ -28,14 +28,14 @@ Run the `shell.py` file and use the following commands...
 ## Commands:
 | Command               | Description                                         | Author   |
 |-----------------------|-----------------------------------------------------|----------|
-| `ls`                  | List files and directories                          | Person 1 |
-| `pwd`                 | Print working directory                             | Person 2 |
+| `ls`                  | List files and directories                          | Cooper |
+| `pwd`                 | Print working directory                             | Cooper |
 | `ls -a`               | List all files, including hidden ones.              |        |
 | `ls -l`               | Long listing format.                                |        |
 | `ls -h`               | Human-readable file sizes.                          |        |
 | `mkdir`               | Create a directory.                                 |        |
-| `cd directory`        | Change to a named directory.                        |        |
-| `cd`                  | Change to the home directory if no argument given.  |        |
+| `cd directory`        | Change to a named directory.                        | Cooper |
+| `cd`                  | Change to the home directory if no argument given.  | Cooper |
 | `cp file1 file2`      | Copy file1 to file2.                                |        |
 | `mv file1 file2`      | Move or rename file1 to file2.                      |        |
 | `rm -r`               | Recursively delete a directory.                     |        |
