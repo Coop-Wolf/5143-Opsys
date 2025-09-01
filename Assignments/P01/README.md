@@ -1,3 +1,9 @@
+Questions for Griffen so I dont't forget.
+    Do we been to display the current directory to the left of the "%"
+    
+
+
+
 20 Sep 2025
 5143 Shell Project
 Group Members:
