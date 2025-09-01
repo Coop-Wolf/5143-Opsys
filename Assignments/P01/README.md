@@ -3,6 +3,7 @@ Questions for Griffen so I dont't forget.
 
 Ideas:
     Change colors depending of File | Folder | Executable
+    Allow user to input "up" and "down" arrow to get previously used commands
 
 
 20 Sep 2025

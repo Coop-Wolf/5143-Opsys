@@ -22,18 +22,28 @@ Authors: Tim Haxton, Cooper Wolf
 Date:    9/1/2024
 """
 
-# importing os module  
+# importing os module for directory and file operations
+# importing colorama for colored terminal text
 import os  
+from colorama import init, Fore
+
+# Allows for colored text in terminal and resets color after each print
+init(autoreset=True)
 
 
 # Welcome message
-print("Welcome to the Simple Shell! Type 'exit' to quit.")
+print(f"{Fore.GREEN}Welcome to the Simple Shell! Type 'exit' to quit.")
+print()
+print(f"{Fore.GREEN}Type '<command> --help' for information on a specific command.")
+print()
+print(f"{Fore.GREEN}Available commands: ls, mkdir, cd, pwd, cp, mv, rm, cat, head, tail, grep, wc, chmod, history, !x")
+print()
 
 # Loop to continuously prompt for user input
 # can remove this true condition with while command != "exit" or "quit"
 while True:
     # Prompt for user input  
-    command = input("% ")
+    command = input(f"{Fore.GREEN}{os.getcwd()}% ")
     
     if command == "exit":
         break
@@ -83,6 +93,7 @@ while True:
     # Help command for each command
     if args and args[0] == "--help" and len(args) == 1:
         if cmd == "ls":
+            print()
             print("ls: list directory contents")
             print("Usage: ls [OPTION]... [FILE]...")
             print("List information about the FILEs (the current directory by default).")
@@ -90,43 +101,63 @@ while True:
             print("  -a, do not ignore entries starting with .")
             print("  -l,  use a long listing format")
             print("  -h, print sizes in human readable format (e.g., 1K 234M 2G)")
+            print()
         if cmd == "mkdir":
+            print()
             print("mkdir: make directories")
             print("Usage: mkdir [OPTION]... DIRECTORY...")
             print("Create the DIRECTORY(ies), if they do not already exist.")
+            print()
         if cmd == "cd":
+            print()
             print("cd: change directory")
             print("Usage: cd [DIRECTORY]")
             print("Change the shell working directory.")
+            print()
         if cmd == "pwd":
+            print()
             print("pwd: print working directory")
             print("Usage: pwd")
             print("Print the name of the current working directory.")
+            print()
         if cmd == "cp":
+            print()
             print("cp: copy files and directories")
             print("Usage: cp [OPTION]... SOURCE... DIRECTORY")
             print("Copy SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.")
+            print()
         if cmd == "mv":
+            print()
             print("mv: move (rename) files")
             print("Usage: mv [OPTION]... SOURCE... DIRECTORY")
             print("Move SOURCE to DEST, or multiple SOURCE(s) to DIRECTORY.")
+            print()
         if cmd == "rm":
+            print()
             print("rm: remove files or directories")
             print("Usage: rm [OPTION]... FILE...")
             print("Remove (unlink) the FILE(s).")
+            print()
         if cmd == "cat":
+            print()
             print("cat: concatenate and display files")
             print("Usage: cat [OPTION]... [FILE]...")
             print("Concatenate FILE(s) to standard output.")
+            print()
         if cmd == "head":
+            print()
             print("head: output the first part of files")
             print("Usage: head [OPTION]... [FILE]...")
             print("Print the first 10 lines of each FILE to standard output.")
+            print()
         if cmd == "tail":
+            print()
             print("tail: output the last part of files")
             print("Usage: tail [OPTION]... [FILE]...")
             print("Print the last 10 lines of each FILE to standard output.")
+            print()
         if cmd == "grep":
+            print()
             print("grep: print lines matching a pattern")
             print("Usage: grep [OPTION]... PATTERN [FILE]...")
             print("Search for PATTERN in each FILE.")
@@ -135,13 +166,17 @@ while True:
             print("  ^abc: lines starting with 'abc'")
             print("  abc$: lines ending with 'abc'")
             print("  abc: lines containing 'abc'")
+            print()
         if cmd == "wc":
+            print()
             print("wc: print newline, word, and byte counts for each file")
             print("Usage: wc [OPTION]... [FILE]...")
             print("Print newline, word, and byte counts for each FILE.")
             print("-l: print the newline counts")
             print("-w: print the word counts")
+            print()
         if cmd == "chmod":
+            print()
             print("chmod: change file mode bits")
             print("Usage: chmod [OPTION]... [xxx] .. FILE...")
             print("Change the mode of each FILE to MODE.")
@@ -151,11 +186,16 @@ while True:
             print("7 = read, write, execute")
             print("5 = read, execute")
             print("4 = read only")
+            print()
         if cmd == "history":
+            print()
             print("history: display command history")
             print("Usage: history")
             print("Display the list of commands previously entered.")
+            print()
         if cmd == "!x":
+            print()
             print("!x: execute command from history")
             print("Usage: !x")
             print("Execute the command numbered x from the history list.")
+            print()
