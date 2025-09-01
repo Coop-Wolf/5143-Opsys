@@ -25,6 +25,10 @@ Date:    9/1/2024
 # importing os module  
 import os  
 
+
+# Welcome message
+print("Welcome to the Simple Shell! Type 'exit' to quit.")
+
 # Loop to continuously prompt for user input
 # can remove this true condition with while command != "exit" or "quit"
 while True:
@@ -39,10 +43,13 @@ while True:
     cmd = token[0]
     args = token[1:]
     
+    print(f"Command: {cmd}, Arguments: {args}")
+    
     # Running commands that have no arguments
         # STILL NEED: history, !x, and maybe others
     if args is None:
         if cmd == "pwd":
+            print("HERE")
             print(os.getcwd())
         elif cmd == "cd":
             homedir = os.path.expanduser("~")
