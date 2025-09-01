@@ -57,7 +57,7 @@ while True:
     
     
     # Help command for each command
-    if args[0] == "--help" and len(args) == 1:
+    if args and args[0] == "--help" and len(args) == 1:
         if cmd == "ls":
             print("ls: list directory contents")
             print("Usage: ls [OPTION]... [FILE]...")
