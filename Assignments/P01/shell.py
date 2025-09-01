@@ -71,9 +71,10 @@ def Command_With_No_Agrs(cmd):
             
     # If user types 'history', print command history
    #elif cmd == "history":
+   #elif cmd == "!x":
     
 # NEEDS FUNCTION COMMENT
-def change_dir(args):
+def cd_with_args(args):
     
     # Go back a directory if ".." is the argument
     if args[0] == "..":
@@ -85,6 +86,18 @@ def change_dir(args):
             os.chdir(args[0])
         else:
             print(f"cd: no such file or directory: {args[0]}")
+            
+#def ls_with_args(args):
+#def cp_with_args(args):
+#def mv_with_args(args):
+#def rm_with_args(args):
+#def cat_with_args(args):
+#def head_with_args(args):
+#def tail_with_args(args):
+#def grep_with_args(args):
+#def wc_with_args(args):
+#def chmod_with_args(args):
+ 
 
 
 #Help Functions for each command
@@ -258,18 +271,38 @@ while True:
         # Running commands that have arguments
         elif args != [] and args[0] != "--help":
         
-        # change directory command with arguments
+            # change directory command with arguments
             if cmd == "cd" and len(args) == 1:
-                change_dir(args)
+                cd_with_args(args)
                 
             # Make Directory
             #elif cmd == "mkdir" and len(args) == 1:
+            #elif cmd == "ls" and len(args) == 1:
+                #ls_with_args(args) 
+            #elif cmd == "cp" and len(args) == 2:
+                #cp_with_args(args)
+            #elif cmd == "mv" and len(args) == 2:
+                #mv_with_args(args)
+            #elif cmd == "rm" and len(args) == 1:
+                #rm_with_args(args)
+            #elif cmd == "cat" and len(args) == 1:
+                #cat_with_args(args)
+            #elif cmd == "head" and len(args) == 1:
+                #head_with_args(args)
+            #elif cmd == "tail" and len(args) == 1:
+                #tail_with_args(args)
+            #elif cmd == "grep" and len(args) == 2:
+                #grep_with_args(args)
+            #elif cmd == "wc" and len(args) == 1:
+                #wc_with_args(args)
+            #elif cmd == "chmod" and len(args) == 2:
+                #chmod_with_args(args)
             
             else:
                 print("Command not recognized or not yet implemented.")
     
     
-        # Help command for each command
+        # Printing help messages for each command
         elif args and args[0] == "--help" and len(args) == 1:
             if cmd == "ls":
                 ls_help()
