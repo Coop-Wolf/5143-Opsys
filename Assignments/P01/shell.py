@@ -25,7 +25,7 @@ Date:    9/1/2024
 # importing os module for directory and file operations
 # importing colorama for colored terminal text
 import os  
-from colorama import init, Fore
+from colorama import init, Fore, Style
 
 # Allows for colored text in terminal and resets color after each print
 init(autoreset=True)
@@ -33,19 +33,20 @@ init(autoreset=True)
 
 # Welcome message
 print(f"{Fore.GREEN}Welcome to the Simple Shell! Type 'exit' to quit.")
-print()
 print(f"{Fore.GREEN}Type '<command> --help' for information on a specific command.")
-print()
 print(f"{Fore.GREEN}Available commands: ls, mkdir, cd, pwd, cp, mv, rm, cat, head, tail, grep, wc, chmod, history, !x")
+print(f"{Fore.GREEN}Designed and implemented by Tim Haxton and Cooper Wolf.")
+print(f"{Fore.GREEN}Don't steal our code, we'll sue.")
 print()
 
 # Loop to continuously prompt for user input
 # can remove this true condition with while command != "exit" or "quit"
 while True:
     # Prompt for user input  
-    command = input(f"{Fore.GREEN}{os.getcwd()}% ")
+    command = input(f"{Fore.GREEN}{os.getcwd()}{Style.RESET_ALL}% ")
     
     if command == "exit":
+        print(f"{Fore.GREEN}Exiting the Simple Shell. Goodbye!")
         break
     
     # Split the command into tokens and parse
@@ -79,9 +80,9 @@ while True:
                 
             # Go to directory in argument if it exists
             else:
-                try:
+                if os.path.isdir(args[0]):
                     os.chdir(args[0])
-                except FileNotFoundError:
+                else:
                     print(f"cd: no such file or directory: {args[0]}")
         
         
