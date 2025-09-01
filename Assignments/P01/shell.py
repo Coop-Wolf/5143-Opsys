@@ -47,7 +47,7 @@ while True:
     
     # Running commands that have no arguments
         # STILL NEED: history, !x, and maybe others
-    if args is None:
+    if args == []:
         if cmd == "pwd":
             print("HERE")
             print(os.getcwd())
