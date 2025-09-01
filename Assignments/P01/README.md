@@ -32,6 +32,8 @@ Run the `shell.py` file and use the following commands...
 | `wc -l`               | Count lines in a file.                              |        |
 | `wc -w`               | Count words in a file.                              |        |
 | `chmod xxx`           | Change file permissions.                            |        |
+| `history`             | Show previously used commands.                      |        |
+| `!x`                  | Re-run command number *x* from history.             |        |
 
 
 ## Non-Working Components:
