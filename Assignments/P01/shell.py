@@ -241,8 +241,8 @@ while True:
     if command == "exit":
         exit_shell()
     # If users tyles invalid command, print error message
-    elif cmd not in cmd_list:
-        print(f"{cmd}: command not found")
+    elif command not in cmd_list:
+        print(f"{command}: command not found")
     else:
     
         # Split the command into tokens and parse
