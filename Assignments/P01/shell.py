@@ -24,10 +24,14 @@ Date:    9/1/2024
 
 # importing os module  
 import os  
-  
-# Command to execute 
-# Using Windows OS command 
-cmd = 'notepad.exe'
-  
-# Using os.system() method 
-os.system(cmd)
+
+# Loop to continuously prompt for user input
+while True:
+    # Prompt for user input  
+    command = input("% ")
+    
+    if command in ["exit", "quit"]:
+        break
+    else:
+        print("Command: ", command)
+    
