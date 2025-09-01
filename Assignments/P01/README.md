@@ -5,13 +5,19 @@ Ideas:
     Change colors depending of File | Folder | Executable
     Allow user to input "up" and "down" arrow to get previously used commands
 
+Next:
+    Add Functions:
+        Welcome
+        If_exit
+        Commands_without_args
+        Commands_with_args
 
-20 Sep 2025
+
+10 Sep 2025
 5143 Shell Project
 Group Members:
 - Tim Haxton
 - Cooper Wolf
-- Name 3
 
 ## Overview:
 This project implements a basic shell in Python that supports a variety of commands.
