@@ -232,7 +232,7 @@ WelcomeMessage()
 while True:
     
     # Allowed list of commands
-    cmd_list = ["ls", "mkdir", "cd", "pwd", "cp", "mv", "rm", "cat", "head", "tail", "grep", "wc", "chmod", "history", "!x"]
+    cmd_list = ["clear", "ls", "mkdir", "cd", "pwd", "cp", "mv", "rm", "cat", "head", "tail", "grep", "wc", "chmod", "history", "!x"]
     
     # Prompt for user input  
     command = input(f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}% ")
