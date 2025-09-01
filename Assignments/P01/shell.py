@@ -27,7 +27,7 @@ import os
   
 # Command to execute 
 # Using Windows OS command 
-cmd = 'notepad'
+cmd = 'notepad.exe'
   
 # Using os.system() method 
 os.system(cmd)
