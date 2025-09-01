@@ -1,7 +1,8 @@
 Questions for Griffen so I dont't forget.
     Do we been to display the current directory to the left of the "%"
-    
 
+Ideas:
+    Change colors depending of File | Folder | Executable
 
 
 20 Sep 2025

@@ -43,13 +43,10 @@ while True:
     cmd = token[0]
     args = token[1:]
     
-    print(f"Command: {cmd}, Arguments: {args}")
-    
     # Running commands that have no arguments
         # STILL NEED: history, !x, and maybe others
     if args == []:
         if cmd == "pwd":
-            print("HERE")
             print(os.getcwd())
         elif cmd == "cd":
             homedir = os.path.expanduser("~")
@@ -61,6 +58,26 @@ while True:
     
     # Running commands that have arguments
     # if args is not None:
+    if args != []:
+        
+        # change directory command with arguments
+        if cmd == "cd":
+            
+            # Go back a directory if ".." is the argument
+            if args[0] == "..":
+                os.chdir("..")
+                
+            # Go to directory in argument if it exists
+            else:
+                try:
+                    os.chdir(args[0])
+                except FileNotFoundError:
+                    print(f"cd: no such file or directory: {args[0]}")
+        
+        
+    # If command is not recognized
+        if cmd not in ["ls", "mkdir", "cd", "pwd", "cp", "mv", "rm", "cat", "head", "tail", "grep", "wc", "chmod", "history", "!x"]:
+            print(f"{cmd}: command not found")
     
     
     # Help command for each command
