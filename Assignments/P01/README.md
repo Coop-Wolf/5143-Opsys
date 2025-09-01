@@ -12,10 +12,10 @@ This project implements a basic shell in Python that supports a variety of comma
 Run the `shell.py` file and use the following commands...
 
 ## Commands:
-| Command  | Description                  | Author   |
-|-----------------------|------------------------------|----------|
-| `ls`                  | List files and directories    | Person 1 |
-| `pwd`                 | Print working directory       | Person 2 |
+| Command               | Description                                         | Author   |
+|-----------------------|-----------------------------------------------------|----------|
+| `ls`                  | List files and directories                          | Person 1 |
+| `pwd`                 | Print working directory                             | Person 2 |
 | `ls -a`               | List all files, including hidden ones.              |        |
 | `ls -l`               | Long listing format.                                |        |
 | `ls -h`               | Human-readable file sizes.                          |        |
