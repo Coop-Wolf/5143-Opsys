@@ -237,18 +237,18 @@ while True:
     # Prompt for user input  
     command = input(f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}% ")
     
+    # Split the command into tokens and parse
+    token = command.split()
+    cmd = token[0]
+    args = token[1:]
+    
     # If user types 'exit', break the loop and exit the shell
     if command == "exit":
         exit_shell()
     # If users tyles invalid command, print error message
-    elif command not in cmd_list:
-        print(f"{command}: command not found")
+    elif cmd not in cmd_list:
+        print(f"{cmd}: command not found")
     else:
-    
-        # Split the command into tokens and parse
-        token = command.split()
-        cmd = token[0]
-        args = token[1:]
     
         # If command has no arguments
         if args == []:
