@@ -6,11 +6,8 @@ Ideas:
     Allow user to input "up" and "down" arrow to get previously used commands
 
 Next:
-    Add Functions:
-        Welcome
-        If_exit
-        Commands_without_args
-        Commands_with_args
+    ls -arg implementation
+    mkdir
 
 
 10 Sep 2025
