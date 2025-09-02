@@ -389,7 +389,7 @@ def ls_with_args(args):
 #    wc_help()       : Prints help for 'wc'
 #    chmod_help()    : Prints help for 'chmod'
 #    history_help()  : Prints help for 'history'
-#    bangx_help()    : Prints help for '!x'
+#    notx_help()     : Prints help for '!x'
 #    clear_help()    : Prints help for 'clear'
 #
 # Returns:
