@@ -452,10 +452,12 @@ while True:
                 cd_with_args(args)
                 
             # Make Directory
-            #elif cmd == "mkdir" and len(args) == 1:
-                #mkdir_with_args(args)
-            #elif cmd == "ls" and len(args) == 1:
-                #ls_with_args(args) 
+            elif cmd == "mkdir" and len(args) == 1:
+                mkdir_with_args(args)
+                
+            # List Directory
+            elif cmd == "ls" and len(args) == 1:
+                ls_with_args(args) 
             #elif cmd == "cp" and len(args) == 2:
                 #cp_with_args(args)
             #elif cmd == "mv" and len(args) == 2:
