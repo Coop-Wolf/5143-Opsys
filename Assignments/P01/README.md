@@ -6,8 +6,10 @@ Ideas:
     Allow user to input "up" and "down" arrow to get previously used commands
 
 Next:
-    ls -arg implementation
-    mkdir
+    ls -la is incorrect
+    program doesn't print hidden while in /OS path but does in regular terminal 
+    need to add -h to all options
+    size is incorrect as well for total: x
 
 
 10 Sep 2025

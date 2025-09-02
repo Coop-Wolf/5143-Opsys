@@ -24,17 +24,11 @@ Authors: Tim Haxton, Cooper Wolf
 Date:    9/1/2024
 """
 
-############################################
-# ==============================
-# Imports
-# ==============================
-# os: Provides functions for interacting with the operating system
-# colorama: Enables cross-platform colored terminal text
-#   - init: Initializes colorama
-#   - Fore: Provides foreground (text) color constants
-#   - Style: Provides style options (e.g., reset formatting)
-#############################################
+# Need command for imports
 import os  
+import pwd
+import grp
+import stat
 from colorama import init, Fore, Style
 
 
@@ -223,10 +217,10 @@ def ls_with_args(args):
                 file_info = os.stat(item)  
                 
                 # Extract and format details  
-                permissions = file_info.st_mode
+                permissions = stat.filemode(file_info.st_mode)
                 links       = file_info.st_nlink
-                owner       = file_info.st_uid
-                group       = file_info.st_gid
+                owner       = pwd.getpwuid(file_info.st_uid).pw_name
+                group       = grp.getgrgid(file_info.st_gid).gr_name
                 size        = file_info.st_size
                 mod_time    = file_info.st_mtime
                 
@@ -238,6 +232,7 @@ def ls_with_args(args):
                 
         total_size = 0
         
+        # Calculate total size of all files in directory
         for item in os.listdir():
             file_info = os.stat(item)
             total_size += file_info.st_blocks
@@ -251,10 +246,10 @@ def ls_with_args(args):
             file_info = os.stat(item)  
                 
             # Extract and format details  
-            permissions = file_info.st_mode
+            permissions = stat.filemode(file_info.st_mode)
             links       = file_info.st_nlink
-            owner       = file_info.st_uid
-            group       = file_info.st_gid
+            owner       = pwd.getpwuid(file_info.st_uid).pw_name
+            group       = grp.getgrgid(file_info.st_gid).gr_name
             size        = file_info.st_size
             mod_time    = file_info.st_mtime
                 
@@ -262,15 +257,46 @@ def ls_with_args(args):
             print(permissions, links, owner, group, size, mod_time, item)
         
     # Using -lh or -hl prints files in long format with human readable sizes
-    #elif args[0] == "-lh" or args[0] == "-hl":
+    elif args[0] == "-lh" or args[0] == "-hl":
+        
+        total_size = 0
+        
+        # Calculate total size of all non-hidden files in directory
+        
+        
+        #THIS NEEDS TO BE CONVERTED TO HUMAN READABLE##################$#$#$#
+        for item in os.listdir():
+            if not item.startswith('.'):
+                file_info = os.stat(item)
+                total_size += file_info.st_blocks
+        
+        print("total", total_size)
+        
+        # Print details for each file
+        for item in os.listdir():
+            if not item.startswith('.'):
+                
+                # Get file info
+                file_info = os.stat(item)  
+                
+                # Extract and format details  
+                permissions = stat.filemode(file_info.st_mode)
+                links       = file_info.st_nlink
+                owner       = pwd.getpwuid(file_info.st_uid).pw_name
+                group       = grp.getgrgid(file_info.st_gid).gr_name
+                size        = file_info.st_size
+                mod_time    = file_info.st_mtime
+                
+                # Print file details
+                print(permissions, links, owner, group, size, mod_time, item)
         
     # Using -alh or any combo of those three prints all files in long format with human readable sizes
     #elif args[0] == "-alh" or args[0] == "-ahl" or args[0] == "-lah" or args[0] == "-lha" or args[0] == "-hal" or args[0] == "-hla":
         
     # Invalid option
-    #else:
-    #    print("ls: invalid option.")
-    #    print("Try 'ls --help' for more information.")
+    else:
+        print("ls: invalid option.")
+        print("Try 'ls --help' for more information.")
             
 
 #def cp_with_args(args):
