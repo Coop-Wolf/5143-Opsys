@@ -73,37 +73,90 @@ def exit_shell():
     print()
     exit()
     
+    
+def cd():
+    """
+    Change to the home directory.
+    This function changes the current working directory to the user's home directory.
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    homedir = os.path.expanduser("~")
+    os.chdir(homedir)
+    
+def pwd_():
+    """
+    Print the current working directory.
+    This function retrieves and prints the absolute path of the current working directory.
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    print(os.getcwd())
+    
+def clear():
+    """
+    Clear the terminal screen.
+    This function clears the terminal screen by executing the appropriate system command.
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    os.system("clear")
+    
+def ls():
+    """
+    List non-hidden files and directories in the current directory.
+    This function lists all files and directories in the current working directory,
+    excluding hidden files (those starting with a dot).
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    for item in os.listdir():
+            
+        # Only print non-hidden files
+        if not item.startswith('.'):
+            print(item)
+    
+    
+    
 # NEEDS FUNCTION COMMENT
 # STILL NEED: history, !x, and maybe others
 def Command_With_No_Agrs(cmd):
     
     # If user types 'clear', clear the terminal
     if cmd == "clear":
-        os.system("clear")
+        clear()
     
     # If user types 'pwd', print current working directory
     elif cmd == "pwd":
-        print(os.getcwd())
+        pwd_()
         
     # If user types 'cd' go to home directory
     elif cmd == "cd":
-        homedir = os.path.expanduser("~")
-        os.chdir(homedir)
+        cd()
         
     # If user types 'ls', list files and directories in current directory that aren't hidden
     elif cmd == "ls":
-        for item in os.listdir():
-            
-            # Only print non-hidden files
-            if not item.startswith('.'):
-                print(item)
+        ls()
             
     # If user types 'history', print command history
    #elif cmd == "history":
+        #history()
    #elif cmd == "!x":
+        #notx()
    #elif cmd == "head":
+    #    head()
    #elif cmd == "tail":
+    #    tail()
    #elif cmd == "ll":
+    #    ll()
     
   
 def cd_with_args(args):
@@ -497,7 +550,10 @@ while True:
     # Split the command into tokens and parse
     token = command.split()
     cmd = token[0]
-    args = token[1:]
+    flag = token[1] if len(token) > 1 else None
+    
+    
+    #args = token[1:]
     
     # If user types 'exit', break the loop and exit the shell
     if command == "exit":
