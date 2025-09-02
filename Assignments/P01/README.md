@@ -46,6 +46,7 @@ Run the `shell.py` file and use the following commands...
 | `!x`                  | Re-run command number *x* from history.             |          |
 | `exit`                | Exits the shell.                                    | Cooper   |
 | `more`                |                                                     |          |
+| `less`                |                                                     |          |
 | `[program] > file`    |                                                     |          |
 | `[program] < file`    |                                                     |          |
 

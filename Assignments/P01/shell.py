@@ -96,6 +96,8 @@ def Command_With_No_Agrs(cmd):
     # If user types 'history', print command history
    #elif cmd == "history":
    #elif cmd == "!x":
+   #elif cmd == "head":
+   #elif cmd == "tail":
     
   
 #########################################################
