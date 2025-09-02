@@ -24,7 +24,7 @@ Authors: Tim Haxton, Cooper Wolf
 Date:    9/1/2024
 """
 
-# Need command for imports
+# Need comment for imports
 import os  
 import pwd
 import grp
