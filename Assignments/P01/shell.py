@@ -33,17 +33,19 @@ from colorama import init, Fore, Style
 
 
 
-##########################################
-# Prints the welcome message for the shell
-#
-# This function displays a formatted introduction to the shell,
-# including available commands and usage instructions.
-# It uses colored text for better visibility.
-#
-# Parameters: None
-# Returns: None
-###########################################
 def WelcomeMessage():
+    """
+    Prints the welcome message for the shell.
+
+    This function displays a formatted introduction to the shell,
+    including available commands and usage instructions.
+    It uses colored text for better visibility.
+
+    Parameters:
+        None
+    Returns:
+        None
+    """
     print()
     print(f"{Fore.GREEN}Welcome to the Simple Shell!")
     print("---------------------------------------------------------------------")
@@ -54,16 +56,19 @@ def WelcomeMessage():
     print(f"{Fore.GREEN}Don't steal our code, we'll sue.")
     print("---------------------------------------------------------------------")
     print()
-    
-###########################################
-# Exits the shell program
-#
-# This function prints a goodbye message and exits the program.
-#
-# Parameters: None
-# Returns: None
-###########################################
+
+
 def exit_shell():
+    """
+    Exits the shell program.
+
+    This function prints a goodbye message and exits the program.
+
+    Parameters:
+        None
+    Returns:
+        None
+    """
     print(f"{Fore.GREEN}Exiting Shell. Goodbye!")
     print()
     exit()
@@ -101,27 +106,21 @@ def Command_With_No_Agrs(cmd):
    #elif cmd == "ll":
     
   
-#########################################################
-# Change Directory Functions with Arguments
-#
-# These functions handle the 'cd' command with arguments.
-# They allow users to change the current working directory
-# to a specified path or navigate back to the parent directory.
-#
-# Parameters:
-#    args (list): List of arguments passed to the 'cd' command.
-#                 - args[0]: Target directory path or ".." to go up one level.
-#
-# Returns:
-#    None
-#########################################################
 def cd_with_args(args):
-    
-    # Go back a directory if ".." is the argument
+    """
+    Change directory with arguments.
+
+    Handles the 'cd' command when arguments are provided.
+    - If args[0] == "..", goes back one directory.
+    - Otherwise, tries to change into the given path.
+
+    Parameters:
+        args (list): arguments passed to 'cd'
+    Returns:
+        None
+    """
     if args[0] == "..":
         os.chdir("..")
-                
-    # Go to directory in argument if it exists
     else:
         if os.path.isdir(args[0]):
             os.chdir(args[0])
@@ -129,22 +128,21 @@ def cd_with_args(args):
             print(f"cd: no such file or directory: {args[0]}")
         
         
-        
-#########################################################
-# Make Directory Functions with Arguments
-#
-# This function handles the 'mkdir' command with arguments.
-# It allows users to create a new directory at a specified path.
-# The function supports both relative and absolute paths.
-#
-# Parameters:
-#    args (list): List of arguments passed to the 'mkdir' command.
-#                 - args[0]: Name or path of the directory to create.
-#
-# Returns:
-#    None
-#########################################################      
+    
 def mkdir_with_args(args):
+    """
+    Handle the 'mkdir' command with arguments.
+
+    Allows users to create a new directory at a specified path.
+    Supports both relative and absolute paths.
+
+    Parameters:
+        args (list): List of arguments passed to the 'mkdir' command.
+                     - args[0]: Name or path of the directory to create.
+
+    Returns:
+        None
+    """
 
     # if relative path, join with current working directory
     if not os.path.isabs(args[0]):
@@ -169,26 +167,25 @@ def mkdir_with_args(args):
 
 
 
-##########################################################
-# List Directory Functions with Arguments
-#
-# This function handles the 'ls' command with arguments.
-# It allows users to list directory contents with various options:
-#    - -a: Include hidden files
-#    - -l: Long listing format with detailed file information
-#    - -h: Human-readable file sizes (not fully implemented)
-# The function supports combinations of these options.
-#
-# Parameters:
-#    args (list): List of arguments passed to the 'ls' command.
-#                 - args[0]: Option string (e.g., "-a", "-l",
-#                            "-al", "-lh", etc.)
-#
-# Returns:
-#    None
-##########################################################
+
 def ls_with_args(args):
-    
+    """
+    Handle the 'ls' command when arguments are provided.
+
+    Supports listing directory contents with various options:
+      - -a   Include hidden files
+      - -l   Long listing format with detailed file information
+      - -h   Human-readable file sizes (not fully implemented)
+    Options can be combined, e.g. "-al", "-lh", etc.
+
+    Parameters:
+        args (list): List of arguments passed to the 'ls' command.
+                     - args[0]: Option string (e.g., "-a", "-l", "-al", "-lh").
+
+    Returns:
+        None
+    """
+        
     # Using -h alone prints the same as no args
     if args[0] == "-h":
         for item in os.listdir():
@@ -463,7 +460,7 @@ def history_help():
     print("Display the list of commands previously entered.")
     print()
 
-def bangx_help():
+def notx_help():
     print()
     print("!x: execute command from history")
     print("Usage: !x")
