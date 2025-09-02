@@ -232,7 +232,6 @@ def ls_with_args(args):
                 
                 # Print file details
                 print(permissions, links, owner, group, size, mod_time, item)
-                print()
          
     # Using -al or -la prints all files in long format
     elif args[0] == "-al" or args[0] == "-la":
@@ -261,7 +260,6 @@ def ls_with_args(args):
                 
             # Print file details
             print(permissions, links, owner, group, size, mod_time, item)
-            print()
         
     # Using -lh or -hl prints files in long format with human readable sizes
     #elif args[0] == "-lh" or args[0] == "-hl":
