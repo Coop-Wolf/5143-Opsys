@@ -6,10 +6,8 @@ Ideas:
     Allow user to input "up" and "down" arrow to get previously used commands
 
 Next:
-    ls -la is incorrect
-    program doesn't print hidden while in /OS path but does in regular terminal 
-    need to add -h to all options
-    size is incorrect as well for total: x
+    Review outputs for ls with params
+    
 
 
 10 Sep 2025
@@ -32,7 +30,7 @@ Run the `shell.py` file and use the following commands...
 | `ls -a`               | List all files, including hidden ones.              |        |
 | `ls -l`               | Long listing format.                                |        |
 | `ls -h`               | Human-readable file sizes.                          |        |
-| `mkdir`               | Create a directory.                                 |        |
+| `mkdir`               | Create a directory.                                 | Cooper |
 | `cd directory`        | Change to a named directory.                        | Cooper |
 | `cd`                  | Change to the home directory if no argument given.  | Cooper |
 | `cp file1 file2`      | Copy file1 to file2.                                |        |
