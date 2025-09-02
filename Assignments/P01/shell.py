@@ -172,6 +172,24 @@ def mkdir_with_args(args):
 
 
 
+##########################################################
+# List Directory Functions with Arguments
+#
+# This function handles the 'ls' command with arguments.
+# It allows users to list directory contents with various options:
+#    - -a: Include hidden files
+#    - -l: Long listing format with detailed file information
+#    - -h: Human-readable file sizes (not fully implemented)
+# The function supports combinations of these options.
+#
+# Parameters:
+#    args (list): List of arguments passed to the 'ls' command.
+#                 - args[0]: Option string (e.g., "-a", "-l",
+#                            "-al", "-lh", etc.)
+#
+# Returns:
+#    None
+##########################################################
 def ls_with_args(args):
     
     # Using -h alone prints the same as no args
@@ -188,9 +206,14 @@ def ls_with_args(args):
     # Using -l alone
     elif args[0] == "-l":
         
-        # Print total number of files
-        print(sum(os.listdir()))
-        print()
+        total_size = 0
+        
+        for item in os.listdir():
+            if not item.startswith('.'):
+                file_info = os.stat(item)
+                total_size += file_info.st_blocks
+        
+        print("total", total_size)
         
         # Print details for each file
         for item in os.listdir():
@@ -210,12 +233,35 @@ def ls_with_args(args):
                 # Print file details
                 print(permissions, links, owner, group, size, mod_time, item)
                 print()
-        
-        
-        
-        
+         
     # Using -al or -la prints all files in long format
-    #elif args[0] == "-al" or args[0] == "-la":
+    elif args[0] == "-al" or args[0] == "-la":
+                
+        total_size = 0
+        
+        for item in os.listdir():
+            file_info = os.stat(item)
+            total_size += file_info.st_blocks
+        
+        print("total", total_size)
+        
+        # Print details for each file
+        for item in os.listdir():
+                
+            # Get file info
+            file_info = os.stat(item)  
+                
+            # Extract and format details  
+            permissions = file_info.st_mode
+            links       = file_info.st_nlink
+            owner       = file_info.st_uid
+            group       = file_info.st_gid
+            size        = file_info.st_size
+            mod_time    = file_info.st_mtime
+                
+            # Print file details
+            print(permissions, links, owner, group, size, mod_time, item)
+            print()
         
     # Using -lh or -hl prints files in long format with human readable sizes
     #elif args[0] == "-lh" or args[0] == "-hl":
