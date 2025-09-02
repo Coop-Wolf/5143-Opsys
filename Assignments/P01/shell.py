@@ -11,6 +11,8 @@ Description:
 Features:
     - Execute commands with arguments
     - Directory navigation (cd, pwd)
+    - Directory listing (ls)
+    - Directory creation (mkdir)
     - File manipulation (cp, mv, rm, chmod)
     - Viewing files (cat, head, tail)
     - Searching with grep
@@ -22,29 +24,54 @@ Authors: Tim Haxton, Cooper Wolf
 Date:    9/1/2024
 """
 
-# importing os module for directory and file operations
-# importing colorama for colored terminal text
+############################################
+# ==============================
+# Imports
+# ==============================
+# os: Provides functions for interacting with the operating system
+# colorama: Enables cross-platform colored terminal text
+#   - init: Initializes colorama
+#   - Fore: Provides foreground (text) color constants
+#   - Style: Provides style options (e.g., reset formatting)
+#############################################
 import os  
 from colorama import init, Fore, Style
 
 
-# NEEDS FUNCTION COMMENT
+
+##########################################
+# Prints the welcome message for the shell
+#
+# This function displays a formatted introduction to the shell,
+# including available commands and usage instructions.
+# It uses colored text for better visibility.
+#
+# Parameters: None
+# Returns: None
+###########################################
 def WelcomeMessage():
-    # Welcome message
     print()
     print(f"{Fore.GREEN}Welcome to the Simple Shell!")
-    print("-----------------------------------------")
+    print("---------------------------------------------------------------------")
     print(f"{Fore.GREEN}Available commands: clear, ls, mkdir, cd, pwd, cp, mv, rm, cat, head, tail, grep, wc, chmod, history, !x")
     print(f"{Fore.GREEN}Type '<command> --help' for information on a specific command.")
     print(f"{Fore.GREEN}Type 'exit' to quit.")
     print(f"{Fore.GREEN}Designed and implemented by Tim Haxton and Cooper Wolf.")
     print(f"{Fore.GREEN}Don't steal our code, we'll sue.")
-    print("-----------------------------------------")
+    print("---------------------------------------------------------------------")
     print()
     
-# NEEDS FUNCTION COMMENT
+###########################################
+# Exits the shell program
+#
+# This function prints a goodbye message and exits the program.
+#
+# Parameters: None
+# Returns: None
+###########################################
 def exit_shell():
     print(f"{Fore.GREEN}Exiting Shell. Goodbye!")
+    print()
     exit()
     
 # NEEDS FUNCTION COMMENT
@@ -64,16 +91,33 @@ def Command_With_No_Agrs(cmd):
         homedir = os.path.expanduser("~")
         os.chdir(homedir)
         
-    # If user types 'ls', list files and directories in current directory
+    # If user types 'ls', list files and directories in current directory that aren't hidden
     elif cmd == "ls":
         for item in os.listdir():
-            print(item)
+            
+            # Only print non-hidden files
+            if not item.startswith('.'):
+                print(item)
             
     # If user types 'history', print command history
    #elif cmd == "history":
    #elif cmd == "!x":
     
-# NEEDS FUNCTION COMMENT
+  
+#########################################################
+# Change Directory Functions with Arguments
+#
+# These functions handle the 'cd' command with arguments.
+# They allow users to change the current working directory
+# to a specified path or navigate back to the parent directory.
+#
+# Parameters:
+#    args (list): List of arguments passed to the 'cd' command.
+#                 - args[0]: Target directory path or ".." to go up one level.
+#
+# Returns:
+#    None
+#########################################################
 def cd_with_args(args):
     
     # Go back a directory if ".." is the argument
@@ -86,8 +130,105 @@ def cd_with_args(args):
             os.chdir(args[0])
         else:
             print(f"cd: no such file or directory: {args[0]}")
+        
+        
+        
+#########################################################
+# Make Directory Functions with Arguments
+#
+# This function handles the 'mkdir' command with arguments.
+# It allows users to create a new directory at a specified path.
+# The function supports both relative and absolute paths.
+#
+# Parameters:
+#    args (list): List of arguments passed to the 'mkdir' command.
+#                 - args[0]: Name or path of the directory to create.
+#
+# Returns:
+#    None
+#########################################################      
+def mkdir_with_args(args):
+
+    # if relative path, join with current working directory
+    if not os.path.isabs(args[0]):
+        
+        # Getting new directory name, current working directory
+        # and joining them to create full path
+        new_dir = args[0]
+        cwd     = os.getcwd()
+        path    = os.path.join(cwd, new_dir)
+        
+    elif os.path.isabs(args[0]):
+        
+        # Getting the absolute path from argumen
+        path = args[0]
+        
+    # Creating the directory and handling errors
+    try:
+        os.mkdir(path)
+        print("Directory created at:", path)
+    except OSError as e:
+        print("Error:", e)
+
+
+
+def ls_with_args(args):
+    
+    # Using -h alone prints the same as no args
+    if args[0] == "-h":
+        for item in os.listdir():
+            if not item.startswith('.'):
+                print(item)
             
-#def ls_with_args(args):
+    # Using -a alone or with -h prints all files including hidden
+    elif args[0] == "-a" or args[0] == "ah" or args[0] == "ha":
+        for item in os.listdir():
+            print(item)
+        
+    # Using -l alone
+    elif args[0] == "-l":
+        
+        # Print total number of files
+        print(sum(os.listdir()))
+        print()
+        
+        # Print details for each file
+        for item in os.listdir():
+            if not item.startswith('.'):
+                
+                # Get file info
+                file_info = os.stat(item)  
+                
+                # Extract and format details  
+                permissions = file_info.st_mode
+                links       = file_info.st_nlink
+                owner       = file_info.st_uid
+                group       = file_info.st_gid
+                size        = file_info.st_size
+                mod_time    = file_info.st_mtime
+                
+                # Print file details
+                print(permissions, links, owner, group, size, mod_time, item)
+                print()
+        
+        
+        
+        
+    # Using -al or -la prints all files in long format
+    #elif args[0] == "-al" or args[0] == "-la":
+        
+    # Using -lh or -hl prints files in long format with human readable sizes
+    #elif args[0] == "-lh" or args[0] == "-hl":
+        
+    # Using -alh or any combo of those three prints all files in long format with human readable sizes
+    #elif args[0] == "-alh" or args[0] == "-ahl" or args[0] == "-lah" or args[0] == "-lha" or args[0] == "-hal" or args[0] == "-hla":
+        
+    # Invalid option
+    #else:
+    #    print("ls: invalid option.")
+    #    print("Try 'ls --help' for more information.")
+            
+
 #def cp_with_args(args):
 #def mv_with_args(args):
 #def rm_with_args(args):
@@ -100,7 +241,37 @@ def cd_with_args(args):
  
 
 
-#Help Functions for each command
+##########################################
+# Help Command Functions
+#
+# These functions print usage information for each supported shell command.
+# Each function follows the same pattern:
+#    - Print the command name
+#    - Print usage syntax
+#    - Print a short description
+#    - Print available options (if any)
+#
+# Functions:
+#    ls_help()       : Prints help for 'ls'
+#    mkdir_help()    : Prints help for 'mkdir'
+#    cd_help()       : Prints help for 'cd'
+#    pwd_help()      : Prints help for 'pwd'
+#    cp_help()       : Prints help for 'cp'
+#    mv_help()       : Prints help for 'mv'
+#    rm_help()       : Prints help for 'rm'
+#    cat_help()      : Prints help for 'cat'
+#    head_help()     : Prints help for 'head'
+#    tail_help()     : Prints help for 'tail'
+#    grep_help()     : Prints help for 'grep'
+#    wc_help()       : Prints help for 'wc'
+#    chmod_help()    : Prints help for 'chmod'
+#    history_help()  : Prints help for 'history'
+#    bangx_help()    : Prints help for '!x'
+#    clear_help()    : Prints help for 'clear'
+#
+# Returns:
+#    None (all functions only print to stdout)
+##########################################
 def ls_help():
     print()
     print("ls: list directory contents")
@@ -110,6 +281,7 @@ def ls_help():
     print("  -a, do not ignore entries starting with .")
     print("  -l,  use a long listing format")
     print("  -h, print sizes in human readable format (e.g., 1K 234M 2G)")
+    print("Example: ls -alh")
     print()
 
 def mkdir_help():
@@ -123,6 +295,8 @@ def cd_help():
     print()
     print("cd: change directory")
     print("Usage: cd [DIRECTORY]")
+    print("Usage: cd .. (to go back one directory)")
+    print("If no argument is given, changes to the home directory.")
     print("Change the shell working directory.")
     print()
 
@@ -237,7 +411,7 @@ def clear_help():
 # Allows for colored text in terminal and resets color after each print
 init(autoreset=True)
 
-# Welcome message
+# Print welcome message
 WelcomeMessage()
 
 # Loop to continuously prompt for user input
@@ -258,9 +432,11 @@ while True:
     # If user types 'exit', break the loop and exit the shell
     if command == "exit":
         exit_shell()
+        
     # If users tyles invalid command, print error message
     elif cmd not in cmd_list:
         print(f"{cmd}: command not found")
+        
     else:
     
         # If command has no arguments
@@ -277,6 +453,7 @@ while True:
                 
             # Make Directory
             #elif cmd == "mkdir" and len(args) == 1:
+                #mkdir_with_args(args)
             #elif cmd == "ls" and len(args) == 1:
                 #ls_with_args(args) 
             #elif cmd == "cp" and len(args) == 2:
