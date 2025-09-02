@@ -49,7 +49,7 @@ Run the `shell.py` file and use the following commands...
 | `less`                |                                                     |          |
 | `[program] > file`    |                                                     |          |
 | `[program] < file`    |                                                     |          |
-
+| `hfind`               |                                                     |          |
 
 ## Non-Working Components:
 List any commands or features that are not fully implemented.
