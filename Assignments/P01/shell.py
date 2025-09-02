@@ -550,10 +550,8 @@ while True:
     # Split the command into tokens and parse
     token = command.split()
     cmd = token[0]
-    flag = token[1] if len(token) > 1 else None
-    
-    
-    #args = token[1:]
+    #flag = token[1] if len(token) > 1 else None
+    args = token[1:]
     
     # If user types 'exit', break the loop and exit the shell
     if command == "exit":
@@ -638,7 +636,7 @@ while True:
             elif cmd == "history":
                 history_help()
             elif cmd == "!x":
-                bangx_help()
+                notx_help()
             elif cmd == "clear":
                 clear_help()
             else:
