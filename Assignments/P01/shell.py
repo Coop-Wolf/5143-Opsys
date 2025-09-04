@@ -95,6 +95,8 @@ def pwd_():
     Returns:
         None
     """
+    
+    # This should return instead of print
     print(os.getcwd())
     
 def clear():
@@ -118,24 +120,26 @@ def ls():
     Returns:
         None
     """
+    
+    # List to hold directory contents
+    l_item = []
+    
+    # This should return the list instead of print
     for item in os.listdir():
             
         # Only print non-hidden files
         if not item.startswith('.'):
-            print(item)
+            l_item.append(item)
     
+    return l_item
     
     
 # NEEDS FUNCTION COMMENT
 # STILL NEED: history, !x, and maybe others
 def Command_With_No_Agrs(cmd):
     
-    # If user types 'clear', clear the terminal
-    if cmd == "clear":
-        clear()
-    
     # If user types 'pwd', print current working directory
-    elif cmd == "pwd":
+    if cmd == "pwd":
         pwd_()
         
     # If user types 'cd' go to home directory
@@ -144,7 +148,8 @@ def Command_With_No_Agrs(cmd):
         
     # If user types 'ls', list files and directories in current directory that aren't hidden
     elif cmd == "ls":
-        ls()
+        contents = ls()
+        print(contents)
             
     # If user types 'history', print command history
    #elif cmd == "history":
@@ -179,8 +184,7 @@ def cd_with_args(args):
             os.chdir(args[0])
         else:
             print(f"cd: no such file or directory: {args[0]}")
-        
-        
+         
     
 def mkdir_with_args(args):
     """
@@ -217,8 +221,6 @@ def mkdir_with_args(args):
         print("Directory created at:", path)
     except OSError as e:
         print("Error:", e)
-
-
 
 
 def ls_with_args(args):
@@ -556,6 +558,10 @@ while True:
     # If user types 'exit', break the loop and exit the shell
     if command == "exit":
         exit_shell()
+        
+    # If user types 'clear', clear the terminal
+    elif command == "clear":
+        clear()
         
     # If users tyles invalid command, print error message
     elif cmd not in cmd_list:

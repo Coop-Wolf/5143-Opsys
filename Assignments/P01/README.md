@@ -1,19 +1,11 @@
 
-Ideas:
-    Change colors depending of File | Folder | Executable.
-    Allow user to input "up" and "down" arrow to get previously used commands
-
-Next:
-    Review outputs for ls with params
-    
-
 
 10 Sep 2025
 5143 Shell Project
 Group Members:
 - Tim Haxton
 - Cooper Wolf
-- Team [3]
+- Person [3]
 
 ## Overview:
 This project implements a basic shell in Python that supports a variety of commands.

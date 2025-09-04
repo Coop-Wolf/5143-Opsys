@@ -25,3 +25,11 @@ have to keep a history that survives when shell detailed
 run like a real command shell.
 
 rich does colors tabular data.
+
+
+Ideas:
+    Change colors depending of File | Folder | Executable.
+    Allow user to input "up" and "down" arrow to get previously used commands
+
+Next:
+    Review outputs for ls with params
