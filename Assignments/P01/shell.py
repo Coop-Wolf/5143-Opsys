@@ -151,6 +151,7 @@ def Command_With_No_Agrs(cmd):
         contents = ls()
         for item in contents:
             print(item, end=' ')
+        print()
             
     # If user types 'history', print command history
    #elif cmd == "history":
@@ -548,7 +549,7 @@ while True:
     cmd_list = ["clear", "ls", "mkdir", "cd", "pwd", "cp", "mv", "rm", "cat", "head", "tail", "grep", "wc", "chmod", "history", "!x", "ll", "more", "less"]
     
     # Prompt for user input  
-    command = input(f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}% ")
+    command = input(f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ ")
     
     # Split the command into tokens and parse
     token = command.split()
