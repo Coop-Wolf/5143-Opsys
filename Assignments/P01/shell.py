@@ -149,7 +149,8 @@ def Command_With_No_Agrs(cmd):
     # If user types 'ls', list files and directories in current directory that aren't hidden
     elif cmd == "ls":
         contents = ls()
-        print(contents)
+        for item in contents:
+            print(item)
             
     # If user types 'history', print command history
    #elif cmd == "history":
