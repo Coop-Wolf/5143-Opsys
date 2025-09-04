@@ -150,7 +150,7 @@ def Command_With_No_Agrs(cmd):
     elif cmd == "ls":
         contents = ls()
         for item in contents:
-            print(item)
+            print(item, end=' ')
             
     # If user types 'history', print command history
    #elif cmd == "history":
