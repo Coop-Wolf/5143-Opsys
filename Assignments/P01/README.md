@@ -13,6 +13,7 @@ Next:
 Group Members:
 - Tim Haxton
 - Cooper Wolf
+- Team [3]
 
 ## Overview:
 This project implements a basic shell in Python that supports a variety of commands.
