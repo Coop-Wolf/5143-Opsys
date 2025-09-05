@@ -19,6 +19,8 @@ import shutil
 ##################################################################################
 ##################################################################################
 
+getch = Getch()  # create instance of our getch class
+prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
 
 
 def WelcomeMessage():
@@ -37,10 +39,10 @@ def WelcomeMessage():
     print()
     print(f"{Fore.GREEN}Welcome to the Simple Shell!")
     print("---------------------------------------------------------------------")
-    print(f"{Fore.GREEN}Available commands  [NEED TO UPDATE]: clear, ls, mkdir, cd, pwd, cp, mv, rm, cat, head, tail, grep, wc, chmod, history, !x")
+    print(f"{Fore.GREEN}To see avaiable commands, type 'help' [Need to implement help command].")
     print(f"{Fore.GREEN}Type '<command> --help' for information on a specific command.")
-    print(f"{Fore.GREEN}Type 'exit' to quit.")
-    print(f"{Fore.GREEN}Designed and implemented by Tim Haxton and Cooper Wolf.")
+    print(f"{Fore.GREEN}Type 'exit' or ctrl + c to quit.")
+    print(f"{Fore.GREEN}Designed and implemented by Tim Haxton, Person 3, and Cooper Wolf.")
     print(f"{Fore.GREEN}Don't steal our code, we'll sue.")
     print("---------------------------------------------------------------------")
     print()
@@ -150,10 +152,6 @@ if __name__ == "__main__":
     WelcomeMessage()
     
     cmd = ""  # empty cmd variable
-    getch = Getch()  # create instance of our getch class
-
-
-    prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
 
     print_cmd(cmd)  # print to terminal
 
@@ -226,7 +224,7 @@ if __name__ == "__main__":
             elif cmd == "ls" and len(args) == 0:
                 items = ls()
                 for item in items:
-                    print(item)
+                    print(item, end=" ")
             elif cmd == "clear" and len(args) == 0:
                 clear()
                 
