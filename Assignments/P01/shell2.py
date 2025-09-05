@@ -14,6 +14,7 @@ import stat
 from getch import Getch
 from colorama import init, Fore, Style
 from time import sleep
+import shutil
 
 ##################################################################################
 ##################################################################################
@@ -43,21 +44,17 @@ def print_cmd(cmd):
     whatever cmd that is passed to it to the bottom of the terminal.
     """
     
-    if(cmd.endswith("/r")):
-        print(f"{prompt}{cmd}", flush=True)
-    else:
-        
-        print(f"{prompt}{cmd}", end="", flush=True)
-        
-    # space of 80 chars longer commands may need to have a longer space
-    # set padding to width of terminal
-      #padding = " " * 80
-    # clear off the line
-      #sys.stdout.write("\r" + padding)
-    # print the prompt + cmd
-      #sys.stdout.write("\r" + prompt + cmd)
-    # flush to terminal
-      #sys.stdout.flush()
+    width = shutil.get_terminal_size((80, 20)).columns  
+
+    # Clear line with spaces equal to width
+    padding = " " * width
+    sys.stdout.write("\r" + padding)
+    sys.stdout.write("\r")
+
+    # Print prompt + cleaned command
+    clean_cmd = cmd.replace("\r", "")
+    sys.stdout.write(f"{prompt}{clean_cmd}")
+    sys.stdout.flush()
 
 
 if __name__ == "__main__":
@@ -122,9 +119,10 @@ if __name__ == "__main__":
             ## YOUR CODE HERE
             ## Parse the command
             token = cmd.split()
-            cmd_ = token[0]
-            #flag = token[1] if len(token) > 1 else None
-            args = token[1:]
+            if token:
+                cmd_ = token[0]
+                #flag = token[1] if len(token) > 1 else None
+                args = token[1:]
             
             if cmd == "pwd" and len(args) == 0:
                 pwd_()
