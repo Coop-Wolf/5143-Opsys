@@ -627,6 +627,13 @@ if __name__ == "__main__":
             
             # write out the command to the history file
             # so you can access it later with the up/down arrows
+            
+            # Get the absolute path of the folder where the script is located
+            script_dir = os.path.dirname(os.path.abspath(__file__))
+
+            # Build the full path to history.txt in the same folder
+            history_file = os.path.join(script_dir, "history.txt")
+            
             with open("history.txt", "a") as file:
                 file.write(cmd + "\n")
             
