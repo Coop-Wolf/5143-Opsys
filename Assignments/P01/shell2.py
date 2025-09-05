@@ -612,15 +612,24 @@ if __name__ == "__main__":
                         for item in items:
                             print(item, end=" ")
                         print()
-            
-            ## Figure out what your executing like finding pipes and redirects
-
-            cmd = ""  # reset command to nothing (since we just executed it)
+                        
+                        
+            # Figure out what your executing like finding pipes and redirects
+            if cmd.contains("|"):
+                print("Pipes not implemented yet.")
+            if cmd.contains(">"):
+                print("Redirects not implemented yet.")
+            if cmd.contains("<"):
+                print("Redirects not implemented yet.")
             
             # write out the command to the history file
             # so you can access it later with the up/down arrows
             with open("history.txt", "a") as file:
                 file.write(cmd + "\n")
+            
+
+            cmd = ""  # reset command to nothing (since we just executed it)
+            
             
             print_cmd(cmd)  # now print empty cmd prompt
             
