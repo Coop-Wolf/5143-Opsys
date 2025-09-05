@@ -340,9 +340,8 @@ def ls_with_args(args):
         
         # Calculate total size of all non-hidden files in directory
         for item in os.listdir():
-            if not item.startswith('.'):
-                file_info = os.stat(item)
-                total_size += file_info.st_size
+            file_info = os.stat(item)
+            total_size += file_info.st_size
         
         print("total", human_readable(total_size))
         
