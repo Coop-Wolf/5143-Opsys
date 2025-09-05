@@ -32,17 +32,20 @@ def print_cmd(cmd):
     """
     
     if(cmd.endswith("/r")):
-        print(f"{prompt}{cmd}", end="", flush=True)
+        print(f"{prompt}{cmd}", flush=True)
     else:
+        
+        print(f"{prompt}{cmd}", end="", flush=True)
+        
     # space of 80 chars longer commands may need to have a longer space
     # set padding to width of terminal
-      padding = " " * 80
+      #padding = " " * 80
     # clear off the line
-      sys.stdout.write("\r" + padding)
+      #sys.stdout.write("\r" + padding)
     # print the prompt + cmd
-      sys.stdout.write("\r" + prompt + cmd)
+      #sys.stdout.write("\r" + prompt + cmd)
     # flush to terminal
-      sys.stdout.flush()
+      #sys.stdout.flush()
 
 
 if __name__ == "__main__":
