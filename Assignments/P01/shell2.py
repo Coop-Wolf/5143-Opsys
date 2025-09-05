@@ -19,10 +19,31 @@ import shutil
 ##################################################################################
 ##################################################################################
 
-getch = Getch()  # create instance of our getch class
 
-prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
 
+def WelcomeMessage():
+    """
+    Prints the welcome message for the shell.
+
+    This function displays a formatted introduction to the shell,
+    including available commands and usage instructions.
+    It uses colored text for better visibility.
+
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    print()
+    print(f"{Fore.GREEN}Welcome to the Simple Shell!")
+    print("---------------------------------------------------------------------")
+    print(f"{Fore.GREEN}Available commands  [NEED TO UPDATE]: clear, ls, mkdir, cd, pwd, cp, mv, rm, cat, head, tail, grep, wc, chmod, history, !x")
+    print(f"{Fore.GREEN}Type '<command> --help' for information on a specific command.")
+    print(f"{Fore.GREEN}Type 'exit' to quit.")
+    print(f"{Fore.GREEN}Designed and implemented by Tim Haxton and Cooper Wolf.")
+    print(f"{Fore.GREEN}Don't steal our code, we'll sue.")
+    print("---------------------------------------------------------------------")
+    print()
 
 
 def pwd_():
@@ -37,6 +58,67 @@ def pwd_():
     
     # This should return instead of print
     print(os.getcwd())
+
+def cd():
+    """
+    Change to the home directory.
+    This function changes the current working directory to the user's home directory.
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    homedir = os.path.expanduser("~")
+    os.chdir(homedir)
+    
+def ls():
+    """
+    List non-hidden files and directories in the current directory.
+    This function lists all files and directories in the current working directory,
+    excluding hidden files (those starting with a dot).
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    
+    # List to hold directory contents
+    l_item = []
+    
+    # This should return the list instead of print
+    for item in os.listdir():
+            
+        # Only print non-hidden files
+        if not item.startswith('.'):
+            l_item.append(item)
+    
+    return l_item
+    
+def clear():
+    """
+    Clear the terminal screen.
+    This function clears the terminal screen by executing the appropriate system command.
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    os.system("clear")
+    
+def exit_shell():
+    """
+    Exits the shell program.
+
+    This function prints a goodbye message and exits the program.
+
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    
+    raise SystemExit(f"{Fore.GREEN}Exiting Shell. Goodbye!")
+    
 
 
 def print_cmd(cmd):
@@ -57,8 +139,21 @@ def print_cmd(cmd):
     sys.stdout.flush()
 
 
+
+# MAIN PROGRAM
 if __name__ == "__main__":
+    
+    # Allows for colored text in terminal and resets color after each print
+    init(autoreset=True)
+
+    # Print welcome message
+    WelcomeMessage()
+    
     cmd = ""  # empty cmd variable
+    getch = Getch()  # create instance of our getch class
+
+
+    prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
 
     print_cmd(cmd)  # print to terminal
 
@@ -67,7 +162,7 @@ if __name__ == "__main__":
         char = getch()  # read a character (but don't print)
 
         if char == "\x03" or cmd == "exit":  # ctrl-c
-            raise SystemExit("Bye.")
+            exit_shell()
 
         elif char == "\x7f":  # back space pressed
             cmd = cmd[:-1]
@@ -126,6 +221,14 @@ if __name__ == "__main__":
             
             if cmd == "pwd" and len(args) == 0:
                 pwd_()
+            elif cmd == "cd" and len(args) == 0:
+                cd()
+            elif cmd == "ls" and len(args) == 0:
+                items = ls()
+                for item in items:
+                    print(item)
+            elif cmd == "clear" and len(args) == 0:
+                clear()
                 
             
             ## Figure out what your executing like finding pipes and redirects
