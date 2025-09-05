@@ -16,3 +16,7 @@ ls
 cd nvm
 ls
 cd
+history
+history
+history
+pwd
