@@ -56,7 +56,7 @@ def WelcomeMessage():
     print()
     print(f"{Fore.GREEN}Welcome to the Simple Shell!")
     print("---------------------------------------------------------------------")
-    print(f"{Fore.GREEN}Available commands: clear, ls, mkdir, cd, pwd, cp, mv, rm, cat, head, tail, grep, wc, chmod, history, !x")
+    print(f"{Fore.GREEN}Available commands  [NEED TO UPDATE]: clear, ls, mkdir, cd, pwd, cp, mv, rm, cat, head, tail, grep, wc, chmod, history, !x")
     print(f"{Fore.GREEN}Type '<command> --help' for information on a specific command.")
     print(f"{Fore.GREEN}Type 'exit' to quit.")
     print(f"{Fore.GREEN}Designed and implemented by Tim Haxton and Cooper Wolf.")
@@ -558,25 +558,30 @@ if __name__ == "__main__":
         
         prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
         
-        # Prompt for user input  
-        command = input(prompt)
+        print(prompt, end='')
         
+        # Prompt for user input  
+        char = getch()
+        
+        # If user types 'exit' or ctrl + c, break the loop and exit the shell
+        if char == "exit" or char == "\x03":
+            exit_shell()
+            
+        elif char == "\x7f":  # back space pressed
+            print("sorry, backspace not supported here.")
+            
+        # If user types 'clear', clear the terminal
+        elif char == "clear":
+            clear()
+            
         # Split the command into tokens and parse
-        token = command.split()
+        token = char.split()
         cmd = token[0]
         #flag = token[1] if len(token) > 1 else None
         args = token[1:]
-        
-        # If user types 'exit', break the loop and exit the shell
-        if command == "exit":
-            exit_shell()
-            
-        # If user types 'clear', clear the terminal
-        elif command == "clear":
-            clear()
             
         # If users tyles invalid command, print error message
-        elif cmd not in cmd_list:
+        if cmd not in cmd_list:
             print(f"{cmd}: command not found")
             
         else:

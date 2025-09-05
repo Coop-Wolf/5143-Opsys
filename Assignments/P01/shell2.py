@@ -5,18 +5,22 @@ when the are pushed. The 'command_helper.py' was about parsing and calling funct
 This file is about capturing the user input so that you can mimic shell behavior.
 
 """
-import os
-import sys
-from time import sleep
-
+# Need comment for imports
+import os 
+import sys 
+import pwd
+import grp
+import stat
 from getch import Getch
+from colorama import init, Fore, Style
+from time import sleep
 
 ##################################################################################
 ##################################################################################
 
 getch = Getch()  # create instance of our getch class
 
-prompt = "$"  # set default prompt
+prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
 
 
 # issues in here. 
@@ -27,15 +31,17 @@ def print_cmd(cmd):
     whatever cmd that is passed to it to the bottom of the terminal.
     """
     
+    
+    print(f"\r{prompt} {cmd} ", end="", flush=True)
     # space of 80 chars longer commands may need to have a longer space
     # set padding to width of terminal
-    padding = " " * 80
+      #padding = " " * 80
     # clear off the line
-    sys.stdout.write("\r" + padding)
+      #sys.stdout.write("\r" + padding)
     # print the prompt + cmd
-    sys.stdout.write("\r" + prompt + cmd)
+      #sys.stdout.write("\r" + prompt + cmd)
     # flush to terminal
-    sys.stdout.flush()
+      #sys.stdout.flush()
 
 
 if __name__ == "__main__":
