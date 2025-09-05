@@ -131,9 +131,8 @@ def ls():
             else:
                 items.append(item)
                 
-        # Sort the items alphabetically before returning
-        items.sort()
-    
+    # Sort the items alphabetically before returning
+    items.sort()
     return items
 
 
@@ -159,32 +158,13 @@ def ls_with_args(args):
     items = []
     
     # Using -h alone prints the same as no args
-    if args[0] == "-h":
-        for item in os.listdir():
-            if not item.startswith('.'):
-                
-                # Getting the full path of the item
-                full_path = os.path.join(os.getcwd(), item)
-                
-                # If item is a directory, print in blue
-                if os.path.isdir(full_path):
-                    items.append(f"{Fore.BLUE}{item}{Style.RESET_ALL}")
-                
-                # If item is an executable file, print in green
-                elif os.access(full_path, os.X_OK):
-                    items.append(f"{Fore.GREEN}{item}{Style.RESET_ALL}")
-                    
-                # Otherwise, print normally
-                else:
-                    items.append(item)
-                    
-        items.sort()        
-        return (items)
+    if args[0] == "-h":       
+        return (ls())
             
     # Using -a alone or with -h prints all files including hidden
     elif args[0] == "-a" or args[0] == "ah" or args[0] == "ha":
         
-        for item in os.listdir():
+        for item in ['.', '..'] + os.listdir():
             
             # Getting the full path of the item
             full_path = os.path.join(os.getcwd(), item)
@@ -253,14 +233,14 @@ def ls_with_args(args):
         total_size = 0
         
         # Calculate total size of all files in directory
-        for item in os.listdir():
+        for item in ['.', '..'] + os.listdir():
             file_info = os.stat(item)
             total_size += file_info.st_blocks
         
         print("total", total_size)
         
         # Print details for each file
-        for item in os.listdir():
+        for item in ['.', '..'] + os.listdir():
                 
             # Get file info
             full_path = os.path.join(os.getcwd(), item)
@@ -338,15 +318,15 @@ def ls_with_args(args):
         
         total_size = 0
         
-        # Calculate total size of all non-hidden files in directory
-        for item in os.listdir():
+        # Calculate total size of all files in directory
+        for item in ['.', '..'] + os.listdir():
             file_info = os.stat(item)
             total_size += file_info.st_size
         
         print("total", human_readable(total_size))
         
         # Print details for each file
-        for item in os.listdir():
+        for item in ['.', '..'] + os.listdir():
                 
             # Get file info
             full_path = os.path.join(os.getcwd(), item)
