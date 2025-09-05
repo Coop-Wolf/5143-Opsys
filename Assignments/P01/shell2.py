@@ -459,7 +459,7 @@ def human_readable(size):
         return f"{size:.1f}{units[i-1]}"
     
 
-def print_cmd(cmd):
+def print_cmd(cmd, cursor_pos=0):
     """This function "cleans" off the command line, then prints
     whatever cmd that is passed to it to the bottom of the terminal.
     """
@@ -468,15 +468,19 @@ def print_cmd(cmd):
 
     # Clear line with spaces equal to width
     padding = " " * width
-    sys.stdout.write("\r" + padding)
-    sys.stdout.write("\r")
+    sys.stdout.write("\r" + padding + "\r")
     
     # Update prompt with current working directory
     prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
 
-    # Print prompt + cleaned command
-    clean_cmd = cmd.replace("\r", "")
-    sys.stdout.write(f"{prompt}{clean_cmd}")
+    # Print prompt
+    sys.stdout.write(f"{prompt}{cmd}")
+    
+    # clean_cmd = cmd.replace("\r", "")
+    #sys.stdout.write(f"{prompt}{clean_cmd}")
+    
+    # Move cursor to correct position
+    sys.stdout.write("\r" + prompt + cmd[:cursor_pos])
     sys.stdout.flush()
 
 
@@ -491,6 +495,9 @@ if __name__ == "__main__":
     WelcomeMessage()
     
     cmd = ""  # empty cmd variable
+    
+    # For handling left/right arrow keys
+    cursor_pos = 0
 
     print_cmd(cmd)  # print to terminal
 
@@ -527,23 +534,19 @@ if __name__ == "__main__":
 
             if direction in "C":  # right arrow pressed
                 # move the cursor to the right on your command prompt line
-                # prints out 'right' then erases it (just to show something)
-                cmd += "\u2192"
-                print_cmd(cmd)
-                sleep(0.3)
-                # cmd = cmd[:-1]
+                if cursor_pos < len(cmd):
+                    cursor_pos += 1
+                print_cmd(cmd, cursor_pos)
 
             if direction in "D":  # left arrow pressed
                 # moves the cursor to the left on your command prompt line
-                # prints out 'left' then erases it (just to show something)
-                cmd += "\u2190"
-                print_cmd(cmd)
-                sleep(0.3)
-                # cmd = cmd[:-1]
-
-            print_cmd(cmd)  # print the command (again)
-
-        elif char in "\r":  # return pressed
+                if cursor_pos > 0:
+                    cursor_pos -= 1
+                print_cmd(cmd, cursor_pos)
+              
+                
+        # return pressed
+        elif char in "\r":
             print()
 
             #sleep(1)
