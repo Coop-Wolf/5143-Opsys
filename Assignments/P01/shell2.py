@@ -31,17 +31,18 @@ def print_cmd(cmd):
     whatever cmd that is passed to it to the bottom of the terminal.
     """
     
-    
-    print(f"{prompt}{cmd}", end="", flush=True)
+    if(cmd.endswith("/r")):
+        print(f"{prompt}{cmd}", end="", flush=True)
+    else:
     # space of 80 chars longer commands may need to have a longer space
     # set padding to width of terminal
-      #padding = " " * 80
+      padding = " " * 80
     # clear off the line
-      #sys.stdout.write("\r" + padding)
+      sys.stdout.write("\r" + padding)
     # print the prompt + cmd
-      #sys.stdout.write("\r" + prompt + cmd)
+      sys.stdout.write("\r" + prompt + cmd)
     # flush to terminal
-      #sys.stdout.flush()
+      sys.stdout.flush()
 
 
 if __name__ == "__main__":
@@ -114,4 +115,4 @@ if __name__ == "__main__":
             print_cmd(cmd)  # now print empty cmd prompt
         else:
             cmd += char  # add typed character to our "cmd"
-            print_cmd(cmd)  # print the cmd out
+            #print_cmd(cmd)  # print the cmd out

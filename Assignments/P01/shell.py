@@ -563,6 +563,12 @@ if __name__ == "__main__":
         # Prompt for user input  
         char = getch()
         
+        # Split the command into tokens and parse
+        token = char.split()
+        cmd = token[0]
+        #flag = token[1] if len(token) > 1 else None
+        args = token[1:]
+        
         # If user types 'exit' or ctrl + c, break the loop and exit the shell
         if char == "exit" or char == "\x03":
             exit_shell()
@@ -574,11 +580,6 @@ if __name__ == "__main__":
         elif char == "clear":
             clear()
             
-        # Split the command into tokens and parse
-        token = char.split()
-        cmd = token[0]
-        #flag = token[1] if len(token) > 1 else None
-        args = token[1:]
             
         # If users tyles invalid command, print error message
         if cmd not in cmd_list:
