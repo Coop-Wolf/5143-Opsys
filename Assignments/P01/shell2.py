@@ -234,7 +234,7 @@ def ls_with_args(args):
 
                 # Color the name
                 if os.path.isdir(full_path):
-                    name = Fore.BLUE + item + "/" + Style.RESET_ALL
+                    name = Fore.BLUE + item + Style.RESET_ALL
                 elif os.access(full_path, os.X_OK):
                     name = Fore.GREEN + item + Style.RESET_ALL
                 else:
@@ -276,7 +276,7 @@ def ls_with_args(args):
 
             # Color the name
             if os.path.isdir(full_path):
-                name = Fore.BLUE + item + "/" + Style.RESET_ALL
+                name = Fore.BLUE + item + Style.RESET_ALL
             elif os.access(full_path, os.X_OK):
                 name = Fore.GREEN + item + Style.RESET_ALL
             else:
@@ -320,7 +320,7 @@ def ls_with_args(args):
 
                 # Color the name
                 if os.path.isdir(full_path):
-                    name = Fore.BLUE + item + "/" + Style.RESET_ALL
+                    name = Fore.BLUE + item + Style.RESET_ALL
                 elif os.access(full_path, os.X_OK):
                     name = Fore.GREEN + item + Style.RESET_ALL
                 else:
@@ -348,30 +348,29 @@ def ls_with_args(args):
         
         # Print details for each file
         for item in os.listdir():
-            if not item.startswith('.'):
                 
-                # Get file info
-                full_path = os.path.join(os.getcwd(), item)
-                file_info = os.stat(full_path)
+            # Get file info
+            full_path = os.path.join(os.getcwd(), item)
+            file_info = os.stat(full_path)
 
-                # Extract and format details
-                permissions = stat.filemode(file_info.st_mode)
-                links = file_info.st_nlink
-                owner = pwd.getpwuid(file_info.st_uid).pw_name
-                group = grp.getgrgid(file_info.st_gid).gr_name
-                size = human_readable(file_info.st_size)
-                mod_time = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
+            # Extract and format details
+            permissions = stat.filemode(file_info.st_mode)
+            links = file_info.st_nlink
+            owner = pwd.getpwuid(file_info.st_uid).pw_name
+            group = grp.getgrgid(file_info.st_gid).gr_name
+            size = human_readable(file_info.st_size)
+            mod_time = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
 
-                # Color the name depending on type
-                if os.path.isdir(full_path):
-                    name = Fore.BLUE + item + "/" + Style.RESET_ALL
-                elif os.access(full_path, os.X_OK):
-                    name = Fore.GREEN + item + Style.RESET_ALL
-                else:
-                    name = item
+            # Color the name depending on type
+            if os.path.isdir(full_path):
+                name = Fore.BLUE + item + Style.RESET_ALL
+            elif os.access(full_path, os.X_OK):
+                name = Fore.GREEN + item + Style.RESET_ALL
+            else:
+                name = item
 
-                # Append as a list (one per file)
-                items.append([permissions, links, owner, group, size, mod_time, name])
+            # Append as a list (one per file)
+            items.append([permissions, links, owner, group, size, mod_time, name])
                 
         # Sort items by filename
         items = sorted(items, key=lambda x: x[-1].lower())
@@ -617,7 +616,7 @@ if __name__ == "__main__":
                     
                     # If using -l or -al options, print in formatted columns
                     # need to add -alh options as well when gets implemented.
-                    if args[0] in ["-l", "-al", "-la", "-lh", "-hl"]:
+                    if args[0] in ["-l", "-al", "-la", "-lh", "-hl", "-alh", "-ahl", "-lah", "-lha", "-hal", "-hla"]:
                         for item in items:
                             print(f"{item[0]:<10}{item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8}{item[5]:<12}{item[6]}")
                     
