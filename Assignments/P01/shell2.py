@@ -617,6 +617,11 @@ if __name__ == "__main__":
 
             cmd = ""  # reset command to nothing (since we just executed it)
             
+            # write out the command to the history file
+            # so you can access it later with the up/down arrows
+            with open("history.txt", "a") as file:
+                file.write(cmd + "\n")
+            
             print_cmd(cmd)  # now print empty cmd prompt
             
         # Any other character that is not handled above
