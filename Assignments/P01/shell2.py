@@ -126,7 +126,7 @@ if __name__ == "__main__":
             #flag = token[1] if len(token) > 1 else None
             args = token[1:]
             
-            if cmd == "pwd":
+            if cmd == "pwd" and len(args) == 0:
                 pwd_()
                 
             
@@ -136,5 +136,6 @@ if __name__ == "__main__":
 
             print_cmd(cmd)  # now print empty cmd prompt
         else:
-            cmd += char  # add typed character to our "cmd"
+            cmd += char 
+            # add typed character to our "cmd"
             #print_cmd(cmd)  # print the cmd out
