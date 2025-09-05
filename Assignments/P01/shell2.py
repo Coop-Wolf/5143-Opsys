@@ -54,11 +54,11 @@ def pwd_():
     Parameters:
         None
     Returns:
-        None
+        str: The current working directory path.
     """
     
-    # This should return instead of print
-    print(os.getcwd())
+    return os.getcwd()
+
 
 def cd():
     """
@@ -72,6 +72,29 @@ def cd():
     homedir = os.path.expanduser("~")
     os.chdir(homedir)
     
+    
+def cd_with_args(args):
+    """
+    Change directory with arguments.
+
+    Handles the 'cd' command when arguments are provided.
+    - If args[0] == "..", goes back one directory.
+    - Otherwise, tries to change into the given path.
+
+    Parameters:
+        args (list): arguments passed to 'cd'
+    Returns:
+        None
+    """
+    if args[0] == "..":
+        os.chdir("..")
+    else:
+        if os.path.isdir(args[0]):
+            os.chdir(args[0])
+        else:
+            print(f"cd: no such file or directory: {args[0]}")
+    
+
 def ls():
     """
     List non-hidden files and directories in the current directory.
@@ -95,6 +118,7 @@ def ls():
     
     return items
     
+    
 def clear():
     """
     Clear the terminal screen.
@@ -105,6 +129,7 @@ def clear():
         None
     """
     os.system("clear")
+    
     
 def exit_shell():
     """
@@ -119,8 +144,43 @@ def exit_shell():
     """
     
     raise SystemExit(f"{Fore.GREEN}Exiting Shell. Goodbye!")
-    
 
+def mkdir_with_args(args):
+    """
+    Handle the 'mkdir' command with arguments.
+
+    Allows users to create a new directory at a specified path.
+    Supports both relative and absolute paths.
+
+    Parameters:
+        args (list): List of arguments passed to the 'mkdir' command.
+                     - args[0]: Name or path of the directory to create.
+
+    Returns:
+        None
+    """
+
+    # if relative path, join with current working directory
+    if not os.path.isabs(args[0]):
+        
+        # Getting new directory name, current working directory
+        # and joining them to create full path
+        new_dir = args[0]
+        cwd     = os.getcwd()
+        path    = os.path.join(cwd, new_dir)
+        
+    elif os.path.isabs(args[0]):
+        
+        # Getting the absolute path from argumen
+        path = args[0]
+        
+    # Creating the directory and handling errors
+    try:
+        os.mkdir(path)
+        print("Directory created at:", path)
+    except OSError as e:
+        print("Error:", e)
+    
 
 def print_cmd(cmd):
     """This function "cleans" off the command line, then prints
@@ -218,19 +278,40 @@ if __name__ == "__main__":
                 cmd_ = token[0]
                 #flag = token[1] if len(token) > 1 else None
                 args = token[1:]
-            
-            if cmd == "pwd" and len(args) == 0:
-                pwd_()
-            elif cmd == "cd" and len(args) == 0:
-                cd()
-            elif cmd == "ls" and len(args) == 0:
-                items = ls()
-                for item in items:
-                    print(item, end=" ")
-                print()
-            elif cmd == "clear" and len(args) == 0:
-                clear()
                 
+            # Searching for valid commands with no arguments
+            if cmd_ and len(args) == 0:
+            
+                # Printing current working directory
+                if cmd_ == "pwd":
+                    cwd_ = pwd_()
+                    print(cwd_)
+                   
+                # Changing to home directory 
+                elif cmd_ == "cd":
+                    cd()
+                    
+                # Listing non-hidden files and directories
+                elif cmd_ == "ls":
+                    items = ls()
+                    for item in items:
+                        print(item, end=" ")
+                    print()
+                    
+                # Clearing the terminal
+                elif cmd_ == "clear":
+                    clear()
+                
+            # Searching for valid commands with arguments
+            elif cmd_ and len(args) == 1:
+                
+                # Changing directory with arguments
+                if cmd_ == "cd":
+                    cd_with_args(args)
+                    
+                # Making directory with arguments
+                elif cmd_ == "mkdir":
+                    mkdir_with_args(args)
             
             ## Figure out what your executing like finding pipes and redirects
 
