@@ -408,6 +408,7 @@ def exit_shell():
     
     raise SystemExit(f"{Fore.GREEN}Exiting Shell. Goodbye!")
 
+
 def mkdir_with_args(args):
     """
     Handle the 'mkdir' command with arguments.
@@ -442,7 +443,6 @@ def mkdir_with_args(args):
         os.mkdir(path)
     except OSError as e:
         print("Error:", e)
-        
         
         
 def human_readable(size):
@@ -611,11 +611,11 @@ if __name__ == "__main__":
                 elif cmd_ == "mkdir":
                     mkdir_with_args(args)
                     
+                # Listing files and directories with arguments
                 elif cmd_ == "ls":
                     items = ls_with_args(args)
                     
-                    # If using -l or -al options, print in formatted columns
-                    # need to add -alh options as well when gets implemented.
+                    # If using -l , -la, or -lah options, print in formatted columns
                     if args[0] in ["-l", "-al", "-la", "-lh", "-hl", "-alh", "-ahl", "-lah", "-lha", "-hal", "-hla"]:
                         for item in items:
                             print(f"{item[0]:<10}{item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8}{item[5]:<12}{item[6]}")
