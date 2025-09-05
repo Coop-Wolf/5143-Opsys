@@ -13,6 +13,7 @@ import grp
 import stat
 from getch import Getch
 from colorama import init, Fore, Style
+import time
 from time import sleep
 import shutil
 
@@ -114,9 +115,231 @@ def ls():
             
         # Only print non-hidden files
         if not item.startswith('.'):
-            items.append(item)
+            
+            # Getting the full path of the item
+            full_path = os.path.join(os.getcwd(), item)
+            
+            # If item is a directory, print in blue
+            if os.path.isdir(full_path):
+                items.append(f"{Fore.BLUE}{item}{Style.RESET_ALL}")
+            
+            # If item is an executable file, print in green
+            elif os.access(full_path, os.X_OK):
+                items.append(f"{Fore.GREEN}{item}{Style.RESET_ALL}")
+                
+            # Otherwise, print normally
+            else:
+                items.append(item)
+                
+        # Sort the items alphabetically before returning
+        items.sort()
     
     return items
+
+
+def ls_with_args(args):
+    """
+    Handle the 'ls' command when arguments are provided.
+
+    Supports listing directory contents with various options:
+      - -a   Include hidden files
+      - -l   Long listing format with detailed file information
+      - -h   Human-readable file sizes (not fully implemented)
+    Options can be combined, e.g. "-al", "-lh", etc.
+
+    Parameters:
+        args (list): List of arguments passed to the 'ls' command.
+                     - args[0]: Option string (e.g., "-a", "-l", "-al", "-lh").
+
+    Returns:
+        None
+    """
+    
+    # List to hold directory contents
+    items = []
+    
+    # Using -h alone prints the same as no args
+    if args[0] == "-h":
+        for item in os.listdir():
+            if not item.startswith('.'):
+                
+                # Getting the full path of the item
+                full_path = os.path.join(os.getcwd(), item)
+                
+                # If item is a directory, print in blue
+                if os.path.isdir(full_path):
+                    items.append(f"{Fore.BLUE}{item}{Style.RESET_ALL}")
+                
+                # If item is an executable file, print in green
+                elif os.access(full_path, os.X_OK):
+                    items.append(f"{Fore.GREEN}{item}{Style.RESET_ALL}")
+                    
+                # Otherwise, print normally
+                else:
+                    items.append(item)
+                    
+        items.sort()        
+        return (items)
+            
+    # Using -a alone or with -h prints all files including hidden
+    elif args[0] == "-a" or args[0] == "ah" or args[0] == "ha":
+        
+        for item in os.listdir():
+            
+            # Getting the full path of the item
+            full_path = os.path.join(os.getcwd(), item)
+            
+            # If item is a directory, print in blue
+            if os.path.isdir(full_path):
+                items.append(f"{Fore.BLUE}{item}{Style.RESET_ALL}")
+            
+            # If item is an executable file, print in green
+            elif os.access(full_path, os.X_OK):
+                items.append(f"{Fore.GREEN}{item}{Style.RESET_ALL}")
+                
+            # Otherwise, print normally
+            else:
+                items.append(item)
+                
+        items.sort() 
+        return(items) 
+        
+    # Using -l alone
+    elif args[0] == "-l":
+        
+        total_size = 0
+        
+        for item in os.listdir():
+            if not item.startswith('.'):
+                file_info = os.stat(item)
+                total_size += file_info.st_blocks
+        
+        print("total", total_size)
+        
+        # Print details for each file
+        for item in os.listdir():
+            if not item.startswith('.'):
+                
+                # Get file info
+                full_path = os.path.join(os.getcwd(), item)
+                file_info = os.stat(full_path)
+
+                # Extract and format details
+                permissions = stat.filemode(file_info.st_mode)
+                links = file_info.st_nlink
+                owner = pwd.getpwuid(file_info.st_uid).pw_name
+                group = grp.getgrgid(file_info.st_gid).gr_name
+                size = file_info.st_size
+                mod_time = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
+
+                # Color the name
+                if os.path.isdir(full_path):
+                    name = Fore.BLUE + item + "/" + Style.RESET_ALL
+                elif os.access(full_path, os.X_OK):
+                    name = Fore.GREEN + item + Style.RESET_ALL
+                else:
+                    name = item
+
+                # Append as a list (one per file)
+                items.append([permissions, links, owner, group, size, mod_time, name])
+                
+        
+        return items
+         
+    # Using -al or -la prints all files in long format
+    elif args[0] == "-al" or args[0] == "-la":
+                
+        total_size = 0
+        
+        # Calculate total size of all files in directory
+        for item in os.listdir():
+            file_info = os.stat(item)
+            total_size += file_info.st_blocks
+        
+        print("total", total_size)
+        
+        # Print details for each file
+        for item in os.listdir():
+                
+            # Get file info
+            full_path = os.path.join(os.getcwd(), item)
+            file_info = os.stat(full_path)
+            
+            # Extract and format details
+            permissions = stat.filemode(file_info.st_mode)
+            links = file_info.st_nlink
+            owner = pwd.getpwuid(file_info.st_uid).pw_name
+            group = grp.getgrgid(file_info.st_gid).gr_name
+            size = file_info.st_size
+            mod_time = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
+
+            # Color the name
+            if os.path.isdir(full_path):
+                name = Fore.BLUE + item + "/" + Style.RESET_ALL
+            elif os.access(full_path, os.X_OK):
+                name = Fore.GREEN + item + Style.RESET_ALL
+            else:
+                name = item
+
+            # Append as a list (one per file)
+            items.append([permissions, links, owner, group, size, mod_time, name])
+                
+        
+        return items
+        
+    # Using -lh or -hl prints files in long format with human readable sizes
+    elif args[0] == "-lh" or args[0] == "-hl":
+        
+        total_size = 0
+        
+        # Calculate total size of all non-hidden files in directory
+        
+        
+        #THIS NEEDS TO BE CONVERTED TO HUMAN READABLE##################$#$#$#
+        for item in os.listdir():
+            if not item.startswith('.'):
+                file_info = os.stat(item)
+                total_size += file_info.st_blocks
+        
+        print("total", human_readable(total_size))
+        
+        # Print details for each file
+        for item in os.listdir():
+            if not item.startswith('.'):
+                
+                # Get file info
+                full_path = os.path.join(os.getcwd(), item)
+                file_info = os.stat(full_path)
+
+                # Extract and format details
+                permissions = stat.filemode(file_info.st_mode)
+                links = file_info.st_nlink
+                owner = pwd.getpwuid(file_info.st_uid).pw_name
+                group = grp.getgrgid(file_info.st_gid).gr_name
+                size = human_readable(file_info.st_size)
+                mod_time = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
+
+                # Color the name
+                if os.path.isdir(full_path):
+                    name = Fore.BLUE + item + "/" + Style.RESET_ALL
+                elif os.access(full_path, os.X_OK):
+                    name = Fore.GREEN + item + Style.RESET_ALL
+                else:
+                    name = item
+
+                # Append as a list (one per file)
+                items.append([permissions, links, owner, group, size, mod_time, name])
+                
+        
+        return items
+        
+    # Using -alh or any combo of those three prints all files in long format with human readable sizes
+    #elif args[0] == "-alh" or args[0] == "-ahl" or args[0] == "-lah" or args[0] == "-lha" or args[0] == "-hal" or args[0] == "-hla":
+        
+    # Invalid option
+    else:
+        print("ls: invalid option.")
+        print("Try 'ls --help' for more information.")
     
     
 def clear():
@@ -160,8 +383,13 @@ def mkdir_with_args(args):
         None
     """
 
+    if os.path.isabs(args[0]):
+        
+        # Getting the absolute path from argumen
+        path = args[0]
+
     # if relative path, join with current working directory
-    if not os.path.isabs(args[0]):
+    elif not os.path.isabs(args[0]):
         
         # Getting new directory name, current working directory
         # and joining them to create full path
@@ -169,17 +397,40 @@ def mkdir_with_args(args):
         cwd     = os.getcwd()
         path    = os.path.join(cwd, new_dir)
         
-    elif os.path.isabs(args[0]):
-        
-        # Getting the absolute path from argumen
-        path = args[0]
-        
     # Creating the directory and handling errors
     try:
         os.mkdir(path)
-        print("Directory created at:", path)
     except OSError as e:
         print("Error:", e)
+        
+        
+        
+def human_readable(size):
+    """
+    Convert a file size in bytes to a human-readable format.
+
+    This function takes a file size in bytes and converts it to a more
+    human-friendly format (e.g., K, M, G) with two decimal places.
+
+    Parameters:
+        size (int): The file size in bytes.
+
+    Returns:
+        str: The file size in a human-readable format.
+    """
+    
+    if size == 0:
+        return "0B"
+    
+    units = ["B", "K", "M", "G"]
+    i = 0
+    size = float(size)
+    
+    while size >= 1024 and i < len(units) - 1:
+        size /= 1024
+        i += 1
+    
+    return f"{size:.1f}{units[i]}"
     
 
 def print_cmd(cmd):
