@@ -136,4 +136,4 @@ if __name__ == "__main__":
         else:
             cmd += char 
             # add typed character to our "cmd"
-            #print_cmd(cmd)  # print the cmd out
+            print_cmd(cmd)  # print the cmd out
