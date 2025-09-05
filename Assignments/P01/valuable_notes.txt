@@ -37,3 +37,22 @@ Errors:
 Added Features:
     left and right arrows
     colored info when doing ls depending on what type it is
+
+
+
+
+
+Issues:
+    Running into problems with the history.txt file
+    Been running the shell py in wsl on path /home/coope/OS/
+    This is where ive cloned my repository.
+    Doing dev through vs code and running commits that sync changes to wsl directory
+    However when adding the history.txt file and trying to write out to it.
+    that file its writing out to is scored on the wsl directory only and needs to be
+    pushed to the github repo. When trying to do this i have to entry my username and password
+    but github has made changes where the password has to be a token. I created the token thorugh dev
+    settings in github but showed to be invalid when trying to enter in when prompted for password in order
+    to push the history.txt. 
+    Not been able to figure that out. 
+    Right now im going to run the shell through vs code and save the history.txt file to the correct place where
+    it copies directory and I don't have to push.

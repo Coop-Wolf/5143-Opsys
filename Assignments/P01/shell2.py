@@ -362,6 +362,38 @@ def ls_with_args(args):
         print("Try 'ls --help' for more information.")
     
     
+# This needs to return a list of commands not print them    
+def history():
+    """
+    Display the command history from the history.txt file.
+
+    This function reads the history.txt file and prints each command
+    stored in it. If the file does not exist, it informs the user.
+
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    
+    # Get the absolute path of the folder where the script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Build the full path to history.txt inside your repo
+    history_file = os.path.join(script_dir, "history.txt")
+
+    command_number = 1
+
+    # Check if history file exists
+    if os.path.exists(history_file):
+        with open(history_file, "r") as file:
+            commands = file.readlines()
+            for command in commands:
+                print(f"{command_number} {command.strip()}")
+                command_number += 1
+    else:
+        print("No history available.")
+    
 def clear():
     """
     Clear the terminal screen.
@@ -588,6 +620,9 @@ if __name__ == "__main__":
                 # Clearing the terminal
                 elif cmd_ == "clear":
                     clear()
+                    
+                elif cmd_ == "history":
+                    history()
                 
             # Searching for valid commands with arguments
             elif cmd_ and len(args) == 1:
