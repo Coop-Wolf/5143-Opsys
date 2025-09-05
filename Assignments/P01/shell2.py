@@ -504,16 +504,18 @@ if __name__ == "__main__":
     while True:  # loop forever
 
         # read a single character, don't print
-        # Increment cursor position
-        char = getch()  # read a character (but don't print)
-        cursor_pos += 1
+        char = getch()
 
-        if char == "\x03" or cmd == "exit":  # ctrl-c
+        # Exit shell on ctrl-c or 'exit' command
+        if char == "\x03" or cmd == "exit":
             exit_shell()
 
-        elif char == "\x7f":  # back space pressed
-            cmd = cmd[:-1]
-            print_cmd(cmd)
+        # If back space pressed, remove the character to the left of the cursor
+        elif char == "\x7f":
+            if cursor_pos > 0:
+                cmd = cmd[:cursor_pos-1] + cmd[cursor_pos:]
+                cursor_pos -= 1
+            print_cmd(cmd, cursor_pos)
 
         elif char in "\x1b":  # arrow key pressed
             null = getch()  # waste a character
@@ -616,7 +618,14 @@ if __name__ == "__main__":
             cmd = ""  # reset command to nothing (since we just executed it)
 
             print_cmd(cmd)  # now print empty cmd prompt
+            
+        # Any other character that is not handled above
         else:
+            # Concatenate the character to cmd
             cmd += char 
+            
+            # move cursor position to the right
+            cursor_pos += 1
+            
             # add typed character to our "cmd"
-            print_cmd(cmd)  # print the cmd out
+            print_cmd(cmd, cursor_pos)
