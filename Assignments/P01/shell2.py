@@ -503,7 +503,10 @@ if __name__ == "__main__":
 
     while True:  # loop forever
 
+        # read a single character, don't print
+        # Increment cursor position
         char = getch()  # read a character (but don't print)
+        cursor_pos += 1
 
         if char == "\x03" or cmd == "exit":  # ctrl-c
             exit_shell()
