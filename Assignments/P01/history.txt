@@ -1,0 +1,18 @@
+ls
+pwd
+cd
+cd 5143-Opsys/Assignments
+cd 5143-Opsys
+ls
+pwd
+cd workspace
+ls
+cd java
+ls
+cd ..
+ls
+cd
+ls
+cd nvm
+ls
+cd
