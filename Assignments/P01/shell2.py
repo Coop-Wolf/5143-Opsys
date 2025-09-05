@@ -298,7 +298,7 @@ def ls_with_args(args):
         for item in os.listdir():
             if not item.startswith('.'):
                 file_info = os.stat(item)
-                total_size += file_info.st_blocks
+                total_size += file_info.st_size
         
         print("total", human_readable(total_size))
         
@@ -342,7 +342,7 @@ def ls_with_args(args):
         for item in os.listdir():
             if not item.startswith('.'):
                 file_info = os.stat(item)
-                total_size += file_info.st_blocks
+                total_size += file_info.st_size
         
         print("total", human_readable(total_size))
         
@@ -618,7 +618,7 @@ if __name__ == "__main__":
                     # If using -l , -la, or -lah options, print in formatted columns
                     if args[0] in ["-l", "-al", "-la", "-lh", "-hl", "-alh", "-ahl", "-lah", "-lha", "-hal", "-hla"]:
                         for item in items:
-                            print(f"{item[0]:<10}{item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8}{item[5]:<12}{item[6]}")
+                            print(f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}")
                     
                     # Otherwise, just print the items
                     else:
