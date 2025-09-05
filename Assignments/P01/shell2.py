@@ -23,7 +23,19 @@ getch = Getch()  # create instance of our getch class
 prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
 
 
-# issues in here. 
+
+def pwd_():
+    """
+    Print the current working directory.
+    This function retrieves and prints the absolute path of the current working directory.
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    
+    # This should return instead of print
+    print(os.getcwd())
 
 
 def print_cmd(cmd):
@@ -103,14 +115,21 @@ if __name__ == "__main__":
             print_cmd(cmd)  # print the command (again)
 
         elif char in "\r":  # return pressed
+            print()
 
-            # This 'elif' simulates something "happening" after pressing return
-            cmd = "Executing command...."  #
-            print_cmd(cmd)
-            sleep(1)
+            #sleep(1)
 
             ## YOUR CODE HERE
             ## Parse the command
+            token = char.split()
+            cmd = token[0]
+            #flag = token[1] if len(token) > 1 else None
+            args = token[1:]
+            
+            if cmd == "pwd":
+                pwd_()
+                
+            
             ## Figure out what your executing like finding pipes and redirects
 
             cmd = ""  # reset command to nothing (since we just executed it)
