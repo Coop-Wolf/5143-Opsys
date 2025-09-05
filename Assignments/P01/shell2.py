@@ -634,7 +634,7 @@ if __name__ == "__main__":
             # Build the full path to history.txt in the same folder
             history_file = os.path.join(script_dir, "history.txt")
             
-            with open("history.txt", "a") as file:
+            with open(history_file, "a") as file:
                 file.write(cmd + "\n")
             
 
