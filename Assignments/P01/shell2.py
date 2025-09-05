@@ -20,7 +20,6 @@ import shutil
 ##################################################################################
 
 getch = Getch()  # create instance of our getch class
-prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
 
 
 def WelcomeMessage():
@@ -85,16 +84,16 @@ def ls():
     """
     
     # List to hold directory contents
-    l_item = []
+    items = []
     
     # This should return the list instead of print
     for item in os.listdir():
             
         # Only print non-hidden files
         if not item.startswith('.'):
-            l_item.append(item)
+            items.append(item)
     
-    return l_item
+    return items
     
 def clear():
     """
@@ -134,6 +133,9 @@ def print_cmd(cmd):
     padding = " " * width
     sys.stdout.write("\r" + padding)
     sys.stdout.write("\r")
+    
+    # Update prompt with current working directory
+    prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
 
     # Print prompt + cleaned command
     clean_cmd = cmd.replace("\r", "")
@@ -225,6 +227,7 @@ if __name__ == "__main__":
                 items = ls()
                 for item in items:
                     print(item, end=" ")
+                print()
             elif cmd == "clear" and len(args) == 0:
                 clear()
                 
