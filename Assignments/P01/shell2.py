@@ -16,6 +16,7 @@ from colorama import init, Fore, Style
 import time
 from time import sleep
 import shutil
+import subprocess
 
 ##################################################################################
 ##################################################################################
@@ -384,7 +385,7 @@ def exit_shell():
     Returns:
         None
     """
-    
+
     raise SystemExit(f"{Fore.GREEN}Exiting Shell. Goodbye!")
 
 
@@ -457,6 +458,7 @@ def human_readable(size):
     # Otherwise, show with one decimal place and appropriate unit
     else:
         return f"{size:.1f}{units[i-1]}"
+
     
 
 def print_cmd(cmd, cursor_pos=0):
@@ -631,9 +633,10 @@ if __name__ == "__main__":
             # Get the absolute path of the folder where the script is located
             script_dir = os.path.dirname(os.path.abspath(__file__))
 
-            # Build the full path to history.txt in the same folder
+            # Build the full path to history.txt inside your repo
             history_file = os.path.join(script_dir, "history.txt")
-            
+
+            # Append command to the file
             with open(history_file, "a") as file:
                 file.write(cmd + "\n")
             
