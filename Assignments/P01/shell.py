@@ -25,12 +25,19 @@ Date:    9/1/2024
 """
 
 # Need comment for imports
-import os  
+import os 
+import sys 
 import pwd
 import grp
 import stat
+from getch import Getch
 from colorama import init, Fore, Style
 
+
+# The getch class allows us to read single characters from user input
+# without waiting for the enter key to be pressed. This is useful for
+# implementing features like command history navigation using arrow keys.
+getch = Getch()
 
 
 def WelcomeMessage():
@@ -534,118 +541,121 @@ def clear_help():
 
 
 ########################### Beginning of the shell program ###########################
+if __name__ == "__main__":
 
-# Allows for colored text in terminal and resets color after each print
-init(autoreset=True)
+    # Allows for colored text in terminal and resets color after each print
+    init(autoreset=True)
 
-# Print welcome message
-WelcomeMessage()
+    # Print welcome message
+    WelcomeMessage()
 
-# Loop to continuously prompt for user input
-# can remove this true condition with while command != "exit" or "quit"
-while True:
-    
-    # Allowed list of commands
-    cmd_list = ["clear", "ls", "mkdir", "cd", "pwd", "cp", "mv", "rm", "cat", "head", "tail", "grep", "wc", "chmod", "history", "!x", "ll", "more", "less"]
-    
-    # Prompt for user input  
-    command = input(f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ ")
-    
-    # Split the command into tokens and parse
-    token = command.split()
-    cmd = token[0]
-    #flag = token[1] if len(token) > 1 else None
-    args = token[1:]
-    
-    # If user types 'exit', break the loop and exit the shell
-    if command == "exit":
-        exit_shell()
+    # Loop to continuously prompt for user input
+    # can remove this true condition with while command != "exit" or "quit"
+    while True:
         
-    # If user types 'clear', clear the terminal
-    elif command == "clear":
-        clear()
+        # Allowed list of commands
+        cmd_list = ["clear", "ls", "mkdir", "cd", "pwd", "cp", "mv", "rm", "cat", "head", "tail", "grep", "wc", "chmod", "history", "!x", "ll", "more", "less"]
         
-    # If users tyles invalid command, print error message
-    elif cmd not in cmd_list:
-        print(f"{cmd}: command not found")
+        prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
         
-    else:
-    
-        # If command has no arguments
-        if args == []:
-            Command_With_No_Agrs(cmd)
-    
-        # THIS NEEDS TO BE A FUNCTION
-        # Running commands that have arguments
-        elif args != [] and args[0] != "--help":
+        # Prompt for user input  
+        command = input(prompt)
         
-            # change directory command with arguments
-            if cmd == "cd" and len(args) == 1:
-                cd_with_args(args)
-                
-            # Make Directory
-            elif cmd == "mkdir" and len(args) == 1:
-                mkdir_with_args(args)
-                
-            # List Directory
-            elif cmd == "ls" and len(args) == 1:
-                ls_with_args(args) 
-            #elif cmd == "cp" and len(args) == 2:
-                #cp_with_args(args)
-            #elif cmd == "mv" and len(args) == 2:
-                #mv_with_args(args)
-            #elif cmd == "rm" and len(args) == 1:
-                #rm_with_args(args)
-            #elif cmd == "cat" and len(args) == 1:
-                #cat_with_args(args)
-            #elif cmd == "head" and len(args) == 1:
-                #head_with_args(args)
-            #elif cmd == "tail" and len(args) == 1:
-                #tail_with_args(args)
-            #elif cmd == "grep" and len(args) == 2:
-                #grep_with_args(args)
-            #elif cmd == "wc" and len(args) == 1:
-                #wc_with_args(args)
-            #elif cmd == "chmod" and len(args) == 2:
-                #chmod_with_args(args)
+        # Split the command into tokens and parse
+        token = command.split()
+        cmd = token[0]
+        #flag = token[1] if len(token) > 1 else None
+        args = token[1:]
+        
+        # If user types 'exit', break the loop and exit the shell
+        if command == "exit":
+            exit_shell()
             
-            else:
-                print("Command not recognized or not yet implemented.")
-    
-    
-        # Printing help messages for each command
-        elif args and args[0] == "--help" and len(args) == 1:
-            if cmd == "ls":
-                ls_help()
-            elif cmd == "mkdir":
-                mkdir_help()
-            elif cmd == "cd":
-                cd_help()
-            elif cmd == "pwd":
-                pwd_help()
-            elif cmd == "cp":
-                cp_help()
-            elif cmd == "mv":
-                mv_help()
-            elif cmd == "rm":
-                rm_help()
-            elif cmd == "cat":
-                cat_help()
-            elif cmd == "head":
-                head_help()
-            elif cmd == "tail":
-                tail_help()
-            elif cmd == "grep":
-                grep_help()
-            elif cmd == "wc":
-                wc_help()
-            elif cmd == "chmod":
-                chmod_help()
-            elif cmd == "history":
-                history_help()
-            elif cmd == "!x":
-                notx_help()
-            elif cmd == "clear":
-                clear_help()
-            else:
-                print("Command not recognized.")
+        # If user types 'clear', clear the terminal
+        elif command == "clear":
+            clear()
+            
+        # If users tyles invalid command, print error message
+        elif cmd not in cmd_list:
+            print(f"{cmd}: command not found")
+            
+        else:
+        
+            # If command has no arguments
+            if args == []:
+                Command_With_No_Agrs(cmd)
+        
+            # THIS NEEDS TO BE A FUNCTION
+            # Running commands that have arguments
+            elif args != [] and args[0] != "--help":
+            
+                # change directory command with arguments
+                if cmd == "cd" and len(args) == 1:
+                    cd_with_args(args)
+                    
+                # Make Directory
+                elif cmd == "mkdir" and len(args) == 1:
+                    mkdir_with_args(args)
+                    
+                # List Directory
+                elif cmd == "ls" and len(args) == 1:
+                    ls_with_args(args) 
+                #elif cmd == "cp" and len(args) == 2:
+                    #cp_with_args(args)
+                #elif cmd == "mv" and len(args) == 2:
+                    #mv_with_args(args)
+                #elif cmd == "rm" and len(args) == 1:
+                    #rm_with_args(args)
+                #elif cmd == "cat" and len(args) == 1:
+                    #cat_with_args(args)
+                #elif cmd == "head" and len(args) == 1:
+                    #head_with_args(args)
+                #elif cmd == "tail" and len(args) == 1:
+                    #tail_with_args(args)
+                #elif cmd == "grep" and len(args) == 2:
+                    #grep_with_args(args)
+                #elif cmd == "wc" and len(args) == 1:
+                    #wc_with_args(args)
+                #elif cmd == "chmod" and len(args) == 2:
+                    #chmod_with_args(args)
+                
+                else:
+                    print("Command not recognized or not yet implemented.")
+        
+        
+            # Printing help messages for each command
+            elif args and args[0] == "--help" and len(args) == 1:
+                if cmd == "ls":
+                    ls_help()
+                elif cmd == "mkdir":
+                    mkdir_help()
+                elif cmd == "cd":
+                    cd_help()
+                elif cmd == "pwd":
+                    pwd_help()
+                elif cmd == "cp":
+                    cp_help()
+                elif cmd == "mv":
+                    mv_help()
+                elif cmd == "rm":
+                    rm_help()
+                elif cmd == "cat":
+                    cat_help()
+                elif cmd == "head":
+                    head_help()
+                elif cmd == "tail":
+                    tail_help()
+                elif cmd == "grep":
+                    grep_help()
+                elif cmd == "wc":
+                    wc_help()
+                elif cmd == "chmod":
+                    chmod_help()
+                elif cmd == "history":
+                    history_help()
+                elif cmd == "!x":
+                    notx_help()
+                elif cmd == "clear":
+                    clear_help()
+                else:
+                    print("Command not recognized.")
