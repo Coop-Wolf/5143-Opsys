@@ -460,18 +460,25 @@ def human_readable(size):
         str: The file size in a human-readable format.
     """
     
-    if size == 0:
-        return "0B"
-    
-    units = ["B", "K", "M", "G"]
-    i = 0
+    # Convert size to float for division
     size = float(size)
     
-    while size >= 1024 and i < len(units) - 1:
+    # Define units for conversion
+    units = ["K", "M", "G"]
+    i = 0
+
+    # Loop to convert size to appropriate unit
+    while size >= 1024 and i < len(units):
         size /= 1024
         i += 1
+
+    # If size is less than 1K, show in bytes without decimal
+    if i == 0:
+        return f"{int(size)}"
     
-    return f"{size:.1f}{units[i]}"
+    # Otherwise, show with one decimal place and appropriate unit
+    else:
+        return f"{size:.1f}{units[i-1]}"
     
 
 def print_cmd(cmd):
@@ -612,7 +619,7 @@ if __name__ == "__main__":
                     # need to add -alh options as well when gets implemented.
                     if args[0] in ["-l", "-al", "-la", "-lh", "-hl"]:
                         for item in items:
-                            print(f"{item[0]:<10} {item[1]:<3} {item[2]:<8} {item[3]:<8} {item[4]:>8} {item[5]:<12} {item[6]}")
+                            print(f"{item[0]:<10}{item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8}{item[5]:<12}{item[6]}")
                     
                     # Otherwise, just print the items
                     else:
