@@ -616,13 +616,13 @@ if __name__ == "__main__":
             ## Figure out what your executing like finding pipes and redirects
 
             cmd = ""  # reset command to nothing (since we just executed it)
-
+            
             print_cmd(cmd)  # now print empty cmd prompt
             
         # Any other character that is not handled above
         else:
-            # Concatenate the character to cmd
-            cmd += char 
+            # Concatenate the typed character at the cursor position
+            cmd = cmd[:cursor_pos] + char + cmd[cursor_pos:]
             
             # move cursor position to the right
             cursor_pos += 1
