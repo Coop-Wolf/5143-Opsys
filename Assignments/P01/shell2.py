@@ -243,7 +243,8 @@ def ls_with_args(args):
                 # Append as a list (one per file)
                 items.append([permissions, links, owner, group, size, mod_time, name])
                 
-        
+        # Sort items by filename
+        items = sorted(items, key=lambda x: x[-1].lower())
         return items
          
     # Using -al or -la prints all files in long format
@@ -284,7 +285,8 @@ def ls_with_args(args):
             # Append as a list (one per file)
             items.append([permissions, links, owner, group, size, mod_time, name])
                 
-        
+        # Sort items by filename
+        items = sorted(items, key=lambda x: x[-1].lower())
         return items
         
     # Using -lh or -hl prints files in long format with human readable sizes
@@ -293,9 +295,6 @@ def ls_with_args(args):
         total_size = 0
         
         # Calculate total size of all non-hidden files in directory
-        
-        
-        #THIS NEEDS TO BE CONVERTED TO HUMAN READABLE##################$#$#$#
         for item in os.listdir():
             if not item.startswith('.'):
                 file_info = os.stat(item)
@@ -330,11 +329,53 @@ def ls_with_args(args):
                 # Append as a list (one per file)
                 items.append([permissions, links, owner, group, size, mod_time, name])
                 
-        
+        # Sort items by filename
+        items = sorted(items, key=lambda x: x[-1].lower())
         return items
         
     # Using -alh or any combo of those three prints all files in long format with human readable sizes
-    #elif args[0] == "-alh" or args[0] == "-ahl" or args[0] == "-lah" or args[0] == "-lha" or args[0] == "-hal" or args[0] == "-hla":
+    elif args[0] == "-alh" or args[0] == "-ahl" or args[0] == "-lah" or args[0] == "-lha" or args[0] == "-hal" or args[0] == "-hla":
+        
+        total_size = 0
+        
+        # Calculate total size of all non-hidden files in directory
+        for item in os.listdir():
+            if not item.startswith('.'):
+                file_info = os.stat(item)
+                total_size += file_info.st_blocks
+        
+        print("total", human_readable(total_size))
+        
+        # Print details for each file
+        for item in os.listdir():
+            if not item.startswith('.'):
+                
+                # Get file info
+                full_path = os.path.join(os.getcwd(), item)
+                file_info = os.stat(full_path)
+
+                # Extract and format details
+                permissions = stat.filemode(file_info.st_mode)
+                links = file_info.st_nlink
+                owner = pwd.getpwuid(file_info.st_uid).pw_name
+                group = grp.getgrgid(file_info.st_gid).gr_name
+                size = human_readable(file_info.st_size)
+                mod_time = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
+
+                # Color the name depending on type
+                if os.path.isdir(full_path):
+                    name = Fore.BLUE + item + "/" + Style.RESET_ALL
+                elif os.access(full_path, os.X_OK):
+                    name = Fore.GREEN + item + Style.RESET_ALL
+                else:
+                    name = item
+
+                # Append as a list (one per file)
+                items.append([permissions, links, owner, group, size, mod_time, name])
+                
+        # Sort items by filename
+        items = sorted(items, key=lambda x: x[-1].lower())
+        return items
         
     # Invalid option
     else:
@@ -563,6 +604,21 @@ if __name__ == "__main__":
                 # Making directory with arguments
                 elif cmd_ == "mkdir":
                     mkdir_with_args(args)
+                    
+                elif cmd_ == "ls":
+                    items = ls_with_args(args)
+                    
+                    # If using -l or -al options, print in formatted columns
+                    # need to add -alh options as well when gets implemented.
+                    if args[0] in ["-l", "-al", "-la", "-lh", "-hl"]:
+                        for item in items:
+                            print(f"{item[0]:<10} {item[1]:<3} {item[2]:<8} {item[3]:<8} {item[4]:>8} {item[5]:<12} {item[6]}")
+                    
+                    # Otherwise, just print the items
+                    else:
+                        for item in items:
+                            print(item, end=" ")
+                        print()
             
             ## Figure out what your executing like finding pipes and redirects
 
