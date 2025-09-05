@@ -121,8 +121,8 @@ if __name__ == "__main__":
 
             ## YOUR CODE HERE
             ## Parse the command
-            token = char.split()
-            cmd = token[0]
+            token = cmd.split()
+            cmd_ = token[0]
             #flag = token[1] if len(token) > 1 else None
             args = token[1:]
             
