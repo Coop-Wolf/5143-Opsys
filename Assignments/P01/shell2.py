@@ -615,12 +615,15 @@ if __name__ == "__main__":
                         
                         
             # Figure out what your executing like finding pipes and redirects
-            if cmd.contains("|"):
+            if "|" in cmd:
                 print("Pipes not implemented yet.")
-            if cmd.contains(">"):
+
+            if ">" in cmd:
                 print("Redirects not implemented yet.")
-            if cmd.contains("<"):
+
+            if "<" in cmd:
                 print("Redirects not implemented yet.")
+
             
             # write out the command to the history file
             # so you can access it later with the up/down arrows
