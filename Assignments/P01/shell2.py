@@ -32,7 +32,7 @@ def print_cmd(cmd):
     """
     
     
-    print(f"\r{prompt} {cmd} ", end="", flush=True)
+    print(f"{prompt}{cmd}", end="", flush=True)
     # space of 80 chars longer commands may need to have a longer space
     # set padding to width of terminal
       #padding = " " * 80
