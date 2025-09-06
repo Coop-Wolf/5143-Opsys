@@ -94,3 +94,6 @@ ls
 history
 ls
 cd P01
+history
+cd Assignments
+!202

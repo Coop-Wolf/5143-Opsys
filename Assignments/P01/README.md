@@ -4,8 +4,8 @@
 5143 Shell Project
 Group Members:
 - Tim Haxton
+- Harika Vemulapalli
 - Cooper Wolf
-- Person [3]
 
 ## Overview:
 This project implements a basic shell in Python that supports a variety of commands.
@@ -19,8 +19,8 @@ Run the `shell.py` file and use the following commands...
 |-----------------------|-----------------------------------------------------|----------|
 | `ls`                  | List files and directories                          | Cooper   |
 | `pwd`                 | Print working directory                             | Cooper   |
-| `ls -a`               | List all files, including hidden ones.              |          |
-| `ls -l`               | Long listing format.                                |          |
+| `ls -a`               | List all files, including hidden ones.              | Cooper   |
+| `ls -l`               | Long listing format.                                | Cooper   |
 | `ls -h`               | Human-readable file sizes.                          |          |
 | `mkdir`               | Create a directory.                                 | Cooper   |
 | `cd directory`        | Change to a named directory.                        | Cooper   |
@@ -35,8 +35,8 @@ Run the `shell.py` file and use the following commands...
 | `wc -l`               | Count lines in a file.                              |          |
 | `wc -w`               | Count words in a file.                              |          |
 | `chmod xxx`           | Change file permissions.                            |          |
-| `history`             | Show previously used commands.                      |          |
-| `!x`                  | Re-run command number *x* from history.             |          |
+| `history`             | Show previously used commands.                      | Cooper   |
+| `!x`                  | Re-run command number *x* from history.             | Cooper   |
 | `exit`                | Exits the shell.                                    | Cooper   |
 | `more`                |                                                     |          |
 | `less`                |                                                     |          |

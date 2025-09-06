@@ -14,7 +14,7 @@ wc without params. words lines and characters.
 
 chmod can do system call.
 
-have to keep a history that survives when shell detailed
+have to keep a history that survives when shell detailed [CHECK]
     - history has line numbers
     - have a history.txt file that reads it in and loads into list.
     - append command to the list and auto write out so if shell breaks all those previous commands are in there
@@ -29,8 +29,11 @@ rich does colors tabular data.
 
 
 
-Errors:
+Errors (bugs):
     ls isn't printing the correct total: size.
+    up and down arrows aren't exactly correct
+        going up 2, then going down 1 will
+        display one command up instead of goind down
 
 
 
@@ -39,7 +42,19 @@ Added Features:
     colored info when doing ls depending on what type it is
 
 
+Commands that work correctly:
+    history
+    mkdir
+    cd (with or without arguments)
+    pwd
+    ls -a
+    ls -l
+    ls -al
+    exit
+    !x
 
+
+Need to do error testing on all commands to make sure errors are handled properly
 
 
 Issues:

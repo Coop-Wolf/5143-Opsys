@@ -42,7 +42,7 @@ def WelcomeMessage():
     print(f"{Fore.GREEN}To see avaiable commands, type 'help' [Need to implement help command].")
     print(f"{Fore.GREEN}Type '<command> --help' for information on a specific command.")
     print(f"{Fore.GREEN}Type 'exit' or ctrl + c to quit.")
-    print(f"{Fore.GREEN}Designed and implemented by Tim Haxton, Person 3, and Cooper Wolf.")
+    print(f"{Fore.GREEN}Designed and implemented by Tim Haxton, Harika Vemulapalli, and Cooper Wolf.")
     print(f"{Fore.GREEN}Don't steal our code, we'll sue.")
     print("---------------------------------------------------------------------")
     print()
@@ -746,7 +746,7 @@ if __name__ == "__main__":
                     
                 # Command wasn't found    
                 else:
-                    print(f"Command at line {cmd[1:]} could not be found.")
+                    print(f"Line {cmd[1:]} does not exist.")
             
             ## Parse the command
             token = cmd.split()
