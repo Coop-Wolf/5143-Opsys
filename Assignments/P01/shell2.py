@@ -15,8 +15,7 @@ from getch import Getch
 from colorama import init, Fore, Style
 import time
 from time import sleep
-import shutil
-import subprocess
+import re
 
 ##################################################################################
 ##################################################################################
@@ -535,6 +534,28 @@ def human_readable(size):
         return f"{size:.1f}{units[i-1]}"
 
 
+def visible_length(s):
+    '''Helper function for print_cmd. This is needed to bring the terminal cursor to the correct
+    position. Previously. it was offset by the length of ({Fore.CYAN}{Style.RESET_ALL}). So this
+    funciton removes that from the prompt so the cursor can be in the correct position.
+    '''
+    
+    # Step by step:
+    # \x1b         -> The escape character signaling the start of an ANSI sequence
+    # \[           -> Matches the literal '[' that follows the escape character
+    # [0-9;]*      -> Matches any digits or semicolons (e.g., 36, 1;32) zero or more times
+    # m            -> Matches the literal 'm' at the end of the ANSI code
+    # Together: \x1b\[[0-9;]*m matches things like:
+    #    \x1b[36m    -> set cyan text
+    #    \x1b[0m     -> reset text style/color
+    #    \x1b[1;32m  -> bold green text
+
+    # re.compile() -> Compiles this regex pattern for reuse
+    # ansi_escape.sub('', s) -> Removes all ANSI sequences from the string
+    # len(...) -> Counts only the visible characters, ignoring color codes
+    ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
+    return len(ansi_escape.sub('', s))
+
 def print_cmd(cmd, cursor_pos=0):
     """This function "cleans" off the command line, then prints
     whatever cmd that is passed to it to the bottom of the terminal.
@@ -574,7 +595,7 @@ def print_cmd(cmd, cursor_pos=0):
 
     # Move cursor to correct position
     sys.stdout.write("\r")                               # go to start
-    sys.stdout.write(f"\033[{len(prompt) + cursor_pos}C")  # move cursor to position
+    sys.stdout.write(f"\033[{visible_length(prompt) + cursor_pos}C")  # move cursor to position
     
     ##################################################################################
     
