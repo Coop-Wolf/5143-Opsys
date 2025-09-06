@@ -446,11 +446,11 @@ def cmd_from_history(index):
     h_cmds = get_history_rev() or []
     
     # Reverse list so
-    if h_cmd:
-        h_cmd.reverse()
+    if h_cmds:
+        h_cmds.reverse()
     
     # Geting history commands
-    if 0 <= index < len(h_cmds) > index:
+    if 0 <= index < len(h_cmds):
     
         # Returning cmd at given index
         return h_cmds[index].strip()

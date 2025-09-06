@@ -70,3 +70,7 @@ ls
 history
 pwd
 history
+ls
+pwd
+history
+ls
