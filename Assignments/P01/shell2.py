@@ -424,10 +424,11 @@ def get_history():
             
             for item in h_cmds:
                 item.strip()
+                print(item)
             
             # Return list of all commands in history in reverse order
             print(h_cmds.reverse())
-            return h_cmds.reverse()
+            return h_cmds
             
     else:
         # History file doesn't exist
