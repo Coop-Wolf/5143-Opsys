@@ -394,6 +394,39 @@ def history():
     else:
         print("No history available.")
     
+    
+def get_history():
+    """
+    Opens history text file and returns the contents.
+
+    This function retrieves the previous command from the history file
+    and returns it. If there is no previous command, it returns None.
+
+    Parameters:
+        None
+    Returns:
+        List of all commands in history file.
+    """
+    
+    # Get the absolute path of the folder where the script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Build the full path to history.txt inside your repo
+    history_file = os.path.join(script_dir, "history.txt")
+
+    # Check if history file exists
+    if os.path.exists(history_file):
+        with open(history_file, "r") as file:
+            h_cmds = file.readlines()
+            
+            # Return list of all commands in history in reverse order
+            return h_cmds.reverse()
+            
+    else:
+        # History file doesn't exist
+        return None
+    
+    
 def clear():
     """
     Clear the terminal screen.
@@ -491,7 +524,6 @@ def human_readable(size):
     else:
         return f"{size:.1f}{units[i-1]}"
 
-    
 
 def print_cmd(cmd, cursor_pos=0):
     """This function "cleans" off the command line, then prints
@@ -533,9 +565,13 @@ if __name__ == "__main__":
     # For handling left/right arrow keys
     cursor_pos = 0
 
+
     print_cmd(cmd)  # print to terminal
 
     while True:  # loop forever
+
+        # For handling up/down arrow keys
+        history_index = 0
 
         # read a single character, don't print
         char = getch()
@@ -556,20 +592,46 @@ if __name__ == "__main__":
             direction = getch()  # grab the direction
 
             if direction in "A":  # up arrow pressed
-                # get the PREVIOUS command from your history (if there is one)
-                # prints out 'up' then erases it (just to show something)
-                cmd += "\u2191"
-                print_cmd(cmd)
-                sleep(0.3)
-                # cmd = cmd[:-1]
+                
+                
+                # Get list of history commands
+                if get_history() and history_index < len(get_history()):
+                    
+                    # Store history commands in list
+                    h_cmd = get_history()
+                    
+                    # Get the previous command from history depending on
+                    # history_index and increment index
+                    cmd = h_cmd[history_index].strip()
+                    history_index += 1
+                    
+                # If at the end of history, stay there
+                elif history_index >= len(get_history()):
+                    h_cmd = get_history()
+                    cmd = h_cmd[-1].strip()
+                    
+                cursor_pos = len(cmd)
+                print_cmd(cmd, cursor_pos)
 
             if direction in "B":  # down arrow pressed
                 # get the NEXT command from history (if there is one)
-                # prints out 'down' then erases it (just to show something)
-                cmd += "\u2193"
-                print_cmd(cmd)
-                sleep(0.3)
-                # cmd = cmd[:-1]
+                if get_history() and history_index < len(get_history()):
+                    
+                    # Store history commands in list
+                    h_cmd = get_history()
+                    
+                    # Get the previous command from history depending on
+                    # history_index and increment index
+                    cmd = h_cmd[history_index].strip()
+                    history_index -= 1
+                    
+                # If at the end of history, stay there
+                elif history_index == 0:
+                    h_cmd = get_history()
+                    cmd = h_cmd[history_index].strip()
+                    
+                cursor_pos = len(cmd)
+                print_cmd(cmd, cursor_pos)
 
             if direction in "C":  # right arrow pressed
                 # move the cursor to the right on your command prompt line
