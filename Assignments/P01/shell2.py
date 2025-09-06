@@ -427,7 +427,7 @@ def get_history():
                 print(item)
             
             # Return list of all commands in history in reverse order
-            print(h_cmds.reverse())
+            #print(h_cmds.reverse())
             return h_cmds
             
     else:
@@ -603,7 +603,7 @@ if __name__ == "__main__":
                 
                 
                 # Get list of history commands
-                if get_history() and history_index < len(get_history() -1):
+                if get_history() and history_index < len(get_history()):
                     
                     # Store history commands in list
                     h_cmd = get_history()
