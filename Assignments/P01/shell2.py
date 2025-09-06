@@ -764,7 +764,8 @@ if __name__ == "__main__":
                     h_cmd = cmd_from_history(cmd_[1:])
                     
                     if h_cmd:
-                        cmd = h_cmd
+                        cmd_ = h_cmd
+                        print(cmd_)
                     else:
                         print(f"Command at line {cmd_[1:]} could not be found.")
             

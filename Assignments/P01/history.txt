@@ -50,3 +50,8 @@ ls
 cd P01
 cd ..
 history
+pwd
+ls
+cd ..
+history
+cd workspace
