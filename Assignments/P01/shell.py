@@ -850,8 +850,3 @@ if __name__ == "__main__":
             # add typed character to our "cmd"
             print_cmd(cmd, cursor_pos)
             
-            
-            #
-            # 
-            #
-            #
