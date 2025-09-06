@@ -423,7 +423,7 @@ def get_history():
             h_cmds.pop()
             
             for item in h_cmds:
-                item.strip()
+                item.strip("\n")
             
             print(h_cmds)
             rev = h_cmds.reverse()
