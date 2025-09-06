@@ -419,15 +419,15 @@ def get_history():
         with open(history_file, "r") as file:
             h_cmds = file.readlines()
             
-            # Remove the empty value in history.txt
-            h_cmds.pop()
+            # Remove the last value if its empty
+            if h_cmds and h_cmds[-1].strip() == "":
+                h_cmds.pop()
             
-            for item in h_cmds:
-                item.strip("\n")
+            # Removing '\n' at the end of each command
+            h_cmds = [item.strip() for item in h_cmds]
             
-            print(h_cmds)
-            rev = h_cmds.reverse()
-            print(rev)
+            # Reversing list
+            h_cmds.reverse()
             
             # Return list of all commands in history in reverse order
             return h_cmds
@@ -575,13 +575,13 @@ if __name__ == "__main__":
     # For handling left/right arrow keys
     cursor_pos = 0
 
+    # For handling up/down arrow keys
+    history_index = 0
 
     print_cmd(cmd)  # print to terminal
 
     while True:  # loop forever
 
-        # For handling up/down arrow keys
-        history_index = 0
 
         # read a single character, don't print
         char = getch()
