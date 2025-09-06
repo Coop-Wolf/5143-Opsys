@@ -427,7 +427,7 @@ def get_history():
                 print(item)
             
             # Return list of all commands in history in reverse order
-            return h_cmds.reverse()
+            return h_cmds
             
     else:
         # History file doesn't exist
