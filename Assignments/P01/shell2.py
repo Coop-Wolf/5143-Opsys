@@ -416,14 +416,11 @@ def get_history():
 
     # Check if history file exists
     if os.path.exists(history_file):
-        
-        print("HISTORY FILE EXISTS")
         with open(history_file, "r") as file:
-            print("OPENING HISTORY FILE")
             h_cmds = file.readlines()
             
             # Return list of all commands in history in reverse order
-            print("RETURNING HISTORY COMMANDS")
+            print(h_cmds)
             return h_cmds.reverse()
             
     else:
@@ -576,10 +573,6 @@ if __name__ == "__main__":
 
         # For handling up/down arrow keys
         history_index = 0
-        
-        print("HERE")
-        print(get_history())
-        print()
 
         # read a single character, don't print
         char = getch()
