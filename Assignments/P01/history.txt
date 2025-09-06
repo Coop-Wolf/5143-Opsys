@@ -22,3 +22,6 @@ history
 pwd
 history
 history
+ls -l
+ls -lah
+pwd

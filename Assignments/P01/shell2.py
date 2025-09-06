@@ -539,24 +539,46 @@ def print_cmd(cmd, cursor_pos=0):
     """This function "cleans" off the command line, then prints
     whatever cmd that is passed to it to the bottom of the terminal.
     """
-    
-    width = shutil.get_terminal_size((80, 20)).columns  
+#    
+#    
+#    # Setting width to terminal size
+#    width = shutil.get_terminal_size((80, 20)).columns  
+#
+#    # Clear line with spaces equal to width
+#    padding = " " * width
+#    sys.stdout.write("\r" + padding + "\r")
+#    
+#    # Update prompt with current working directory
+#    prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
+#
+#    # Print prompt
+#    sys.stdout.write(f"{prompt}{cmd}")
+#    
+#    # Move cursor to correct position
+#    sys.stdout.write("\r" + prompt + cmd[:cursor_pos])
+#    sys.stdout.flush()
+#
+#
 
-    # Clear line with spaces equal to width
-    padding = " " * width
-    sys.stdout.write("\r" + padding + "\r")
-    
     # Update prompt with current working directory
     prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
-
-    # Print prompt
+    
+    
+    # Print fix from ChatGPT
+    ###################################################################################
+    
+    # Move cursor to start, print prompt + command
+    sys.stdout.write("\r")           # go to start of line
     sys.stdout.write(f"{prompt}{cmd}")
-    
-    # clean_cmd = cmd.replace("\r", "")
-    #sys.stdout.write(f"{prompt}{clean_cmd}")
-    
+    sys.stdout.write("\033[K")       # clear from cursor to end of line
+
     # Move cursor to correct position
-    sys.stdout.write("\r" + prompt + cmd[:cursor_pos])
+    sys.stdout.write("\r")                               # go to start
+    sys.stdout.write(f"\033[{len(prompt) + cursor_pos}C")  # move cursor to position
+    
+    ##################################################################################
+    
+
     sys.stdout.flush()
 
 
