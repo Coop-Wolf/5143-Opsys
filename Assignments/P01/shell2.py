@@ -422,8 +422,10 @@ def get_history():
             # Remove the empty value in history.txt
             h_cmds.pop()
             
+            for item in h_cmds:
+                item.strip()
+            
             # Return list of all commands in history in reverse order
-            print(h_cmds.strip())
             print(h_cmds.reverse())
             return h_cmds.reverse()
             
