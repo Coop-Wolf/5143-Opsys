@@ -420,7 +420,8 @@ def get_history():
             h_cmds = file.readlines()
             
             # Return list of all commands in history in reverse order
-            print(h_cmds.strip())
+            print(h_cmds)
+            print(h_cmds.reverse())
             return h_cmds.reverse()
             
     else:
