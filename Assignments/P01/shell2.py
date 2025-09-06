@@ -443,6 +443,7 @@ def cmd_from_history(index):
     '''
     
     index = int(index)
+    index += 1
     h_cmds = get_history_rev() or []
     
     # Reverse list so

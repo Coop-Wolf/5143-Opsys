@@ -74,3 +74,6 @@ ls
 pwd
 history
 ls
+history
+history
+pwd
