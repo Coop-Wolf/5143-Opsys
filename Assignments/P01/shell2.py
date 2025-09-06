@@ -435,6 +435,24 @@ def get_history():
         # History file doesn't exist
         return None
     
+# This functions works as the !x command
+def cmd_from_history(index):
+    '''
+    Functions handles the !x command by getting the index value from the command
+    and retrieves the history commands then return the at index given
+    '''
+    
+    index = int(index)
+    h_cmds = get_history() or []
+    
+    # Geting history commands
+    if 0 <= index < len(h_cmds) > index:
+    
+        # Returning cmd at given index
+        return h_cmds[index].strip()
+    else:
+        return None
+       
     
 def clear():
     """
@@ -555,6 +573,7 @@ def visible_length(s):
     # len(...) -> Counts only the visible characters, ignoring color codes
     ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
     return len(ansi_escape.sub('', s))
+
 
 def print_cmd(cmd, cursor_pos=0):
     """This function "cleans" off the command line, then prints
@@ -739,7 +758,16 @@ if __name__ == "__main__":
                     
                 elif cmd_ == "history":
                     history()
-                
+                    
+                elif cmd_.startswith("!") and cmd_[1:].isnumeric() and (".") not in cmd_:
+                    
+                    h_cmd = cmd_from_history(cmd_[1:])
+                    
+                    if h_cmd:
+                        cmd = h_cmd
+                    else:
+                        print(f"Command at line {cmd_[1:]} could not be found.")
+            
             # Searching for valid commands with arguments
             elif cmd_ and len(args) == 1:
                 

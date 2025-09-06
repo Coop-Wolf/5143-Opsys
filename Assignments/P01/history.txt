@@ -32,3 +32,21 @@ ls
 pwd
 cd
 pwd
+pwd
+ls
+ls -h
+ls -al
+pwd
+ls
+cd ..
+cd ..
+ls
+cd Assignments
+ls
+cd P01
+ls
+cd ..
+ls
+cd P01
+cd ..
+history
