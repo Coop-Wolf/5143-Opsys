@@ -416,10 +416,14 @@ def get_history():
 
     # Check if history file exists
     if os.path.exists(history_file):
+        
+        print("HISTORY FILE EXISTS")
         with open(history_file, "r") as file:
+            print("OPENING HISTORY FILE")
             h_cmds = file.readlines()
             
             # Return list of all commands in history in reverse order
+            print("RETURNING HISTORY COMMANDS")
             return h_cmds.reverse()
             
     else:
@@ -599,7 +603,7 @@ if __name__ == "__main__":
                 
                 
                 # Get list of history commands
-                if get_history() and history_index < len(get_history()):
+                if get_history() and history_index < len(get_history() -1):
                     
                     # Store history commands in list
                     h_cmd = get_history()
