@@ -602,7 +602,7 @@ if __name__ == "__main__":
             direction = getch()  # grab the direction
             
             # Get updated history if avaible
-            h_cmd = get_history or []
+            h_cmd = get_history() or []
 
             if direction in "A":  # up arrow pressed
                 
