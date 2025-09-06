@@ -600,45 +600,46 @@ if __name__ == "__main__":
         elif char in "\x1b":  # arrow key pressed
             null = getch()  # waste a character
             direction = getch()  # grab the direction
+            
+            # Get updated history if avaible
+            h_cmd = get_history or []
 
             if direction in "A":  # up arrow pressed
                 
                 
                 # Get list of history commands
-                if get_history() and history_index < len(get_history()):
+                if history_index < len(h_cmd) - 1:
                     
-                    # Store history commands in list
-                    h_cmd = get_history()
-                    
+                
                     # Get the previous command from history depending on
                     # history_index and increment index
-                    cmd = h_cmd[history_index].strip()
+                    cmd = h_cmd[history_index]
                     history_index += 1
                     
+                    
                 # If at the end of history, stay there
-                elif history_index >= len(get_history()):
-                    h_cmd = get_history()
-                    cmd = h_cmd[-1].strip()
+                else:
+                    # already at the oldest command
+                    cmd = h_cmd[-1] if h_cmd else ""
                     
                 cursor_pos = len(cmd)
                 print_cmd(cmd, cursor_pos)
 
             if direction in "B":  # down arrow pressed
                 # get the NEXT command from history (if there is one)
-                if get_history() and history_index <= len(get_history()):
-                    
-                    # Store history commands in list
-                    h_cmd = get_history()
+                if history_index > 0:
                     
                     # Get the previous command from history depending on
-                    # history_index and increment index
-                    cmd = h_cmd[history_index].strip()
+                    # history_index and decrement index
+                    cmd = h_cmd[history_index]
                     history_index -= 1
                     
-                # If at the end of history, stay there
-                elif history_index == 0:
-                    h_cmd = get_history()
-                    cmd = h_cmd[history_index].strip()
+                # At the newest, go to blank like
+                else:
+                    
+                    # Getting a blank line
+                    history_index = 0
+                    cmd = ""
                     
                 cursor_pos = len(cmd)
                 print_cmd(cmd, cursor_pos)
