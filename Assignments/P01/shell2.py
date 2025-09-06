@@ -424,7 +424,9 @@ def get_history():
             
             for item in h_cmds:
                 item.strip()
-                print(item)
+            
+            print(h_cmds)
+            print(h_cmds.reverse())
             
             # Return list of all commands in history in reverse order
             return h_cmds
