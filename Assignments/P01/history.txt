@@ -55,3 +55,7 @@ ls
 cd ..
 history
 cd workspace
+pwd
+ls
+history
+!59

@@ -723,9 +723,26 @@ if __name__ == "__main__":
         elif char in "\r":
             print()
 
-            #sleep(1)
-
-            ## YOUR CODE HERE
+            # Printing the command of the index given from history file
+            if len(cmd.split()) == 1 and cmd.startswith("!") and cmd[1:].isnumeric() and (".") not in cmd:
+                    
+                # Getting command from history
+                h_cmd = cmd_from_history(cmd[1:])
+                    
+                # If found, print and set cmd to command
+                if h_cmd:
+                        
+                    # Set command from history to command
+                    cmd = h_cmd
+                    
+                    # set cursor_pos to zero
+                    cursor_pos = 0
+                    print(cmd)
+                    
+                # Command wasn't found    
+                else:
+                    print(f"Command at line {cmd[1:]} could not be found.")
+            
             ## Parse the command
             token = cmd.split()
             if token:
@@ -758,16 +775,7 @@ if __name__ == "__main__":
                     
                 elif cmd_ == "history":
                     history()
-                    
-                elif cmd_.startswith("!") and cmd_[1:].isnumeric() and (".") not in cmd_:
-                    
-                    h_cmd = cmd_from_history(cmd_[1:])
-                    
-                    if h_cmd:
-                        cmd_ = h_cmd
-                        print(cmd_)
-                    else:
-                        print(f"Command at line {cmd_[1:]} could not be found.")
+    
             
             # Searching for valid commands with arguments
             elif cmd_ and len(args) == 1:
