@@ -625,7 +625,7 @@ if __name__ == "__main__":
 
             if direction in "B":  # down arrow pressed
                 # get the NEXT command from history (if there is one)
-                if get_history() and history_index < len(get_history()):
+                if get_history() and history_index <= len(get_history()):
                     
                     # Store history commands in list
                     h_cmd = get_history()
