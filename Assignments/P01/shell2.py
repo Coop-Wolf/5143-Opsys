@@ -572,6 +572,10 @@ if __name__ == "__main__":
 
         # For handling up/down arrow keys
         history_index = 0
+        
+        print("HERE")
+        print(get_history())
+        print()
 
         # read a single character, don't print
         char = getch()

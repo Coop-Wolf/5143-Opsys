@@ -20,3 +20,4 @@ history
 history
 history
 pwd
+history
