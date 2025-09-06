@@ -419,6 +419,9 @@ def get_history():
         with open(history_file, "r") as file:
             h_cmds = file.readlines()
             
+            # Remove the empty value in history.txt
+            h_cmds.pop()
+            
             # Return list of all commands in history in reverse order
             print(h_cmds)
             print(h_cmds.reverse())
