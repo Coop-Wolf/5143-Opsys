@@ -59,3 +59,14 @@ pwd
 ls
 history
 !59
+ls
+pwd
+history
+ls
+pwd
+ls
+ls
+ls
+history
+pwd
+history

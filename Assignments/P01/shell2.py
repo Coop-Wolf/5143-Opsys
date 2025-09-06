@@ -394,7 +394,7 @@ def history():
         print("No history available.")
     
     
-def get_history():
+def get_history_rev():
     """
     Opens history text file and returns the contents.
 
@@ -443,7 +443,11 @@ def cmd_from_history(index):
     '''
     
     index = int(index)
-    h_cmds = get_history() or []
+    h_cmds = get_history_rev() or []
+    
+    # Reverse list so
+    if h_cmd:
+        h_cmd.reverse()
     
     # Geting history commands
     if 0 <= index < len(h_cmds) > index:
@@ -664,7 +668,7 @@ if __name__ == "__main__":
             direction = getch()  # grab the direction
             
             # Get updated history if avaible
-            h_cmd = get_history() or []
+            h_cmd = get_history_rev() or []
 
             if direction in "A":  # up arrow pressed
                 
