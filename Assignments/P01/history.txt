@@ -25,3 +25,10 @@ history
 ls -l
 ls -lah
 pwd
+history
+pwd
+cd
+ls
+pwd
+cd
+pwd

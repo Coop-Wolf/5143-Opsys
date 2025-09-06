@@ -793,7 +793,7 @@ if __name__ == "__main__":
             
 
             cmd = ""  # reset command to nothing (since we just executed it)
-            
+            cursor_pos = 0
             
             print_cmd(cmd)  # now print empty cmd prompt
             
