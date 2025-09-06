@@ -91,3 +91,6 @@ cd P01
 ls
 history
 ls
+history
+ls
+cd P01
