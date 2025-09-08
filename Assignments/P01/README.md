@@ -49,7 +49,7 @@ Run the `shell.py` file and use the following commands...
 | `piping`              |                                                     |          |
 
 ## Non-Working Components:
-cd
+cp
 mv
 rm
 cat
