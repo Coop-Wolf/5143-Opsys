@@ -1,11 +1,35 @@
 #!/usr/bin/env python
-"""
-This file is about using getch to capture input and handle certain keys 
-when the are pushed. The 'command_helper.py' was about parsing and calling functions.
-This file is about capturing the user input so that you can mimic shell behavior.
+
+
+
 
 """
-# Need comment for imports
+Imports used in this project:
+
+OS and system interaction:
+    - os       : Functions for interacting with the operating system (paths, directory listing, permissions, etc.)
+    - sys      : System-specific parameters and functions (e.g., arguments, exit)
+
+User and group information:
+    - pwd      : Retrieve user account information (file owner in long listings)
+    - grp      : Retrieve group account information (file group in long listings)
+
+File status and permissions:
+    - stat     : Interpret file status results (file mode, permissions, file type)
+
+Input handling:
+    - getch.Getch : Capture single keypresses without needing Enter (used for shell input handling)
+
+Terminal output formatting:
+    - colorama (init, Fore, Style) : Cross-platform colored terminal output (e.g., directories in blue, executables in green)
+
+Time-related functionality:
+    - time     : Time functions (formatting file modification times)
+    - sleep    : Pause execution for a given number of seconds (optional delays)
+
+Other utilities:
+    - re       : Regular expression matching operations (parsing and validating input/commands)
+"""
 import os 
 import sys 
 import pwd
@@ -16,6 +40,8 @@ from colorama import init, Fore, Style
 import time
 from time import sleep
 import re
+
+
 
 ##################################################################################
 ##################################################################################
@@ -134,6 +160,7 @@ def ls():
     # Sort the items alphabetically before returning
     items.sort()
     return items
+
 
 # Helper function for ls_with_args
 def color_filename(item, full_path):
@@ -448,6 +475,7 @@ def get_history_rev():
         # History file doesn't exist
         return None
     
+    
 # This functions works as the !x command
 def cmd_from_history(index):
     '''
@@ -641,7 +669,7 @@ def print_cmd(cmd, cursor_pos=0):
 
 
 
-# MAIN PROGRAM
+####### BEGINNING OF MAIN PROGRAM ##############
 if __name__ == "__main__":
     
     # Allows for colored text in terminal and resets color after each print
@@ -661,7 +689,6 @@ if __name__ == "__main__":
     print_cmd(cmd)  # print to terminal
 
     while True:  # loop forever
-
 
         # read a single character, don't print
         char = getch()
@@ -849,6 +876,7 @@ if __name__ == "__main__":
             # so you can access it later with the up/down arrows
             
             # Get the absolute path of the folder where the script is located
+            # Since this script and the history file are in the same directory:
             script_dir = os.path.dirname(os.path.abspath(__file__))
 
             # Build the full path to history.txt inside your repo

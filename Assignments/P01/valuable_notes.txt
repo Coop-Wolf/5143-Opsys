@@ -2,7 +2,7 @@ for piping. split the command using split("|")
 
 Using man linux and copy and paste for there.
 
-"&" at the end of a command is a backgroup process [not for sure yet]
+"&" at the end of a command is a backgroup process [not for sure yet if we'll be implementing this.]
 
 functions needs to return strings and have no arguments
 
@@ -30,10 +30,7 @@ rich does colors tabular data.
 
 
 Errors (bugs):
-    ls isn't printing the correct total: size.
-    up and down arrows aren't exactly correct
-        going up 2, then going down 1 will
-        display one command up instead of goind down
+
 
 
 
@@ -50,6 +47,7 @@ Commands that work correctly:
     ls -a
     ls -l
     ls -al
+    ls -alh
     exit
     !x
 
@@ -57,6 +55,8 @@ Commands that work correctly:
 Need to do error testing on all commands to make sure errors are handled properly
 
 
+
+May not have to confront this problem since vscode runs bash. May not have to use wsl.
 Issues:
     Running into problems with the history.txt file
     Been running the shell py in wsl on path /home/coope/OS/

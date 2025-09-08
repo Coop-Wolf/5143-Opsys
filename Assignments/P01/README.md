@@ -1,6 +1,5 @@
 
-
-10 Sep 2025
+04 Sep 2025
 5143 Shell Project
 Group Members:
 - Tim Haxton
@@ -12,6 +11,8 @@ This project implements a basic shell in Python that supports a variety of comma
 
 ## Instructions:
 Clone the repository.
+install requests is haven't already
+    - pip install requests
 Run the `shell.py` file and use the following commands...
 
 ## Commands:
@@ -21,7 +22,7 @@ Run the `shell.py` file and use the following commands...
 | `pwd`                 | Print working directory                             | Cooper   |
 | `ls -a`               | List all files, including hidden ones.              | Cooper   |
 | `ls -l`               | Long listing format.                                | Cooper   |
-| `ls -h`               | Human-readable file sizes.                          |          |
+| `ls -h`               | Human-readable file sizes.                          | Cooper   |
 | `mkdir`               | Create a directory.                                 | Cooper   |
 | `cd directory`        | Change to a named directory.                        | Cooper   |
 | `cd`                  | Change to the home directory if no argument given.  | Cooper   |
@@ -38,14 +39,32 @@ Run the `shell.py` file and use the following commands...
 | `history`             | Show previously used commands.                      | Cooper   |
 | `!x`                  | Re-run command number *x* from history.             | Cooper   |
 | `exit`                | Exits the shell.                                    | Cooper   |
+| `up & down arrows`    | Navigate previous command                           | Cooper   |
+| `left & right arrows` | Move cursor                                         | Cooper   |
 | `more`                |                                                     |          |
 | `less`                |                                                     |          |
 | `[program] > file`    |                                                     |          |
 | `[program] < file`    |                                                     |          |
 | `hfind`               |                                                     |          |
+| `piping`              |                                                     |          |
 
 ## Non-Working Components:
-List any commands or features that are not fully implemented.
+cd
+mv
+rm
+cat
+head
+tail
+grep
+wc
+chmod
+more
+less
+"<"
+">"
+hfind
+commands with piping
+
 
 ## References:
 - [geeksforgeeks](https://www.geeksforgeeks.org/python/executing-shell-commands-with-python/)
