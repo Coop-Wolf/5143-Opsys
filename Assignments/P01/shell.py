@@ -360,8 +360,7 @@ def ls_with_args(args):
         print("ls: invalid option.")
         print("Try 'ls --help' for more information.")
     
-    
-# This needs to return a list of commands not print them    
+        
 def history():
     """
     Display the command history from the history.txt file.
@@ -381,6 +380,7 @@ def history():
     # Build the full path to history.txt inside your repo
     history_file = os.path.join(script_dir, "history.txt")
 
+    history_list = []
     command_number = 1
 
     # Check if history file exists
@@ -388,10 +388,18 @@ def history():
         with open(history_file, "r") as file:
             commands = file.readlines()
             for command in commands:
-                print(f"{command_number} {command.strip()}")
+                history_list.append(f"{command_number} {command.strip()}")
                 command_number += 1
+        
+        # Appending the history command that was just executed
+        history_list.append(f"{command_number} history")
+        
+        # Returning list
+        return history_list       
+        
+    # If history_file does not exist, return None
     else:
-        print("No history available.")
+        return None
     
     
 def get_history_rev():
@@ -779,7 +787,14 @@ if __name__ == "__main__":
                     clear()
                     
                 elif cmd_ == "history":
-                    history()
+                    history_list = history()
+                    
+                    if history_list:
+                        for item in history_list:
+                            print(item)
+                            
+                    else:
+                        print("ERROR: History File could not be found.")
     
             
             # Searching for valid commands with arguments
