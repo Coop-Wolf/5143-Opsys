@@ -106,3 +106,11 @@ ls
 history
 ls
 ls -a
+ls
+ls -a
+ls -ah
+ls -l
+ls -lh
+ls -la
+ls -lah
+ls -l

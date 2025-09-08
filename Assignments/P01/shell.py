@@ -277,7 +277,7 @@ def ls_with_args(args):
             total_size += file_info.st_blocks
         
         # Printing size of directory
-        print("total", total_size)
+        print("total", total_size // 2)
         
         # Print details for each file
         for item in directory_list:
@@ -300,7 +300,7 @@ def ls_with_args(args):
             file_info = os.stat(item)
             total_size += file_info.st_blocks
         
-        print("total", total_size)
+        print("total", total_size // 2)
         
         # Print details for each file
         for item in all_directory_list:
