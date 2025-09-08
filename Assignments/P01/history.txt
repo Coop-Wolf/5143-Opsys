@@ -104,3 +104,4 @@ ls
 history
 ls
 history
+exit

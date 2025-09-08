@@ -660,6 +660,10 @@ if __name__ == "__main__":
 
         # read a single character, don't print
         char = getch()
+        
+        # Exit shell on ctrl-c command
+        if char == "\x03":
+            exit_shell()
 
         # If back space pressed, remove the character to the left of the cursor
         if char == "\x7f":
@@ -733,8 +737,8 @@ if __name__ == "__main__":
         elif char in "\r":
             print()
             
-            # Exit shell on ctrl-c or 'exit' command
-            if char == "\x03" or cmd == "exit":
+            # Exit shell on 'exit' command
+            if cmd == "exit":
                 exit_shell()
 
             # Executing !x command
