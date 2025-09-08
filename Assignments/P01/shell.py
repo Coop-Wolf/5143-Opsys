@@ -248,7 +248,7 @@ def ls_with_args(args):
         return ls()
             
     # Using -a alone or with -h prints all files including hidden
-    elif option in ("-a","ah", "ha"):
+    elif option in ("-a","-ah", "-ha"):
         
         # list to store directory items
         items = []
