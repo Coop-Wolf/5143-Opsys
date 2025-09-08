@@ -682,7 +682,7 @@ if __name__ == "__main__":
             if direction in "A":  # up arrow pressed
                 
                 # Get list of history commands
-                if h_cmd and history_index <= len(h_cmd) - 1:
+                if h_cmd and history_index < len(h_cmd) - 1:
                     
                     # Get the previous command from history depending on
                     # history_index and increment index
