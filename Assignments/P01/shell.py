@@ -682,6 +682,12 @@ if __name__ == "__main__":
     
     # For handling left/right arrow keys
     cursor_pos = 0
+    
+    # Used to store for final result (Not used right now because)
+    # Piping hasn't been implemented yet. But ultimately, every
+    # command will return something and be set to result instead
+    # of being printed. Result a string or list?
+    result = []
 
     # For handling up/down arrow keys
     history_index = -1
@@ -797,7 +803,6 @@ if __name__ == "__main__":
             token = cmd.split()
             if token:
                 cmd_ = token[0]
-                #flag = token[1] if len(token) > 1 else None
                 args = token[1:]
                 
             # Searching for valid commands with no arguments
@@ -823,6 +828,7 @@ if __name__ == "__main__":
                 elif cmd_ == "clear":
                     clear()
                     
+                # Printing history contents
                 elif cmd_ == "history":
                     history_list = history()
                     
@@ -886,11 +892,18 @@ if __name__ == "__main__":
             with open(history_file, "a") as file:
                 file.write(cmd + "\n")
             
-
-            cmd = ""  # reset command to nothing (since we just executed it)
+            
+            
+            # Where I will be printing the result to the command when piping is implemented
+            #for item in result:
+            #    print(item)
+            
+            
+            # reset command to nothing and set cursor position back to normal
+            cmd = ""
             cursor_pos = 0
             
-            print_cmd(cmd)  # now print empty cmd prompt
+            print_cmd(cmd)  # now print empty cmd prompt on next line
             
         # Any other character that is not handled above
         else:
