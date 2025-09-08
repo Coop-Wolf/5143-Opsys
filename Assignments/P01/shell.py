@@ -135,6 +135,88 @@ def ls():
     items.sort()
     return items
 
+# Helper function for ls_with_args
+def color_filename(item, full_path):
+    '''
+    Returns a colored string for a filename based on its type.
+    
+    - Directories → Blue
+    - Executable files → Green
+    - Other files → Default color
+    '''
+    
+    # Coloring the directories blue
+    if os.path.isdir(full_path):
+        return Fore.BLUE + item + Style.RESET_ALL
+    
+    # Coloring the executables green
+    elif os.access(full_path, os.X_OK):
+        return Fore.GREEN + item + Style.RESET_ALL
+    
+    # Leaving all other itms default color
+    return item
+    
+
+# Helper functin for ls_with_args
+def format_long_listing(item, human = False):
+    '''
+    Returns detailed metadata for a file in "long listing" format.
+    
+    Parameters:
+        item (str): The filename.
+        human (bool): If True, convert file size to human-readable format.
+    
+    Returns:
+        list: [permissions, links, owner, group, size, mod_time, colored_name]
+    '''
+    
+    # Getting full path of the item and info about the item
+    full_path = os.path.join(os.getcwd(), item)
+    file_info = os.stat(full_path)
+
+    # Retreiving info about item
+    permissions = stat.filemode(file_info.st_mode)
+    links       = file_info.st_nlink
+    owner       = pwd.getpwuid(file_info.st_uid).pw_name
+    group       = grp.getgrgid(file_info.st_gid).gr_name
+    size        = human_readable(file_info.st_size) if human else file_info.st_size
+    mod_time    = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
+    
+    # coloring item name depending on type
+    name        = color_filename(item, full_path)
+
+    # Returning all item information
+    return [permissions, links, owner, group, size, mod_time, name]
+
+
+# Helper function for ls_with_args
+def get_directory_items(include_hidden = False):
+    '''
+    Returns a list of items in the current directory.
+    
+    Parameters:
+        include_hidden (bool): If True, include hidden files along with "." and "..".
+    
+    Returns:
+        list: Filenames in the directory.
+    '''
+    
+    # Storing items from directory into items list
+    items = os.listdir()
+    non_hidden_items = []
+    
+    # If wanting all items return items + . and ..
+    if include_hidden:
+        return ['.', '..'] + items
+    
+    # Return only non hidden items
+    else:
+        for item in items:
+            if not item.startswith('.'):
+                non_hidden_items.append(item)
+                
+        return non_hidden_items
+
 
 def ls_with_args(args):
     """
@@ -154,204 +236,127 @@ def ls_with_args(args):
         None
     """
     
-    # List to hold directory contents
-    items = []
+    # Storing the argument
+    option = args[0]
+    
+    # List that stores directory contents
+    directory_list     = get_directory_items()
+    all_directory_list = get_directory_items(include_hidden = True)
     
     # Using -h alone prints the same as no args
-    if args[0] == "-h":       
-        return (ls())
+    if option == "-h":       
+        return ls()
             
     # Using -a alone or with -h prints all files including hidden
-    elif args[0] == "-a" or args[0] == "ah" or args[0] == "ha":
+    elif option in ("-a","ah", "ha"):
         
-        for item in ['.', '..'] + os.listdir():
+        # list to store directory items
+        items = []
+        
+        # Getting items in directory including hidden and coloring
+        # depending on item type
+        for item in all_directory_list:
             
-            # Getting the full path of the item
+            # Get full path to apply correct coloring
             full_path = os.path.join(os.getcwd(), item)
-            
-            # If item is a directory, print in blue
-            if os.path.isdir(full_path):
-                items.append(f"{Fore.BLUE}{item}{Style.RESET_ALL}")
-            
-            # If item is an executable file, print in green
-            elif os.access(full_path, os.X_OK):
-                items.append(f"{Fore.GREEN}{item}{Style.RESET_ALL}")
-                
-            # Otherwise, print normally
-            else:
-                items.append(item)
-                
-        items.sort() 
-        return(items) 
+            items.append(color_filename(item, full_path))
+        
+        # Returning sorted list of items
+        items.sort()
+        return items
         
     # Using -l alone
-    elif args[0] == "-l":
+    elif option == "-l":
         
+        items = []
         total_size = 0
         
-        for item in os.listdir():
-            if not item.startswith('.'):
-                file_info = os.stat(item)
-                total_size += file_info.st_blocks
+        # Getting block size
+        for item in directory_list:
+            file_info = os.stat(item)
+            total_size += file_info.st_blocks
         
+        # Printing size of directory
         print("total", total_size)
         
         # Print details for each file
-        for item in os.listdir():
-            if not item.startswith('.'):
+        for item in directory_list:
                 
-                # Get file info
-                full_path = os.path.join(os.getcwd(), item)
-                file_info = os.stat(full_path)
-
-                # Extract and format details
-                permissions = stat.filemode(file_info.st_mode)
-                links = file_info.st_nlink
-                owner = pwd.getpwuid(file_info.st_uid).pw_name
-                group = grp.getgrgid(file_info.st_gid).gr_name
-                size = file_info.st_size
-                mod_time = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
-
-                # Color the name
-                if os.path.isdir(full_path):
-                    name = Fore.BLUE + item + Style.RESET_ALL
-                elif os.access(full_path, os.X_OK):
-                    name = Fore.GREEN + item + Style.RESET_ALL
-                else:
-                    name = item
-
-                # Append as a list (one per file)
-                items.append([permissions, links, owner, group, size, mod_time, name])
+            # Getting info about the item and adding it to list
+            items.append(format_long_listing(item))
                 
-        # Sort items by filename
+        # Return items sorted by filename
         items = sorted(items, key=lambda x: x[-1].lower())
         return items
          
     # Using -al or -la prints all files in long format
-    elif args[0] == "-al" or args[0] == "-la":
-                
+    elif option in ("-al", "-la"):
+               
         total_size = 0
+        items = []
         
         # Calculate total size of all files in directory
-        for item in ['.', '..'] + os.listdir():
+        for item in all_directory_list:
             file_info = os.stat(item)
             total_size += file_info.st_blocks
         
         print("total", total_size)
         
         # Print details for each file
-        for item in ['.', '..'] + os.listdir():
+        for item in all_directory_list:
                 
-            # Get file info
-            full_path = os.path.join(os.getcwd(), item)
-            file_info = os.stat(full_path)
-            
-            # Extract and format details
-            permissions = stat.filemode(file_info.st_mode)
-            links = file_info.st_nlink
-            owner = pwd.getpwuid(file_info.st_uid).pw_name
-            group = grp.getgrgid(file_info.st_gid).gr_name
-            size = file_info.st_size
-            mod_time = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
-
-            # Color the name
-            if os.path.isdir(full_path):
-                name = Fore.BLUE + item + Style.RESET_ALL
-            elif os.access(full_path, os.X_OK):
-                name = Fore.GREEN + item + Style.RESET_ALL
-            else:
-                name = item
-
-            # Append as a list (one per file)
-            items.append([permissions, links, owner, group, size, mod_time, name])
+            # Getting info about the item and adding it to list
+            items.append(format_long_listing(item))
                 
         # Sort items by filename
         items = sorted(items, key=lambda x: x[-1].lower())
         return items
         
     # Using -lh or -hl prints files in long format with human readable sizes
-    elif args[0] == "-lh" or args[0] == "-hl":
+    elif option in ("-lh", "-hl"):
         
         total_size = 0
+        items = []
         
         # Calculate total size of all non-hidden files in directory
-        for item in os.listdir():
-            if not item.startswith('.'):
-                file_info = os.stat(item)
-                total_size += file_info.st_size
+        for item in directory_list:
+            file_info = os.stat(item)
+            total_size += file_info.st_blocks
         
-        print("total", human_readable(total_size))
+        # st_blocks * 512 = byte
+        print("total", human_readable(total_size * 512))
         
         # Print details for each file
-        for item in os.listdir():
-            if not item.startswith('.'):
+        for item in directory_list:
                 
-                # Get file info
-                full_path = os.path.join(os.getcwd(), item)
-                file_info = os.stat(full_path)
-
-                # Extract and format details
-                permissions = stat.filemode(file_info.st_mode)
-                links = file_info.st_nlink
-                owner = pwd.getpwuid(file_info.st_uid).pw_name
-                group = grp.getgrgid(file_info.st_gid).gr_name
-                size = human_readable(file_info.st_size)
-                mod_time = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
-
-                # Color the name
-                if os.path.isdir(full_path):
-                    name = Fore.BLUE + item + Style.RESET_ALL
-                elif os.access(full_path, os.X_OK):
-                    name = Fore.GREEN + item + Style.RESET_ALL
-                else:
-                    name = item
-
-                # Append as a list (one per file)
-                items.append([permissions, links, owner, group, size, mod_time, name])
+            # Getting item info and adding to list
+            items.append(format_long_listing(item, human = True))
                 
-        # Sort items by filename
+        # Returning items sorted by filename
         items = sorted(items, key=lambda x: x[-1].lower())
         return items
         
     # Using -alh or any combo of those three prints all files in long format with human readable sizes
-    elif args[0] == "-alh" or args[0] == "-ahl" or args[0] == "-lah" or args[0] == "-lha" or args[0] == "-hal" or args[0] == "-hla":
+    elif option in ("-alh", "-ahl", "-lah", "-lha", "-hal", "-hla"):
         
         total_size = 0
+        items = []
         
         # Calculate total size of all files in directory
-        for item in ['.', '..'] + os.listdir():
+        for item in all_directory_list:
             file_info = os.stat(item)
-            total_size += file_info.st_size
+            total_size += file_info.st_blocks
         
-        print("total", human_readable(total_size))
+        # st_blocks * 512 = byte
+        print("total", human_readable(total_size * 512))
         
         # Print details for each file
-        for item in ['.', '..'] + os.listdir():
+        for item in all_directory_list:
                 
-            # Get file info
-            full_path = os.path.join(os.getcwd(), item)
-            file_info = os.stat(full_path)
-
-            # Extract and format details
-            permissions = stat.filemode(file_info.st_mode)
-            links = file_info.st_nlink
-            owner = pwd.getpwuid(file_info.st_uid).pw_name
-            group = grp.getgrgid(file_info.st_gid).gr_name
-            size = human_readable(file_info.st_size)
-            mod_time = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
-
-            # Color the name depending on type
-            if os.path.isdir(full_path):
-                name = Fore.BLUE + item + Style.RESET_ALL
-            elif os.access(full_path, os.X_OK):
-                name = Fore.GREEN + item + Style.RESET_ALL
-            else:
-                name = item
-
-            # Append as a list (one per file)
-            items.append([permissions, links, owner, group, size, mod_time, name])
+            # Getting item info and adding to list
+            items.append(format_long_listing(item, human = True))
                 
-        # Sort items by filename
+        # Returning items sorted by filename
         items = sorted(items, key=lambda x: x[-1].lower())
         return items
         

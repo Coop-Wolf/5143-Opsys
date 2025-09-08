@@ -104,5 +104,3 @@ ls
 history
 ls
 history
-exit
-history
