@@ -710,7 +710,7 @@ if __name__ == "__main__":
                 else:
                     
                     # Getting a blank line
-                    history_index = 0
+                    history_index = -1
                     cmd = ""
                     
                 cursor_pos = len(cmd)

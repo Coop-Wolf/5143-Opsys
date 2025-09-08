@@ -102,3 +102,5 @@ history
 ls
 !202
 history
+ls
+history
