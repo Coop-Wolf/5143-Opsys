@@ -661,12 +661,8 @@ if __name__ == "__main__":
         # read a single character, don't print
         char = getch()
 
-        # Exit shell on ctrl-c or 'exit' command
-        if char == "\x03" or cmd == "exit":
-            exit_shell()
-
         # If back space pressed, remove the character to the left of the cursor
-        elif char == "\x7f":
+        if char == "\x7f":
             if cursor_pos > 0:
                 cmd = cmd[:cursor_pos-1] + cmd[cursor_pos:]
                 cursor_pos -= 1
@@ -735,11 +731,15 @@ if __name__ == "__main__":
         # return pressed
         elif char in "\r":
             print()
+            
+            # Exit shell on ctrl-c or 'exit' command
+            if char == "\x03" or cmd == "exit":
+                exit_shell()
 
-            # Printing the command of the index given from history file
+            # Executing !x command
             if len(cmd.split()) == 1 and cmd.startswith("!") and cmd[1:].isnumeric() and (".") not in cmd:
                     
-                # Getting command from history
+                # Getting the given command from history file
                 h_cmd = cmd_from_history(cmd[1:])
                     
                 # If found, print and set cmd to command

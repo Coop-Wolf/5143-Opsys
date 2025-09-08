@@ -97,3 +97,8 @@ cd P01
 history
 cd Assignments
 !202
+ls
+history
+ls
+!202
+history
