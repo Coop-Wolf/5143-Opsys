@@ -651,7 +651,7 @@ if __name__ == "__main__":
     cursor_pos = 0
 
     # For handling up/down arrow keys
-    history_index = 0
+    history_index = -1
 
     print_cmd(cmd)  # print to terminal
 
@@ -677,33 +677,34 @@ if __name__ == "__main__":
 
             if direction in "A":  # up arrow pressed
                 
-                
                 # Get list of history commands
-                if history_index < len(h_cmd) - 1:
+                if h_cmd and history_index <= len(h_cmd) - 1:
                     
-                
                     # Get the previous command from history depending on
                     # history_index and increment index
-                    cmd = h_cmd[history_index]
                     history_index += 1
+                    cmd = h_cmd[history_index]
                     
                     
                 # If at the end of history, stay there
                 else:
                     # already at the oldest command
-                    cmd = h_cmd[-1] if h_cmd else ""
+                    # so set cmd to end of h_cmd list
+                    cmd = h_cmd[-1]
                     
                 cursor_pos = len(cmd)
                 print_cmd(cmd, cursor_pos)
 
             if direction in "B":  # down arrow pressed
+                
                 # get the NEXT command from history (if there is one)
-                if history_index > 0:
+                if h_cmd and history_index > 0:
                     
                     # Get the previous command from history depending on
                     # history_index and decrement index
-                    cmd = h_cmd[history_index]
                     history_index -= 1
+                    cmd = h_cmd[history_index]
+
                     
                 # At the newest, go to blank like
                 else:
