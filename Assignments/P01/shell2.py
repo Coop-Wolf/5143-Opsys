@@ -894,7 +894,7 @@ if __name__ == "__main__":
                     command = command_list[0]
                     
                     if command.get("cmd") == "cd":
-                        result = cd(command)
+                        cd(command)
                     elif command.get("cmd") == "ls":
                         result = ls(command)
                 else:
