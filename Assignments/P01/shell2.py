@@ -789,6 +789,7 @@ if __name__ == "__main__":
 
             ## YOUR CODE HERE
             ## Parse the command
+            command = parse_cmd(cmd)
             ## Figure out what your executing like finding pipes and redirects
 
             cmd = ""  # reset command to nothing (since we just executed it)
