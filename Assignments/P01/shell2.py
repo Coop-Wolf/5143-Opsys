@@ -269,9 +269,9 @@ def ls(parts):
             print("Try 'ls --help' for more information.")
         
     if params:
+        print("HERE if params.")
         
-        
-        output = "something"
+    output = "something"
         
     return {"output" : output}
 
