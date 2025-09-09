@@ -115,42 +115,6 @@ def ls(parts):
         None
     """
     
-    # These are lists
-    input = parts.get("input", None)
-    flags = parts.get("flags", None)
-    params = parts.get("params", None)
-    
-    # List to hold directory contents
-    items = []
-    
-    # If ls command with nothing else
-    if not input or not flags or not params:
-        
-        # Getting items in cwd
-        for item in os.listdir():
-                
-            # Only get non-hidden files
-            if not item.startswith('.'):
-                
-                # Getting the full path of the item
-                full_path = os.path.join(os.getcwd(), item)
-                
-                # If item is a directory, print in blue
-                if os.path.isdir(full_path):
-                    items.append(f"{Fore.BLUE}{item}{Style.RESET_ALL}")
-                
-                # If item is an executable file, print in green
-                elif os.access(full_path, os.X_OK):
-                    items.append(f"{Fore.GREEN}{item}{Style.RESET_ALL}")
-                    
-                # Otherwise, print normally
-                else:
-                    items.append(item)
-                    
-        # Sort the items alphabetically before returning
-        items.sort()
-        return items
-    
     
     '''
     input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
@@ -162,6 +126,7 @@ def ls(parts):
     flags = parts.get("flags", None)
     params = parts.get("params", None)
     
+    
     if input:
         pass
         
@@ -172,6 +137,8 @@ def ls(parts):
     if flags:
         # Storing the argument
         option = flags[0]
+        
+        print("Here is option (flags):", option)
     
         # List that stores directory contents
         directory_list     = get_directory_items()
