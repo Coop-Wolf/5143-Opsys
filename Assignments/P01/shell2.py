@@ -783,6 +783,22 @@ def print_cmd(cmd, cursor_pos=0):
 
 if __name__ == "__main__":
     
+    
+        # Allows for colored text in terminal and resets color after each print
+    init(autoreset=True)
+
+    # Print welcome message
+    WelcomeMessage()
+    
+    cmd = ""  # empty cmd variable
+    
+    # For handling left/right arrow keys
+    cursor_pos = 0
+
+    # For handling up/down arrow keys
+    history_index = -1
+    
+    
     print(parse_cmd("ls -l | ls -lah | cd Assignment/OS"))
     print()
     print()
@@ -853,12 +869,19 @@ if __name__ == "__main__":
                 command = parse_cmd(cmd)
             
                 # Checking if multiple commands
-                print(command)
+                
             ## Figure out what your executing like finding pipes and redirects
 
-            cmd = ""  # reset command to nothing (since we just executed it)
-
-            print_cmd(cmd)  # now print empty cmd prompt
+            cmd = ""
+            cursor_pos = 0
+            
+            print_cmd(cmd)  # now print empty cmd prompt on next line
         else:
-            cmd += char  # add typed character to our "cmd"
-            print_cmd(cmd)  # print the cmd out
+            # Concatenate the typed character at the cursor position
+            cmd = cmd[:cursor_pos] + char + cmd[cursor_pos:]
+            
+            # move cursor position to the right
+            cursor_pos += 1
+            
+            # add typed character to our "cmd"
+            print_cmd(cmd, cursor_pos)
