@@ -273,7 +273,7 @@ def ls(parts):
         
     output = "something"
         
-    return {"output" : output}
+    return None
 
 
 # Helper function for ls_with_args
