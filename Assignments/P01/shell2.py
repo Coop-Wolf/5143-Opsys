@@ -710,14 +710,75 @@ def parse_cmd(cmd_input):
         
 
 
-def print_cmd(cmd):
+def visible_length(s):
+    '''Helper function for print_cmd. This is needed to bring the terminal cursor to the correct
+    position. Previously. it was offset by the length of ({Fore.CYAN}{Style.RESET_ALL}). So this
+    funciton removes that from the prompt so the cursor can be in the correct position.
+    '''
+    
+    # Step by step:
+    # \x1b         -> The escape character signaling the start of an ANSI sequence
+    # \[           -> Matches the literal '[' that follows the escape character
+    # [0-9;]*      -> Matches any digits or semicolons (e.g., 36, 1;32) zero or more times
+    # m            -> Matches the literal 'm' at the end of the ANSI code
+    # Together: \x1b\[[0-9;]*m matches things like:
+    #    \x1b[36m    -> set cyan text
+    #    \x1b[0m     -> reset text style/color
+    #    \x1b[1;32m  -> bold green text
+
+    # re.compile() -> Compiles this regex pattern for reuse
+    # ansi_escape.sub('', s) -> Removes all ANSI sequences from the string
+    # len(...) -> Counts only the visible characters, ignoring color codes
+    ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
+    return len(ansi_escape.sub('', s))
+
+
+def print_cmd(cmd, cursor_pos=0):
     """This function "cleans" off the command line, then prints
     whatever cmd that is passed to it to the bottom of the terminal.
     """
-    padding = " " * 80
-    sys.stdout.write("\r" + padding)
-    sys.stdout.write("\r" + prompt + cmd)
+#    
+#    
+#    # Setting width to terminal size
+#    width = shutil.get_terminal_size((80, 20)).columns  
+#
+#    # Clear line with spaces equal to width
+#    padding = " " * width
+#    sys.stdout.write("\r" + padding + "\r")
+#    
+#    # Update prompt with current working directory
+#    prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
+#
+#    # Print prompt
+#    sys.stdout.write(f"{prompt}{cmd}")
+#    
+#    # Move cursor to correct position
+#    sys.stdout.write("\r" + prompt + cmd[:cursor_pos])
+#    sys.stdout.flush()
+#
+#
+
+    # Update prompt with current working directory
+    prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
+    
+    
+    # Print fix from ChatGPT
+    ###################################################################################
+    
+    # Move cursor to start, print prompt + command
+    sys.stdout.write("\r")           # go to start of line
+    sys.stdout.write(f"{prompt}{cmd}")
+    sys.stdout.write("\033[K")       # clear from cursor to end of line
+
+    # Move cursor to correct position
+    sys.stdout.write("\r")                               # go to start
+    sys.stdout.write(f"\033[{visible_length(prompt) + cursor_pos}C")  # move cursor to position
+    
+    ##################################################################################
+    
+
     sys.stdout.flush()
+
 
 
 if __name__ == "__main__":
@@ -788,10 +849,11 @@ if __name__ == "__main__":
 
             ## YOUR CODE HERE
             ## Parse the command
-            command = parse_cmd(cmd)
+            if(cmd):
+                command = parse_cmd(cmd)
             
-            # Checking if multiple commands
-            print(command)
+                # Checking if multiple commands
+                print(command)
             ## Figure out what your executing like finding pipes and redirects
 
             cmd = ""  # reset command to nothing (since we just executed it)
