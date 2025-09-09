@@ -78,13 +78,16 @@ def cd(parts):
     output dict: {"output" : string, "error" : string}
     '''
     
-    
+    # These are lists
     input = parts.get("input", None)
     flags = parts.get("flags", None)
     params = parts.get("params", None)
     
+    params.strip("'")
+    str_params = str(params)
+    
     print(input)
-    print(str(params))
+    print(str_params)
     
     
     '''
