@@ -25,8 +25,12 @@ have to keep a history that survives when shell detailed [CHECK]
 run like a real command shell.
 
 rich does colors tabular data.
+------------------------------------------------------------------------------
 
 
+Need to fix:
+    All functions must return strings.
+    As of now, the functions are returning lists
 
 
 Errors (bugs):
@@ -51,8 +55,8 @@ Commands that work correctly:
     exit
     !x
 
-
-Need to do error testing on all commands to make sure errors are handled properly
+Next
+    Need to do error testing on all commands to make sure errors are handled properly
 
 
 
@@ -71,3 +75,6 @@ Issues:
     Not been able to figure that out. 
     Right now im going to run the shell through vs code and save the history.txt file to the correct place where
     it copies directory and I don't have to push.
+
+
+------------------------------------------------------------------------------------------------------
