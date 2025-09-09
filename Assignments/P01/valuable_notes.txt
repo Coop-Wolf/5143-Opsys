@@ -32,6 +32,12 @@ Need to fix:
     All functions must return strings.
     As of now, the functions are returning lists
 
+    For the command functions that are taking in a parameter,
+    They may need to be broken up more into separate functions.
+    Example: ls_a(), ls_la() instead of one ls_with_args(args).
+    This means i'll need to determine which one to run from
+    main program.
+
 
 Errors (bugs):
 
