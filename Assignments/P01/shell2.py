@@ -15,7 +15,7 @@ from colorama import init, Fore, Style
 import time
 from time import sleep
 import re
-from rich import print
+#from rich import print
 
 ##################################################################################
 ##################################################################################
