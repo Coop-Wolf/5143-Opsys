@@ -83,10 +83,15 @@ def cd(parts):
     flags = parts.get("flags", None)
     params = parts.get("params", None)
     
-    params.strip("'")
-    str_params = str(params)
+    # If params exist convert to string
+    if params:
+        
+        # Convert params list to string
+        str_params = " ".join(params)
     
-    print(input)
+        # Remove single quotes if they exist
+        str_params = str_params.strip("'")
+    
     print(str_params)
     
     
