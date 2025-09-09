@@ -84,8 +84,10 @@ def cd(parts):
     params = parts.get("params", None)
     
     print(input)
-    print(params)
+    print(str(params))
     
+    
+    '''
     if input:
         parts["error"] = "Error. Command should not have an input."
     elif params:
@@ -95,7 +97,7 @@ def cd(parts):
             os.chdir(params)
         elif not os.path.isdir(params):
             print(f"cd: no such file or directory: {params}")
-
+    '''
     
     
 def cd_with_args():
