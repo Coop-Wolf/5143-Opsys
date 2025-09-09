@@ -869,6 +869,7 @@ if __name__ == "__main__":
                 command = parse_cmd(cmd)
             
                 # Checking if multiple commands
+                print(command)
                 
             ## Figure out what your executing like finding pipes and redirects
 
