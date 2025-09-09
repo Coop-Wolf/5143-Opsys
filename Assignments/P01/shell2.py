@@ -783,13 +783,15 @@ if __name__ == "__main__":
         elif char in "\r":  # return pressed
 
             # This 'elif' simulates something "happening" after pressing return
-            cmd = "Executing command...."  #
             print_cmd(cmd)
             sleep(1)
 
             ## YOUR CODE HERE
             ## Parse the command
             command = parse_cmd(cmd)
+            
+            # Checking if multiple commands
+            print(command)
             ## Figure out what your executing like finding pipes and redirects
 
             cmd = ""  # reset command to nothing (since we just executed it)
