@@ -723,6 +723,9 @@ def print_cmd(cmd):
 if __name__ == "__main__":
     
     print(parse_cmd("ls -l | ls -lah | cd Assignment/OS"))
+    print()
+    print()
+    print(parse_cmd("ls -l"))
     
     cmd = ""  # empty cmd variable
 
