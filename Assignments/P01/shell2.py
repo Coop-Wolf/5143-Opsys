@@ -72,8 +72,27 @@ def cd(parts):
     Returns:
         None
     """
-    homedir = os.path.expanduser("~")
-    os.chdir(homedir)
+    
+    '''
+    input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
+    output dict: {"output" : string, "error" : string}
+    '''
+    
+    
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    if input:
+        parts["error"] = "Error. Command should not have an input."
+    elif params:
+        if params == "..":
+            os.chdir("..")
+        elif os.path.isdir(params):
+            os.chdir(params)
+        elif not os.path.isdir(params):
+            print(f"cd: no such file or directory: {params}")
+
     
     
 def cd_with_args():
@@ -875,9 +894,9 @@ if __name__ == "__main__":
                     command = command_list[0]
                     
                     if command.get("cmd") == "cd":
-                        print("Single command, cd ")
+                        result = cd(command)
                     elif command.get("cmd") == "ls":
-                        print("Single command, ls.")
+                        result = ls(command)
                 else:
                     print("Multiple commands. Piping.")
                     
