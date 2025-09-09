@@ -870,6 +870,9 @@ if __name__ == "__main__":
             
                 # Checking if multiple commands
                 print(command)
+                print('This should be the first command within a pipe.')
+                print(command.pop())
+                #Push each dictionary from command list to a queue
                 
             ## Figure out what your executing like finding pipes and redirects
 
