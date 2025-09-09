@@ -83,6 +83,9 @@ def cd(parts):
     flags = parts.get("flags", None)
     params = parts.get("params", None)
     
+    print(input)
+    print(params)
+    
     if input:
         parts["error"] = "Error. Command should not have an input."
     elif params:
