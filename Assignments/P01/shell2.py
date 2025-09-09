@@ -784,7 +784,7 @@ def print_cmd(cmd, cursor_pos=0):
 
 
 
-def ls(parts):
+def ls_(parts):
     '''
     input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
     output dict: {"output" : string, "error" : string}
