@@ -126,8 +126,8 @@ def ls(parts):
     flags = parts.get("flags", None)
     params = parts.get("params", None)
     
-    print("params")
-    print("flags")
+    print(params)
+    print(flags)
     
     if input:
         pass
