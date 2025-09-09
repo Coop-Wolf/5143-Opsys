@@ -100,30 +100,8 @@ def cd(parts):
         elif os.path.isdir(str_params):
             os.chdir(str_params)
         elif not os.path.isdir(str_params):
-            print(f"cd: no such file or directory: {str_params}")
+            parts["error"] = f"Error. {str_params} is not a directory."
             
-    
-    
-def cd_with_args():
-    """
-    Change directory with arguments.
-
-    Handles the 'cd' command when arguments are provided.
-    - If args[0] == "..", goes back one directory.
-    - Otherwise, tries to change into the given path.
-
-    Parameters:
-        args (list): arguments passed to 'cd'
-    Returns:
-        None
-    """
-    if args[0] == "..":
-        os.chdir("..")
-    else:
-        if os.path.isdir(args[0]):
-            os.chdir(args[0])
-        else:
-            print(f"cd: no such file or directory: {args[0]}")
     
 
 def ls(parts):
@@ -137,33 +115,196 @@ def ls(parts):
         None
     """
     
+    # These are lists
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
     # List to hold directory contents
     items = []
     
-    # This should return the list instead of print
-    for item in os.listdir():
-            
-        # Only print non-hidden files
-        if not item.startswith('.'):
-            
-            # Getting the full path of the item
-            full_path = os.path.join(os.getcwd(), item)
-            
-            # If item is a directory, print in blue
-            if os.path.isdir(full_path):
-                items.append(f"{Fore.BLUE}{item}{Style.RESET_ALL}")
-            
-            # If item is an executable file, print in green
-            elif os.access(full_path, os.X_OK):
-                items.append(f"{Fore.GREEN}{item}{Style.RESET_ALL}")
+    # If ls command with nothing else
+    if not input or not flags or not params:
+        
+        # Getting items in cwd
+        for item in os.listdir():
                 
-            # Otherwise, print normally
-            else:
-                items.append(item)
+            # Only get non-hidden files
+            if not item.startswith('.'):
                 
-    # Sort the items alphabetically before returning
-    items.sort()
-    return items
+                # Getting the full path of the item
+                full_path = os.path.join(os.getcwd(), item)
+                
+                # If item is a directory, print in blue
+                if os.path.isdir(full_path):
+                    items.append(f"{Fore.BLUE}{item}{Style.RESET_ALL}")
+                
+                # If item is an executable file, print in green
+                elif os.access(full_path, os.X_OK):
+                    items.append(f"{Fore.GREEN}{item}{Style.RESET_ALL}")
+                    
+                # Otherwise, print normally
+                else:
+                    items.append(item)
+                    
+        # Sort the items alphabetically before returning
+        items.sort()
+        return items
+    
+    
+    '''
+    input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
+    output dict: {"output" : string, "error" : string}
+    '''
+    
+    
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    if input:
+        pass
+        
+    if len(params) > 0:
+        
+        return {"output": None, "error" : "Directionary doesn't exist"}
+        
+    if flags:
+        # Storing the argument
+        option = flags[0]
+    
+        # List that stores directory contents
+        directory_list     = get_directory_items()
+        all_directory_list = get_directory_items(include_hidden = True)
+        
+        # Using -h alone prints the same as no args
+        if option == "-h":       
+            return ls()
+                
+        # Using -a alone or with -h prints all files including hidden
+        elif option in ("-a","-ah", "-ha"):
+            
+            # list to store directory items
+            items = []
+            
+            # Getting items in directory including hidden and coloring
+            # depending on item type
+            for item in all_directory_list:
+                
+                # Get full path to apply correct coloring
+                full_path = os.path.join(os.getcwd(), item)
+                items.append(color_filename(item, full_path))
+            
+            # Returning sorted list of items
+            items.sort()
+            return items
+            
+        # Using -l alone
+        elif option == "-l":
+            
+            items = []
+            total_size = 0
+            
+            # Getting block size
+            for item in directory_list:
+                file_info = os.stat(item)
+                total_size += file_info.st_blocks
+            
+            # Printing size of directory
+            print("total", total_size // 2)
+            
+            # Print details for each file
+            for item in directory_list:
+                    
+                # Getting info about the item and adding it to list
+                items.append(format_long_listing(item))
+                    
+            # Return items sorted by filename
+            items = sorted(items, key=lambda x: x[-1].lower())
+            return items
+            
+        # Using -al or -la prints all files in long format
+        elif option in ("-al", "-la"):
+                
+            total_size = 0
+            items = []
+            
+            # Calculate total size of all files in directory
+            for item in all_directory_list:
+                file_info = os.stat(item)
+                total_size += file_info.st_blocks
+            
+            print("total", total_size // 2)
+            
+            # Print details for each file
+            for item in all_directory_list:
+                    
+                # Getting info about the item and adding it to list
+                items.append(format_long_listing(item))
+                    
+            # Sort items by filename
+            items = sorted(items, key=lambda x: x[-1].lower())
+            return items
+            
+        # Using -lh or -hl prints files in long format with human readable sizes
+        elif option in ("-lh", "-hl"):
+            
+            total_size = 0
+            items = []
+            
+            # Calculate total size of all non-hidden files in directory
+            for item in directory_list:
+                file_info = os.stat(item)
+                total_size += file_info.st_blocks
+            
+            # st_blocks * 512 = byte
+            print("total", human_readable(total_size * 512))
+            
+            # Print details for each file
+            for item in directory_list:
+                    
+                # Getting item info and adding to list
+                items.append(format_long_listing(item, human = True))
+                    
+            # Returning items sorted by filename
+            items = sorted(items, key=lambda x: x[-1].lower())
+            return items
+            
+        # Using -alh or any combo of those three prints all files in long format with human readable sizes
+        elif option in ("-alh", "-ahl", "-lah", "-lha", "-hal", "-hla"):
+            
+            total_size = 0
+            items = []
+            
+            # Calculate total size of all files in directory
+            for item in all_directory_list:
+                file_info = os.stat(item)
+                total_size += file_info.st_blocks
+            
+            # st_blocks * 512 = byte
+            print("total", human_readable(total_size * 512))
+            
+            # Print details for each file
+            for item in all_directory_list:
+                    
+                # Getting item info and adding to list
+                items.append(format_long_listing(item, human = True))
+                    
+            # Returning items sorted by filename
+            items = sorted(items, key=lambda x: x[-1].lower())
+            return items
+            
+        # Invalid option
+        else:
+            print("ls: invalid option.")
+            print("Try 'ls --help' for more information.")
+        
+    if params:
+        
+        
+        output = "something"
+        
+    return {"output" : output}
 
 
 # Helper function for ls_with_args
@@ -906,6 +1047,8 @@ if __name__ == "__main__":
                         cd(command)
                     elif command.get("cmd") == "ls":
                         result = ls(command)
+                
+                # Piping
                 else:
                     print("Multiple commands. Piping.")
                     
@@ -917,6 +1060,8 @@ if __name__ == "__main__":
                 #Push each dictionary from command list to a queue
                 
             ## Figure out what your executing like finding pipes and redirects
+            
+            print(result)
 
             cmd = ""
             cursor_pos = 0
