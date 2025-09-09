@@ -133,8 +133,8 @@ def ls(parts):
         pass
         
     if len(params) > 0:
-        
-        return {"output": None, "error" : "Directionary doesn't exist"}
+        print("HERE.")
+        #return {"output": None, "error" : "Directionary doesn't exist"}
         
     if flags:
         # Storing the argument
