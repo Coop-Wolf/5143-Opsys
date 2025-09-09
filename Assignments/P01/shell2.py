@@ -870,7 +870,11 @@ if __name__ == "__main__":
             
                 # If there is only one command to execute
                 if len(command_list) == 1:
-                    print("Single command")
+                    
+                    if command_list["cmd"] == "cd":
+                        print("Single command, cd ")
+                    elif command_list["cmd"] == "ls":
+                        print("Single command, ls.")
                 else:
                     print("Multiple commands. Piping.")
                     
