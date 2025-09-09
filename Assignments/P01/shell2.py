@@ -871,9 +871,12 @@ if __name__ == "__main__":
                 # If there is only one command to execute
                 if len(command_list) == 1:
                     
-                    if command_list["cmd"] == "cd":
+                    # Getting directory from list
+                    command = command_list[0]
+                    
+                    if command.get("cmd") == "cd":
                         print("Single command, cd ")
-                    elif command_list["cmd"] == "ls":
+                    elif command.get("cmd") == "ls":
                         print("Single command, ls.")
                 else:
                     print("Multiple commands. Piping.")
