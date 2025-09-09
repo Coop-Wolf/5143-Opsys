@@ -98,7 +98,7 @@ def cd(parts):
         if params == "..":
             os.chdir("..")
         elif os.path.isdir(str_params):
-            os.chdir(params)
+            os.chdir(str_params)
         elif not os.path.isdir(str_params):
             print(f"cd: no such file or directory: {str_params}")
             
