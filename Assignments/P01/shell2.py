@@ -866,12 +866,19 @@ if __name__ == "__main__":
             ## YOUR CODE HERE
             ## Parse the command
             if(cmd):
-                command = parse_cmd(cmd)
+                command_list = parse_cmd(cmd)
+            
+                # If there is only one command to execute
+                if len(command_list) == 1:
+                    print("Single command")
+                else:
+                    print("Multiple commands. Piping.")
+                    
             
                 # Checking if multiple commands
-                print(command)
+                print(command_list)
                 print('This should be the first command within a pipe.')
-                print(command.pop(0))
+                print(command_list.pop(0))
                 #Push each dictionary from command list to a queue
                 
             ## Figure out what your executing like finding pipes and redirects
