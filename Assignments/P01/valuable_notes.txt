@@ -28,6 +28,9 @@ rich does colors tabular data.
 ------------------------------------------------------------------------------
 
 
+
+
+
 Need to fix:
     All functions must return strings.
     As of now, the functions are returning lists
@@ -38,6 +41,11 @@ Need to fix:
     This means i'll need to determine which one to run from
     main program.
 
+    ls function is in correct. ls -ls Assignment/shell_project/  {command, flag, parameter, input}
+    the parser is going to split command into cmd, flag, param, input. 
+    The dictionary will get passed to every function?
+
+    Every command will have the parsed dictionary command as parameter.
 
 Errors (bugs):
 
@@ -82,5 +90,10 @@ Issues:
     Right now im going to run the shell through vs code and save the history.txt file to the correct place where
     it copies directory and I don't have to push.
 
+
+
+
+First, need to parse correctly, then need to change all functions that contain commands to have parts has parameter
+will condense all cd functions into one. cd() and cd_with_args(args) will just be one function.
 
 ------------------------------------------------------------------------------------------------------
