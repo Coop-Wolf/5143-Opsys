@@ -83,29 +83,25 @@ def cd(parts):
     flags = parts.get("flags", None)
     params = parts.get("params", None)
     
-    # If params exist convert to string
-    if params:
+    
+    if input:
+        parts["error"] = "Error. Command should not have an input."
+        
+    elif params:
         
         # Convert params list to string
         str_params = " ".join(params)
     
         # Remove single quotes if they exist
         str_params = str_params.strip("'")
-    
-    print(str_params)
-    
-    
-    '''
-    if input:
-        parts["error"] = "Error. Command should not have an input."
-    elif params:
+        
         if params == "..":
             os.chdir("..")
         elif os.path.isdir(params):
             os.chdir(params)
         elif not os.path.isdir(params):
             print(f"cd: no such file or directory: {params}")
-    '''
+            
     
     
 def cd_with_args():
