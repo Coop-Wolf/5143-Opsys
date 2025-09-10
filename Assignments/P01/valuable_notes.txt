@@ -47,7 +47,12 @@ Need to fix:
 
     Every command will have the parsed dictionary command as parameter.
 
+
+
+
 Errors (bugs):
+    ls /workspaces/5143-Opsys does not work.
+    the 5143-Opsys overwrits the /workspaces i believe
 
 
 
@@ -68,6 +73,13 @@ Commands that work correctly:
     ls -alh
     exit
     !x
+
+
+Commands that work correctly for Shell2.py
+    ls -alh
+    cd 
+    cd ..
+    cd directory
 
 Next
     Need to do error testing on all commands to make sure errors are handled properly

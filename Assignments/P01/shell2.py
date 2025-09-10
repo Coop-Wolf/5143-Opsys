@@ -467,7 +467,6 @@ def format_long_listing(full_path, human = False):
     #return f"{permissions} {links} {owner} {group} {size} {mod_time} {name}"
 
 
-
 # Helper function for ls_with_args
 def get_directory_items(directory = None, include_hidden = False):
     '''
@@ -501,154 +500,6 @@ def get_directory_items(directory = None, include_hidden = False):
                 non_hidden_items.append(item)
                 
         return non_hidden_items
-
-# Will combine with ls()
-def ls_with_args(args):
-    """
-    Handle the 'ls' command when arguments are provided.
-
-    Supports listing directory contents with various options:
-      - -a   Include hidden files
-      - -l   Long listing format with detailed file information
-      - -h   Human-readable file sizes (not fully implemented)
-    Options can be combined, e.g. "-al", "-lh", etc.
-
-    Parameters:
-        args (list): List of arguments passed to the 'ls' command.
-                     - args[0]: Option string (e.g., "-a", "-l", "-al", "-lh").
-
-    Returns:
-        None
-    """
-    
-    # Storing the argument
-    option = args[0]
-    
-    # List that stores directory contents
-    directory_list     = get_directory_items()
-    all_directory_list = get_directory_items(include_hidden = True)
-    
-    # Using -h alone prints the same as no args
-    if option == "-h":       
-        return ls()
-            
-    # Using -a alone or with -h prints all files including hidden
-    elif option in ("-a","-ah", "-ha"):
-        
-        # list to store directory items
-        items = []
-        
-        # Getting items in directory including hidden and coloring
-        # depending on item type
-        for item in all_directory_list:
-            
-            # Get full path to apply correct coloring
-            full_path = os.path.join(ls_directory or os.getcwd(), item)
-            items.append(color_filename(item, full_path))
-        
-        # Returning sorted list of items
-        items.sort()
-        return items
-        
-    # Using -l alone
-    elif option == "-l":
-        
-        items = []
-        total_size = 0
-        
-        # Getting block size
-        for item in directory_list:
-            file_info = os.stat(item)
-            total_size += file_info.st_blocks
-        
-        # Printing size of directory
-        print("total", total_size // 2)
-        
-        # Print details for each file
-        for item in directory_list:
-                
-            # Getting info about the item and adding it to list
-            items.append(format_long_listing(item))
-                
-        # Return items sorted by filename
-        items = sorted(items, key=lambda x: x[-1].lower())
-        return items
-         
-    # Using -al or -la prints all files in long format
-    elif option in ("-al", "-la"):
-               
-        total_size = 0
-        items = []
-        
-        # Calculate total size of all files in directory
-        for item in all_directory_list:
-            file_info = os.stat(item)
-            total_size += file_info.st_blocks
-        
-        print("total", total_size // 2)
-        
-        # Print details for each file
-        for item in all_directory_list:
-                
-            # Getting info about the item and adding it to list
-            items.append(format_long_listing(item))
-                
-        # Sort items by filename
-        items = sorted(items, key=lambda x: x[-1].lower())
-        return items
-        
-    # Using -lh or -hl prints files in long format with human readable sizes
-    elif option in ("-lh", "-hl"):
-        
-        total_size = 0
-        items = []
-        
-        # Calculate total size of all non-hidden files in directory
-        for item in directory_list:
-            file_info = os.stat(item)
-            total_size += file_info.st_blocks
-        
-        # st_blocks * 512 = byte
-        print("total", human_readable(total_size * 512))
-        
-        # Print details for each file
-        for item in directory_list:
-                
-            # Getting item info and adding to list
-            items.append(format_long_listing(item, human = True))
-                
-        # Returning items sorted by filename
-        items = sorted(items, key=lambda x: x[-1].lower())
-        return items
-        
-    # Using -alh or any combo of those three prints all files in long format with human readable sizes
-    elif option in ("-alh", "-ahl", "-lah", "-lha", "-hal", "-hla"):
-        
-        total_size = 0
-        items = []
-        
-        # Calculate total size of all files in directory
-        for item in all_directory_list:
-            file_info = os.stat(item)
-            total_size += file_info.st_blocks
-        
-        # st_blocks * 512 = byte
-        print("total", human_readable(total_size * 512))
-        
-        # Print details for each file
-        for item in all_directory_list:
-                
-            # Getting item info and adding to list
-            items.append(format_long_listing(item, human = True))
-                
-        # Returning items sorted by filename
-        items = sorted(items, key=lambda x: x[-1].lower())
-        return items
-        
-    # Invalid option
-    else:
-        print("ls: invalid option.")
-        print("Try 'ls --help' for more information.")
     
         
 def history():
@@ -978,8 +829,6 @@ def ls_(parts):
         output = "something"
         
     return {"output" : output}
-        
-        
 
 
 def parse_cmd(cmd_input):
@@ -1004,6 +853,8 @@ def parse_cmd(cmd_input):
                 d["flags"] = item[1:]
             else:
                 d["params"].append(item)
+                
+        print("parameters list:", d["params"])
         
         command_list.append(d)
         

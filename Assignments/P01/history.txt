@@ -156,3 +156,11 @@ cd.. | ls
 cd .. | ls
 ls
 cd .. | ls
+cd .. | ls
+ls -h
+ls /workspaces
+cd ..
+cd ..
+cd ..
+ls
+ls /workspaces/5143-Opsys
