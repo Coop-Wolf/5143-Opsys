@@ -668,26 +668,50 @@ def mkdir(parts):
     Returns:
         None
     """
+    
+    # These are lists
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
+    # Make sure user only ran mkdir [directory]
+    if not input and not flags:
+        # Convert params list to string
+        str_params = " ".join(params)
+        
+        # Remove single quotes if they exist
+        str_params = str_params.strip("'")
 
-    if os.path.isabs(args[0]):
-        
-        # Getting the absolute path from argumen
-        path = args[0]
+        if os.path.isabs(str_params):
+            
+            # Getting the absolute path from argumen
+            path = str_params
 
-    # if relative path, join with current working directory
-    elif not os.path.isabs(args[0]):
+        # if relative path, join with current working directory
+        elif not os.path.isabs(str_params):
+            
+            # Getting new directory name, current working directory
+            # and joining them to create full path
+            new_dir = str_params
+            cwd     = os.getcwd()
+            path    = os.path.join(cwd, new_dir)
+            
+        # Creating the directory and handling errors
+        try:
+            os.mkdir(path)
+        except OSError as e:
+            output["error"] = f"Error: {e}"
+            
+            
+    # User entered incorrect command format
+    else:
+        output["error"] = "Error. Mkdir command only takes a directory."
         
-        # Getting new directory name, current working directory
-        # and joining them to create full path
-        new_dir = args[0]
-        cwd     = os.getcwd()
-        path    = os.path.join(cwd, new_dir)
         
-    # Creating the directory and handling errors
-    try:
-        os.mkdir(path)
-    except OSError as e:
-        print("Error:", e)
+    return output
         
         
 def human_readable(size):
@@ -1064,6 +1088,10 @@ if __name__ == "__main__":
                         result = cd(command)
                     elif command.get("cmd") == "ls":
                         result = ls(command)
+                    elif command.get("cmd") == "pwd":
+                        result = pwd_()
+                    elif command.get("cmd") == "mkdir":
+                        result = mkdir(command)
 
                             
                             
