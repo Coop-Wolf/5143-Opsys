@@ -926,6 +926,7 @@ def parse_cmd(cmd_input):
         print(d["cmd"])
         print(d["error"])
         print(d["flags"])
+        print(d["params"])
         
         
         for item in subparts[1:]:
