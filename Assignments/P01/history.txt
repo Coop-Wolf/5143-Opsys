@@ -170,3 +170,12 @@ ls /workspaces
 ls /workspaces/5143-Opsys
 ls /workspaces/5143-Opsys
 pwd
+pwd
+ls
+cd ..
+ls
+ls
+mkdir P03
+ls
+cd P03
+ls
