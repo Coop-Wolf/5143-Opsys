@@ -121,6 +121,9 @@ def ls(parts):
     output dict: {"output" : string, "error" : string}
     '''
     
+    # directory to store output information
+    output = {"output" : None, "error" : None}
+    
     
     input = parts.get("input", None)
     flags = parts.get("flags", None)
@@ -162,7 +165,9 @@ def ls(parts):
             
             # Returning sorted list of items
             items.sort()
-            return items
+            result = "\n".join(items)
+            output["output"] = result
+            return output
             
         # Using -l alone
         elif option == "l":
@@ -186,7 +191,9 @@ def ls(parts):
                     
             # Return items sorted by filename
             items = sorted(items, key=lambda x: x[-1].lower())
-            return items
+            result = "\n".join(items)
+            output["output"] = result
+            return output
             
         # Using -al or -la prints all files in long format
         elif option in ("al", "la"):
@@ -209,7 +216,9 @@ def ls(parts):
                     
             # Sort items by filename
             items = sorted(items, key=lambda x: x[-1].lower())
-            return items
+            result = "\n".join(items)
+            output["output"] = result
+            return output
             
         # Using -lh or -hl prints files in long format with human readable sizes
         elif option in ("lh", "hl"):
@@ -233,7 +242,9 @@ def ls(parts):
                     
             # Returning items sorted by filename
             items = sorted(items, key=lambda x: x[-1].lower())
-            return items
+            result = "\n".join(items)
+            output["output"] = result
+            return output
             
         # Using -alh or any combo of those three prints all files in long format with human readable sizes
         elif option in ("alh", "ahl", "lah", "lha", "hal", "hla"):
@@ -257,7 +268,9 @@ def ls(parts):
                     
             # Returning items sorted by filename
             items = sorted(items, key=lambda x: x[-1].lower())
-            return items
+            result = "\n".join(items)
+            output["output"] = result
+            return output
             
         # Invalid option
         else:
@@ -1011,8 +1024,13 @@ if __name__ == "__main__":
                         cd(command)
                     elif command.get("cmd") == "ls":
                         result = ls(command)
-                        for item in result:
-                            print(f"{item[0]:<10} {item[1]:<3}{item[2]:<10}{item[3]:<10}{item[4]:>8} {item[5]:<12} {item[6]}")
+                        
+                        print(result)
+                        
+                        #for item in result:
+                            # Printing results to ls. but really needs to be a string thats stored and printed at the end.
+                            #print(f"{item[0]:<10} {item[1]:<3}{item[2]:<10}{item[3]:<10}{item[4]:>8} {item[5]:<12} {item[6]}")
+                            
                 
                 # Piping
                 #else:
