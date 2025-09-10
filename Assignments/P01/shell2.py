@@ -126,8 +126,6 @@ def ls(parts):
     flags = parts.get("flags", None)
     params = parts.get("params", None)
     
-    print("params:", params)
-    print("flags", flags)
     
     if input:
         pass
@@ -1018,19 +1016,19 @@ if __name__ == "__main__":
                         result = ls(command)
                 
                 # Piping
-                else:
-                    print("Multiple commands. Piping.")
+                #else:
+                    
                     
             
                 # Checking if multiple commands
-                print(command_list)
-                print('This should be the first command within a pipe.')
-                print(command_list.pop(0))
+              #  print(command_list)
+              #  print('This should be the first command within a pipe.')
+              #  print(command_list.pop(0))
                 #Push each dictionary from command list to a queue
                 
             ## Figure out what your executing like finding pipes and redirects
             
-            print(result)
+            #print(result)
 
             cmd = ""
             cursor_pos = 0
