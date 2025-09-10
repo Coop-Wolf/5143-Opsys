@@ -625,13 +625,14 @@ def cmd_from_history(index):
         return None
        
        
-def write_to_history(command_list):
+def write_to_history(cmd):
     '''
     # write out the command to the history file
     # so you can access it later with the up/down arrows
     '''
     
     # Clean command_list by converting to string
+    print("HERE")
           
     # Get the absolute path of the folder where the script is located
     # Since this script and the history file are in the same directory:
@@ -814,7 +815,7 @@ def print_cmd(cmd, cursor_pos=0):
 
 
 
-
+# Test function
 def ls_(parts):
     '''
     input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
@@ -1026,7 +1027,7 @@ if __name__ == "__main__":
             print()
 
 
-            #write_to_history(cmd)
+            write_to_history(cmd)
                 
             print("This is what would go into history file", cmd)
 
@@ -1056,7 +1057,7 @@ if __name__ == "__main__":
                             
                             
                 # Printing result to screen
-                if result["error"] != None:
+                if result["error"]:
                     print(result["error"])
                 elif result["output"]:
                     print(result["output"])
