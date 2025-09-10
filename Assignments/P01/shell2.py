@@ -164,6 +164,7 @@ def ls(parts):
     if input:
         pass
         
+    # If user wants to ls a certain directory, grab the directory name if it's a directory
     if len(params) == 1:
         
         # Getting directory info from param given
@@ -186,24 +187,40 @@ def ls(parts):
             return output
         
         
-        print("Directory:", ls_directory)
-        
+    # return error if there are more than 1 parameters
     elif len(params) > 1:
         output["error"] = "ls has too many parameters"
         return output
         
+    # User wants to print list from current directory
+    if flags == "":
+        # list to store items
+        items = []
+            
+        for item in directory_list:
+            # Get full path to apply correct coloring
+            full_path = os.path.join(ls_directory or os.getcwd(), item)
+            items.append(color_filename(item, full_path))
+            
+        # Returning sorted list of items
+        items.sort()
+            
+        # Convert to string
+        result = " ".join(items)
+        output["output"] = result
+        return output
+    
+    # Executing ls that has flags
     if flags:
         # Storing the argument
         option = flags
-        
-        print("option: |", option, "|")
     
         # List that stores directory contents
         directory_list     = get_directory_items(ls_directory)
         all_directory_list = get_directory_items(ls_directory, include_hidden = True)
         
         # Using -h alone prints the same as no args
-        if option == "h" or option == "": 
+        if option == "h": 
             
             # list to store items
             items = []

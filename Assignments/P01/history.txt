@@ -151,3 +151,4 @@ ls -ah
 cd | ls
 cd | ls
 cd .. | ls -h
+cd | ls
