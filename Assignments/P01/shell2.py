@@ -624,6 +624,26 @@ def cmd_from_history(index):
     else:
         return None
        
+       
+def write_to_history(command_list):
+    '''
+    # write out the command to the history file
+    # so you can access it later with the up/down arrows
+    '''
+    
+    # Clean command_list by converting to string
+          
+    # Get the absolute path of the folder where the script is located
+    # Since this script and the history file are in the same directory:
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Build the full path to history.txt inside your repo
+    history_file = os.path.join(script_dir, "history.txt")
+
+    # Append command to the file
+    with open(history_file, "a") as file:
+        file.write(cmd + "\n")
+       
     
 def clear():
     """
@@ -948,11 +968,6 @@ if __name__ == "__main__":
     history_index = -1
     
     
-    print(parse_cmd("ls -l | ls -lah | cd Assignment/OS"))
-    print()
-    print()
-    print(parse_cmd("ls -l"))
-    
     cmd = ""  # empty cmd variable
 
     print_cmd(cmd)  # print to terminal
@@ -1015,8 +1030,13 @@ if __name__ == "__main__":
             ## Parse the command
             if(cmd):
                 
+                # Part command and returning list of dictionaries
                 command_list = parse_cmd(cmd)
                 result = {"output" : None, "error" : None}
+                
+                #write_to_history(command_list)
+                
+                print("This is what would go into history file", command_list)
                 
                 # Here we need to save the command to the history file.
             
