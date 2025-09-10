@@ -111,6 +111,7 @@ def cd(parts):
     # Remove single quotes if they exist
     str_params = str_params.strip("'")
     
+    print(str_params)
         
     # User wants to go to home directory
     if str_params == "":
