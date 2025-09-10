@@ -131,14 +131,12 @@ def ls(parts):
         pass
         
     if len(params) > 0:
-        print("HERE.")
+        print()
         #return {"output": None, "error" : "Directionary doesn't exist"}
         
     if flags:
         # Storing the argument
         option = flags
-        
-        print("Here is option (flags):", option)
     
         # List that stores directory contents
         directory_list     = get_directory_items()
@@ -994,10 +992,9 @@ if __name__ == "__main__":
             print_cmd(cmd)  # print the command (again)
 
         elif char in "\r":  # return pressed
+            
+            print()
 
-            # This 'elif' simulates something "happening" after pressing return
-            print_cmd(cmd)
-            sleep(1)
 
             ## YOUR CODE HERE
             ## Parse the command
@@ -1014,7 +1011,8 @@ if __name__ == "__main__":
                         cd(command)
                     elif command.get("cmd") == "ls":
                         result = ls(command)
-                        print(result)
+                        for item in result:
+                            print(item)
                 
                 # Piping
                 #else:
