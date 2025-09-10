@@ -83,36 +83,41 @@ def cd(parts):
     flags = parts.get("flags", None)
     params = parts.get("params", None)
     
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
     
     if input:
-        parts["error"] = "Error. Command should not have an input."
-        
-    elif params:
-        
-        # Convert params list to string
-        str_params = " ".join(params)
+        output["error"] = "Error. Command should not have an input."
+        return output
     
-        # Remove single quotes if they exist
-        str_params = str_params.strip("'")
+    if flags:
+        output["error"] = "Error. Command doesn't take flags."
+        return output
         
-        print("This is str_params: ", str_params)
         
-        # User wants to go to home directory
-        if str_params == " ":
-            homedir = os.path.expanduser("~")
-            os.chdir(homedir)
+    # Convert params list to string
+    str_params = " ".join(params)
+    
+    # Remove single quotes if they exist
+    str_params = str_params.strip("'")
+        
+    # User wants to go to home directory
+    if str_params == " ":
+        homedir = os.path.expanduser("~")
+        os.chdir(homedir)
         
         # User wants to go to parent directory
-        if str_params == "..":
-            os.chdir("..")
+    if str_params == "..":
+        os.chdir("..")
             
-        # User wants to go to differnt directory
-        elif os.path.isdir(str_params):
-            os.chdir(str_params)
+    # User wants to go to differnt directory
+    elif os.path.isdir(str_params):
+        os.chdir(str_params)
             
-        # Directory is invalid
-        elif not os.path.isdir(str_params):
-            parts["error"] = f"Error. {str_params} is not a directory."
+    # Directory is invalid
+    elif not os.path.isdir(str_params):
+        parts["error"] = f"Error. {str_params} is not a directory."
             
     
 
@@ -991,8 +996,6 @@ if __name__ == "__main__":
     # For handling up/down arrow keys
     history_index = -1
     
-    
-    cmd = ""  # empty cmd variable
 
     print_cmd(cmd)  # print to terminal
 
@@ -1047,15 +1050,13 @@ if __name__ == "__main__":
 
         elif char in "\r":  # return pressed
             
+            # Printing blank line to info isn't overwritten
             print()
 
-
+            # Writing command to history file
             write_to_history(cmd)
                 
-            print("This is what would go into history file", cmd)
-
-            ## YOUR CODE HERE
-            ## Parse the command
+            # If there is a command to execute
             if(cmd):
                 
                 # Part command and returning list of dictionaries
@@ -1069,10 +1070,14 @@ if __name__ == "__main__":
             
                     # Pop first command off of the command list
                     command = command_list.pop(0)
+                    
+                    # Kill execution if error
+                    if result["error"]:
+                        break
 
                         
                     if command.get("cmd") == "cd":
-                        cd(command)
+                        result = cd(command)
                     elif command.get("cmd") == "ls":
                         result = ls(command)
 
