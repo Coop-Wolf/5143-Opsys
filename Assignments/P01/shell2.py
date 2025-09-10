@@ -1035,7 +1035,7 @@ if __name__ == "__main__":
                             
                             
                 # Printing result to screen
-                if result["error"]:
+                if result["error"] != None:
                     print(result["error"])
                 elif result["output"]:
                     print(result["output"])
