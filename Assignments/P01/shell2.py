@@ -1014,6 +1014,7 @@ if __name__ == "__main__":
                         cd(command)
                     elif command.get("cmd") == "ls":
                         result = ls(command)
+                        print(result)
                 
                 # Piping
                 #else:
@@ -1028,7 +1029,7 @@ if __name__ == "__main__":
                 
             ## Figure out what your executing like finding pipes and redirects
             
-            #print(result)
+            
 
             cmd = ""
             cursor_pos = 0
