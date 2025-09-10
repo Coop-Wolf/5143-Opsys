@@ -248,6 +248,7 @@ def ls(parts):
             for item in directory_list:
                     
                 # Getting info about the item and adding it to list
+                full_path = os.path.join(ls_directory or os.getcwd(), item)
                 items.append(format_long_listing(full_path))
                     
             # Return items sorted by filename
@@ -274,6 +275,7 @@ def ls(parts):
             for item in all_directory_list:
                     
                 # Getting info about the item and adding it to list
+                full_path = os.path.join(ls_directory or os.getcwd(), item)
                 items.append(format_long_listing(full_path))
                     
             # Sort items by filename
@@ -301,6 +303,7 @@ def ls(parts):
             for item in directory_list:
                     
                 # Getting item info and adding to list
+                full_path = os.path.join(ls_directory or os.getcwd(), item)
                 items.append(format_long_listing(full_path, human = True))
                     
             # Returning items sorted by filename
@@ -328,6 +331,7 @@ def ls(parts):
             for item in all_directory_list:
                     
                 # Getting item info and adding to list
+                full_path = os.path.join(ls_directory or os.getcwd(), item)
                 items.append(format_long_listing(full_path, human = True))
                     
             # Returning items sorted by filename

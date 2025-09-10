@@ -136,3 +136,4 @@ ls -lah /workspaces
 cd /workspaces
 cd /workspaces
 ls -lah /workspaces
+ls -lah
