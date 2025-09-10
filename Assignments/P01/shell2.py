@@ -849,7 +849,7 @@ def parse_cmd(cmd_input):
         
         for item in subparts[1:]:
             
-            if "-" in item:
+            if item.startswith("-"):
                 d["flags"] = item[1:]
             else:
                 d["params"].append(item)
