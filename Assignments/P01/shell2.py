@@ -845,8 +845,7 @@ def parse_cmd(cmd_input):
         subparts = cmd.strip().split()
         d["cmd"] = subparts[0]
         
-        print("subparts", subparts)
-        
+        # Going thorugh the rest of the subparts to classify and store correctly
         for item in subparts[1:]:
             
             if item.startswith("-"):
@@ -854,8 +853,7 @@ def parse_cmd(cmd_input):
             else:
                 d["params"].append(item)
                 
-        print("parameters list:", d["params"])
-        
+        # Appending the correct dictionary to command list
         command_list.append(d)
         
     return command_list
@@ -958,48 +956,76 @@ if __name__ == "__main__":
 
         char = getch()  # read a character (but don't print)
 
-        if char == "\x03" or cmd == "exit":  # ctrl-c
-            raise SystemExit("Bye.")
+        # Exit shell on ctrl-c command
+        if char == "\x03":
+            exit_shell()
 
-        elif char == "\x7f":  # back space pressed
-            cmd = cmd[:-1]
-            print_cmd(cmd)
+        # If back space pressed, remove the character to the left of the cursor
+        if char == "\x7f":
+            if cursor_pos > 0:
+                cmd = cmd[:cursor_pos-1] + cmd[cursor_pos:]
+                cursor_pos -= 1
+            print_cmd(cmd, cursor_pos)
 
         elif char in "\x1b":  # arrow key pressed
             null = getch()  # waste a character
             direction = getch()  # grab the direction
+            
+            # Get updated history if avaible
+            h_cmd = get_history_rev() or []
 
             if direction in "A":  # up arrow pressed
-                # get the PREVIOUS command from your history (if there is one)
-                # prints out 'up' then erases it (just to show something)
-                cmd += "\u2191"
-                print_cmd(cmd)
-                sleep(0.3)
-                # cmd = cmd[:-1]
+                
+                # Get list of history commands
+                if h_cmd and history_index < len(h_cmd) - 1:
+                    
+                    # Get the previous command from history depending on
+                    # history_index and increment index
+                    history_index += 1
+                    cmd = h_cmd[history_index]
+                    
+                    
+                # If at the end of history, stay there
+                else:
+                    # already at the oldest command
+                    # so set cmd to end of h_cmd list
+                    cmd = h_cmd[-1]
+                    
+                cursor_pos = len(cmd)
+                print_cmd(cmd, cursor_pos)
 
             if direction in "B":  # down arrow pressed
+                
                 # get the NEXT command from history (if there is one)
-                # prints out 'down' then erases it (just to show something)
-                cmd += "\u2193"
-                print_cmd(cmd)
-                sleep(0.3)
-                # cmd = cmd[:-1]
+                if h_cmd and history_index > 0:
+                    
+                    # Get the previous command from history depending on
+                    # history_index and decrement index
+                    history_index -= 1
+                    cmd = h_cmd[history_index]
+
+                    
+                # At the newest, go to blank like
+                else:
+                    
+                    # Getting a blank line
+                    history_index = -1
+                    cmd = ""
+                    
+                cursor_pos = len(cmd)
+                print_cmd(cmd, cursor_pos)
 
             if direction in "C":  # right arrow pressed
                 # move the cursor to the right on your command prompt line
-                # prints out 'right' then erases it (just to show something)
-                cmd += "\u2192"
-                print_cmd(cmd)
-                sleep(0.3)
-                # cmd = cmd[:-1]
+                if cursor_pos < len(cmd):
+                    cursor_pos += 1
+                print_cmd(cmd, cursor_pos)
 
             if direction in "D":  # left arrow pressed
                 # moves the cursor to the left on your command prompt line
-                # prints out 'left' then erases it (just to show something)
-                cmd += "\u2190"
-                print_cmd(cmd)
-                sleep(0.3)
-                # cmd = cmd[:-1]
+                if cursor_pos > 0:
+                    cursor_pos -= 1
+                print_cmd(cmd, cursor_pos)
 
             print_cmd(cmd)  # print the command (again)
 
@@ -1007,6 +1033,9 @@ if __name__ == "__main__":
             
             # Printing blank line to info isn't overwritten
             print()
+            
+            if cmd == "exit":
+                exit_shell()
 
             # Writing command to history file
             write_to_history(cmd)
