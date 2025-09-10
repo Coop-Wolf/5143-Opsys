@@ -111,7 +111,6 @@ def cd(parts):
     # Remove single quotes if they exist
     str_params = str_params.strip("'")
     
-    print(str_params)
         
     # User wants to go to home directory
     if str_params == "":
@@ -165,7 +164,7 @@ def ls(parts):
     
     
     # Used to store directory from params
-    directory = ""
+    ls_directory = ""
     
     if input:
         pass
@@ -182,17 +181,17 @@ def ls(parts):
         
         # Determining which directory to display info from
         if params == "..":
-            directory = params
+            ls_directory = params
             
         elif os.path.isdir(str_params):
-            directory = str_params
+            ls_directory = str_params
             
         elif not os.path.isdir(str_params):
             output["error"] = f"Error. {str_params} is not a directory."
             return output
         
         
-        print("Directory:", directory)
+        print("Directory:", ls_directory)
         
     elif len(params) > 1:
         output["error"] = "ls has too many parameters"
@@ -203,8 +202,8 @@ def ls(parts):
         option = flags
     
         # List that stores directory contents
-        directory_list     = get_directory_items(directory)
-        all_directory_list = get_directory_items(directory, include_hidden = True)
+        directory_list     = get_directory_items(ls_directory)
+        all_directory_list = get_directory_items(ls_directory, include_hidden = True)
         
         # Using -h alone prints the same as no args
         if option == "h":       
@@ -221,7 +220,7 @@ def ls(parts):
             for item in all_directory_list:
                 
                 # Get full path to apply correct coloring
-                full_path = os.path.join(os.getcwd(), item)
+                full_path = os.path.join(ls_directory or os.getcwd(), item)
                 items.append(color_filename(item, full_path))
             
             # Returning sorted list of items
@@ -238,7 +237,8 @@ def ls(parts):
             
             # Getting block size
             for item in directory_list:
-                file_info = os.stat(item)
+                full_path = os.path.join(ls_directory or os.getcwd(), item)
+                file_info = os.stat(full_path)
                 total_size += file_info.st_blocks
             
             # Printing size of directory
@@ -264,7 +264,8 @@ def ls(parts):
             
             # Calculate total size of all files in directory
             for item in all_directory_list:
-                file_info = os.stat(item)
+                full_path = os.path.join(ls_directory or os.getcwd(), item)
+                file_info = os.stat(full_path)
                 total_size += file_info.st_blocks
             
             print("total", total_size // 2)
@@ -289,7 +290,8 @@ def ls(parts):
             
             # Calculate total size of all non-hidden files in directory
             for item in directory_list:
-                file_info = os.stat(item)
+                full_path = os.path.join(ls_directory or os.getcwd(), item)
+                file_info = os.stat(full_path)
                 total_size += file_info.st_blocks
             
             # st_blocks * 512 = byte
@@ -315,7 +317,8 @@ def ls(parts):
             
             # Calculate total size of all files in directory
             for item in all_directory_list:
-                file_info = os.stat(item)
+                full_path = os.path.join(ls_directory or os.getcwd(), item)
+                file_info = os.stat(full_path)
                 total_size += file_info.st_blocks
             
             # st_blocks * 512 = byte
@@ -338,8 +341,8 @@ def ls(parts):
             output["error"] = "ls: invalid option. Try 'ls --help for more info."
             return output
         
-        
-    return None
+    output["error"] = "Error"
+    return output
 
 
 # Helper function for ls_with_args
@@ -473,7 +476,7 @@ def ls_with_args(args):
         for item in all_directory_list:
             
             # Get full path to apply correct coloring
-            full_path = os.path.join(os.getcwd(), item)
+            full_path = os.path.join(ls_directory or os.getcwd(), item)
             items.append(color_filename(item, full_path))
         
         # Returning sorted list of items
