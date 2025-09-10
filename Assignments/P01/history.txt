@@ -142,3 +142,4 @@ ls -lah /workspaces
 ls -lah /workspaces/5143-Opsys
 ls -lah /workspaces
 ls -l
+ls -lah
