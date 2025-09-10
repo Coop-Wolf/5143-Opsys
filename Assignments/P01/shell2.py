@@ -248,7 +248,7 @@ def ls(parts):
             for item in directory_list:
                     
                 # Getting info about the item and adding it to list
-                items.append(format_long_listing(item))
+                items.append(format_long_listing(full_path))
                     
             # Return items sorted by filename
             items = sorted(items, key=lambda x: x[-1].lower())
@@ -274,7 +274,7 @@ def ls(parts):
             for item in all_directory_list:
                     
                 # Getting info about the item and adding it to list
-                items.append(format_long_listing(item))
+                items.append(format_long_listing(full_path))
                     
             # Sort items by filename
             items = sorted(items, key=lambda x: x[-1].lower())
@@ -301,7 +301,7 @@ def ls(parts):
             for item in directory_list:
                     
                 # Getting item info and adding to list
-                items.append(format_long_listing(item, human = True))
+                items.append(format_long_listing(full_path, human = True))
                     
             # Returning items sorted by filename
             items = sorted(items, key=lambda x: x[-1].lower())
@@ -328,7 +328,7 @@ def ls(parts):
             for item in all_directory_list:
                     
                 # Getting item info and adding to list
-                items.append(format_long_listing(item, human = True))
+                items.append(format_long_listing(full_path, human = True))
                     
             # Returning items sorted by filename
             items = sorted(items, key=lambda x: x[-1].lower())
@@ -368,7 +368,7 @@ def color_filename(item, full_path):
     
 
 # Helper functin for ls_with_args
-def format_long_listing(item, human = False):
+def format_long_listing(full_path, human = False):
     '''
     Returns detailed metadata for a file in "long listing" format.
     
@@ -381,7 +381,6 @@ def format_long_listing(item, human = False):
     '''
     
     # Getting full path of the item and info about the item
-    full_path = os.path.join(os.getcwd(), item)
     file_info = os.stat(full_path)
 
     # Retreiving info about item
@@ -393,7 +392,7 @@ def format_long_listing(item, human = False):
     mod_time    = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
     
     # coloring item name depending on type
-    name        = color_filename(item, full_path)
+    name        = color_filename(os.path.basename(full_path), full_path)
 
     # Returning all item information
     #return [permissions, links, owner, group, size, mod_time, name]
