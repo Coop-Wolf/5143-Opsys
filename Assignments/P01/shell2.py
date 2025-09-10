@@ -845,7 +845,7 @@ def parse_cmd(cmd_input):
         subparts = cmd.strip().split()
         d["cmd"] = subparts[0]
         
-        
+        print("subparts", subparts)
         
         for item in subparts[1:]:
             
