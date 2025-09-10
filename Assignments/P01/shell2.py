@@ -197,7 +197,7 @@ def ls(parts):
         # list to store items
         items = []
             
-        for item in directory_list:
+        for item in get_directory_items(ls_directory):
             # Get full path to apply correct coloring
             full_path = os.path.join(ls_directory or os.getcwd(), item)
             items.append(color_filename(item, full_path))
