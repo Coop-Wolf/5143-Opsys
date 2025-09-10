@@ -1027,8 +1027,10 @@ if __name__ == "__main__":
                     elif command.get("cmd") == "ls":
                         result = ls(command)
                         
-                        print(result)
-                        
+                        if result["error"]:
+                            print(result["error"])
+                        else:
+                            print(result["output"])
                         #for item in result:
                             # Printing results to ls. but really needs to be a string thats stored and printed at the end.
                             #print(f"{item[0]:<10} {item[1]:<3}{item[2]:<10}{item[3]:<10}{item[4]:>8} {item[5]:<12} {item[6]}")
