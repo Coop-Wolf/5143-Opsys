@@ -127,3 +127,5 @@ cd
 cd
 cd
 cd
+ls -lah
+ls -lah /workspaces/5143-Opsys

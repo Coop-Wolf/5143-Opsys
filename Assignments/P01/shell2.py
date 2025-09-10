@@ -158,6 +158,10 @@ def ls(parts):
     flags = parts.get("flags", None)
     params = parts.get("params", None)
     
+    print("input:", input)
+    print("flags", flags)
+    print("params", params)
+    
     
     # Used to store directory from params
     directory = ""
@@ -328,8 +332,8 @@ def ls(parts):
             
         # Invalid option
         else:
-            print("ls: invalid option.")
-            print("Try 'ls --help' for more information.")
+            output["error"] = "ls: invalid option. Try 'ls --help for more info."
+            return output
         
         
     return None
