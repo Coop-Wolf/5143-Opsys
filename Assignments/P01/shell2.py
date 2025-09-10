@@ -221,12 +221,6 @@ def ls(parts):
             # Returning sorted list of items
             items.sort()
             
-            # Formatting the list before converting to string
-            format_list = []
-            for item in items:
-                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<10}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
-                format_list.append(line)
-            
             # Convert to string
             result = "\n".join(format_list)
             output["output"] = result
