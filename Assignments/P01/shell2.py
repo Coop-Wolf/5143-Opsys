@@ -95,6 +95,10 @@ def cd(parts):
         # Remove single quotes if they exist
         str_params = str_params.strip("'")
         
+        
+        print("Params:", params)
+        print("str_params:", str_params)
+        
         if params == "..":
             os.chdir("..")
         elif os.path.isdir(str_params):
@@ -133,9 +137,27 @@ def ls(parts):
     if input:
         pass
         
-    if len(params) > 0:
-        print()
-        #return {"output": None, "error" : "Directionary doesn't exist"}
+    if len(params) == 1:
+        
+        # Getting directory info from param given
+        
+        # Convert params list to string
+        str_params = " ".join(params)
+    
+        # Remove single quotes if they exist
+        str_params = str_params.strip("'")
+        
+        if params == "..":
+            directory = params
+        elif os.path.isdir(str_params):
+            os.chdir(str_params)
+        elif not os.path.isdir(str_params):
+            parts["error"] = f"Error. {str_params} is not a directory."
+        
+        
+    elif len(params) > 1:
+        output["error"] = "ls has too many parameters"
+        return output
         
     if flags:
         # Storing the argument
@@ -277,10 +299,6 @@ def ls(parts):
             print("ls: invalid option.")
             print("Try 'ls --help' for more information.")
         
-    if params:
-        print("HERE if params.")
-        
-    output = "something"
         
     return None
 
@@ -630,9 +648,6 @@ def write_to_history(cmd):
     # write out the command to the history file
     # so you can access it later with the up/down arrows
     '''
-    
-    # Clean command_list by converting to string
-    print("HERE")
           
     # Get the absolute path of the folder where the script is located
     # Since this script and the history file are in the same directory:

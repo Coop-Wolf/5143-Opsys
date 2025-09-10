@@ -114,3 +114,5 @@ ls -lh
 ls -la
 ls -lah
 ls -l
+ls - lah
+ls -lah
