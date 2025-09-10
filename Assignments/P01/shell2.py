@@ -434,8 +434,8 @@ def format_long_listing(full_path, human = False):
     name        = color_filename(os.path.basename(full_path), full_path)
 
     # Returning all item information
-    #return [permissions, links, owner, group, size, mod_time, name]
-    return f"{permissions} {links} {owner} {group} {size} {mod_time} {name}"
+    return [permissions, links, owner, group, size, mod_time, name]
+    #return f"{permissions} {links} {owner} {group} {size} {mod_time} {name}"
 
 
 
