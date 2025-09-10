@@ -1108,6 +1108,7 @@ if __name__ == "__main__":
             cursor_pos = 0
             
             print_cmd(cmd)  # now print empty cmd prompt on next line
+            
         else:
             # Concatenate the typed character at the cursor position
             cmd = cmd[:cursor_pos] + char + cmd[cursor_pos:]
