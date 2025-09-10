@@ -51,8 +51,7 @@ Need to fix:
 
 
 Errors (bugs):
-    ls /workspaces/5143-Opsys does not work.
-    the 5143-Opsys overwrits the /workspaces i believe
+    weird results when doign left arrow then deleting
 
 
 
@@ -80,9 +79,12 @@ Commands that work correctly for Shell2.py
     cd 
     cd ..
     cd directory
+    pwd
+    mkdir
 
 Next
-    Need to do error testing on all commands to make sure errors are handled properly
+    implement history command.
+    implement !x command.
 
 
 
