@@ -60,6 +60,13 @@ def pwd_():
         str: The current working directory path.
     """
     
+    output = {"output" : None, "error" : None}
+    
+    # Storing cwd
+    cwd = os.getcwd()
+    
+    # Storing it into output dictionary and returning
+    output["output"] = cwd 
     return os.getcwd()
 
 
@@ -104,7 +111,6 @@ def cd(parts):
     # Remove single quotes if they exist
     str_params = str_params.strip("'")
     
-    print("This is str_params|", str_params, "|")
         
     # User wants to go to home directory
     if str_params == "":
@@ -121,13 +127,12 @@ def cd(parts):
             
     # Directory is invalid
     elif not os.path.isdir(str_params):
-        parts["error"] = f"Error. {str_params} is not a directory."
+        output["error"] = f"Error. {str_params} is not a directory."
         
     # Returning output dictionary
     return output
             
     
-
 def ls(parts):
     """
     List non-hidden files and directories in the current directory.
@@ -154,6 +159,9 @@ def ls(parts):
     params = parts.get("params", None)
     
     
+    # Used to store directory from params
+    directory = ""
+    
     if input:
         pass
         
@@ -167,12 +175,16 @@ def ls(parts):
         # Remove single quotes if they exist
         str_params = str_params.strip("'")
         
+        # Determining which directory to display info from
         if params == "..":
             directory = params
+            
         elif os.path.isdir(str_params):
-            os.chdir(str_params)
+            directory = str_params
+            
         elif not os.path.isdir(str_params):
-            parts["error"] = f"Error. {str_params} is not a directory."
+            output["error"] = f"Error. {str_params} is not a directory."
+            return output
         
         
     elif len(params) > 1:
@@ -184,8 +196,8 @@ def ls(parts):
         option = flags
     
         # List that stores directory contents
-        directory_list     = get_directory_items()
-        all_directory_list = get_directory_items(include_hidden = True)
+        directory_list     = get_directory_items(directory)
+        all_directory_list = get_directory_items(directory, include_hidden = True)
         
         # Using -h alone prints the same as no args
         if option == "h":       
@@ -380,7 +392,7 @@ def format_long_listing(item, human = False):
 
 
 # Helper function for ls_with_args
-def get_directory_items(include_hidden = False):
+def get_directory_items(directory = None, include_hidden = False):
     '''
     Returns a list of items in the current directory.
     
@@ -392,7 +404,13 @@ def get_directory_items(include_hidden = False):
     '''
     
     # Storing items from directory into items list
-    items = os.listdir()
+    if directory:
+        items = os.listdir(directory)
+    
+    if not directory:
+        items = os.listdir()
+        
+        
     non_hidden_items = []
     
     # If wanting all items return items + . and ..
