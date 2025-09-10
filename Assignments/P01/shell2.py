@@ -1016,7 +1016,7 @@ if __name__ == "__main__":
             if(cmd):
                 
                 command_list = parse_cmd(cmd)
-                result = {}
+                result = {"output" : None, "error" : None}
                 
                 # Here we need to save the command to the history file.
             
