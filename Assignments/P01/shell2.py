@@ -107,7 +107,7 @@ def cd(parts):
     print("This is str_params|", str_params, "|")
         
     # User wants to go to home directory
-    if str_params == "  ":
+    if str_params == "":
         homedir = os.path.expanduser("~")
         os.chdir(homedir)
         
