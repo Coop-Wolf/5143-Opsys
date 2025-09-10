@@ -156,12 +156,7 @@ def ls(parts):
     
     input = parts.get("input", None)
     flags = parts.get("flags", None)
-    params = parts.get("params", None)
-    
-    print("input:", input)
-    print("flags", flags)
-    print("params", params)
-    
+    params = parts.get("params", None)    
     
     # Used to store directory from params
     ls_directory = ""
@@ -225,7 +220,15 @@ def ls(parts):
             
             # Returning sorted list of items
             items.sort()
-            result = "\n".join(items)
+            
+            # Formatting the list before converting to string
+            format_list = []
+            for item in items:
+                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
+                format_list.append(line)
+            
+            # Convert to string
+            result = "\n".join(format_list)
             output["output"] = result
             return output
             
@@ -253,9 +256,17 @@ def ls(parts):
                     
             # Return items sorted by filename
             items = sorted(items, key=lambda x: x[-1].lower())
-            result = "\n".join(items)
+            
+            format_list = []
+            for item in items:
+                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
+                format_list.append(line)
+                
+            # Convert to string and return
+            result = "\n".join(format_list)
             output["output"] = result
             return output
+        
             
         # Using -al or -la prints all files in long format
         elif option in ("al", "la"):
@@ -280,7 +291,15 @@ def ls(parts):
                     
             # Sort items by filename
             items = sorted(items, key=lambda x: x[-1].lower())
-            result = "\n".join(items)
+            
+            # formatting list before converting to string
+            format_list = []
+            for item in items:
+                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
+                format_list.append(line)
+            
+            # Converting to string and returning
+            result = "\n".join(format_list)
             output["output"] = result
             return output
             
@@ -308,7 +327,15 @@ def ls(parts):
                     
             # Returning items sorted by filename
             items = sorted(items, key=lambda x: x[-1].lower())
-            result = "\n".join(items)
+            
+            # formatting list before converting to string
+            format_list = []
+            for item in items:
+                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
+                format_list.append(line)
+            
+            # Converting to string and returning
+            result = "\n".join(format_list)
             output["output"] = result
             return output
             
@@ -336,7 +363,15 @@ def ls(parts):
                     
             # Returning items sorted by filename
             items = sorted(items, key=lambda x: x[-1].lower())
-            result = "\n".join(items)
+            
+            # formatting list before converting to string
+            format_list = []
+            for item in items:
+                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
+                format_list.append(line)
+            
+            # Converting to string and returning
+            result = "\n".join(format_list)
             output["output"] = result
             return output
             
