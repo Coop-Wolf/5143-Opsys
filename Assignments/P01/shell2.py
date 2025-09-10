@@ -201,8 +201,24 @@ def ls(parts):
         all_directory_list = get_directory_items(ls_directory, include_hidden = True)
         
         # Using -h alone prints the same as no args
-        if option == "h":       
-            return ls()
+        if option == "h" or option == "": 
+            
+            # list to store items
+            items = []
+            
+            for item in directory_list:
+                # Get full path to apply correct coloring
+                full_path = os.path.join(ls_directory or os.getcwd(), item)
+                items.append(color_filename(item, full_path))
+            
+            # Returning sorted list of items
+            items.sort()
+            
+            # Convert to string
+            result = " ".join(items)
+            output["output"] = result
+            return output
+                
                 
         # Using -a alone or with -h prints all files including hidden
         elif option in ("a","ah", "ha"):

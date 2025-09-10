@@ -147,3 +147,5 @@ ls -lah
 ls -ah
 ls -ah
 ls -ah
+ls -ah
+cd | ls
