@@ -96,6 +96,8 @@ def cd(parts):
         return output
         
         
+    # Changing output dictionary so it can be checked
+        
     # Convert params list to string
     str_params = " ".join(params)
     
@@ -118,6 +120,9 @@ def cd(parts):
     # Directory is invalid
     elif not os.path.isdir(str_params):
         parts["error"] = f"Error. {str_params} is not a directory."
+        
+    # Returning output dictionary
+    return output
             
     
 
