@@ -923,6 +923,11 @@ def parse_cmd(cmd_input):
         subparts = cmd.strip().split()
         d["cmd"] = subparts[0]
         
+        print(d["cmd"])
+        print(d["error"])
+        print(d["flags"])
+        
+        
         for item in subparts[1:]:
             
             if "-" in item:
