@@ -195,6 +195,8 @@ def ls(parts):
     if flags:
         # Storing the argument
         option = flags
+        
+        print("option: |", option, "|")
     
         # List that stores directory contents
         directory_list     = get_directory_items(ls_directory)

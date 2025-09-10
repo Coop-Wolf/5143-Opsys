@@ -149,3 +149,5 @@ ls -ah
 ls -ah
 ls -ah
 cd | ls
+cd | ls
+cd .. | ls -h
