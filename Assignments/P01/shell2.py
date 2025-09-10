@@ -193,7 +193,7 @@ def ls(parts):
         return output
         
     # User wants to print list from current directory
-    if flags == "":
+    if not flags:
         # list to store items
         items = []
             

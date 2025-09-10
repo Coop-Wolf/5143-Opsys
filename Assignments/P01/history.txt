@@ -152,3 +152,6 @@ cd | ls
 cd | ls
 cd .. | ls -h
 cd | ls
+cd.. | ls
+cd .. | ls
+ls
