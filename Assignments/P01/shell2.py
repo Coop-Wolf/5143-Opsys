@@ -1012,7 +1012,7 @@ if __name__ == "__main__":
                     elif command.get("cmd") == "ls":
                         result = ls(command)
                         for item in result:
-                            print(item)
+                            print(f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}")
                 
                 # Piping
                 #else:
