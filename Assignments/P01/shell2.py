@@ -222,7 +222,7 @@ def ls(parts):
             items.sort()
             
             # Convert to string
-            result = "\n".join(format_list)
+            result = "\n".join(items)
             output["output"] = result
             return output
             
