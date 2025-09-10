@@ -116,3 +116,4 @@ ls -lah
 ls -l
 ls - lah
 ls -lah
+cd ..

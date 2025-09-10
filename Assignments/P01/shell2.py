@@ -96,10 +96,9 @@ def cd(parts):
         str_params = str_params.strip("'")
         
         
-        print("Params:", params)
-        print("str_params:", str_params)
+
         
-        if params == "..":
+        if str_params == "..":
             os.chdir("..")
         elif os.path.isdir(str_params):
             os.chdir(str_params)
