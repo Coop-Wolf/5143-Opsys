@@ -336,7 +336,9 @@ def format_long_listing(item, human = False):
     name        = color_filename(item, full_path)
 
     # Returning all item information
-    return [permissions, links, owner, group, size, mod_time, name]
+    #return [permissions, links, owner, group, size, mod_time, name]
+    return f"{permissions} {links} {owner} {group} {size} {mod_time} {name}"
+
 
 
 # Helper function for ls_with_args
