@@ -95,13 +95,20 @@ def cd(parts):
         # Remove single quotes if they exist
         str_params = str_params.strip("'")
         
+        # User wants to go to home directory
+        if str_params == " ":
+            homedir = os.path.expanduser("~")
+            os.chdir(homedir)
         
-
-        
+        # User wants to go to parent directory
         if str_params == "..":
             os.chdir("..")
+            
+        # User wants to go to differnt directory
         elif os.path.isdir(str_params):
             os.chdir(str_params)
+            
+        # Directory is invalid
         elif not os.path.isdir(str_params):
             parts["error"] = f"Error. {str_params} is not a directory."
             
