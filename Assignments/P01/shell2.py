@@ -138,7 +138,7 @@ def ls(parts):
         
     if flags:
         # Storing the argument
-        option = flags[0]
+        option = flags
         
         print("Here is option (flags):", option)
     
@@ -147,11 +147,11 @@ def ls(parts):
         all_directory_list = get_directory_items(include_hidden = True)
         
         # Using -h alone prints the same as no args
-        if option == "-h":       
+        if option == "h":       
             return ls()
                 
         # Using -a alone or with -h prints all files including hidden
-        elif option in ("-a","-ah", "-ha"):
+        elif option in ("a","ah", "ha"):
             
             # list to store directory items
             items = []
@@ -169,7 +169,7 @@ def ls(parts):
             return items
             
         # Using -l alone
-        elif option == "-l":
+        elif option == "l":
             
             items = []
             total_size = 0
@@ -193,7 +193,7 @@ def ls(parts):
             return items
             
         # Using -al or -la prints all files in long format
-        elif option in ("-al", "-la"):
+        elif option in ("al", "la"):
                 
             total_size = 0
             items = []
@@ -216,7 +216,7 @@ def ls(parts):
             return items
             
         # Using -lh or -hl prints files in long format with human readable sizes
-        elif option in ("-lh", "-hl"):
+        elif option in ("lh", "hl"):
             
             total_size = 0
             items = []
@@ -240,7 +240,7 @@ def ls(parts):
             return items
             
         # Using -alh or any combo of those three prints all files in long format with human readable sizes
-        elif option in ("-alh", "-ahl", "-lah", "-lha", "-hal", "-hla"):
+        elif option in ("alh", "ahl", "lah", "lha", "hal", "hla"):
             
             total_size = 0
             items = []
