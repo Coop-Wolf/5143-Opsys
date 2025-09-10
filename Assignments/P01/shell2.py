@@ -1026,6 +1026,10 @@ if __name__ == "__main__":
             print()
 
 
+            #write_to_history(cmd)
+                
+            print("This is what would go into history file", cmd)
+
             ## YOUR CODE HERE
             ## Parse the command
             if(cmd):
@@ -1034,9 +1038,6 @@ if __name__ == "__main__":
                 command_list = parse_cmd(cmd)
                 result = {"output" : None, "error" : None}
                 
-                #write_to_history(command_list)
-                
-                print("This is what would go into history file", command_list)
                 
                 # Here we need to save the command to the history file.
             
