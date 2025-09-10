@@ -67,7 +67,7 @@ def pwd_():
     
     # Storing it into output dictionary and returning
     output["output"] = cwd 
-    return os.getcwd()
+    return output
 
 
 def cd(parts):
