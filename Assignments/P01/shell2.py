@@ -191,6 +191,8 @@ def ls(parts):
             return output
         
         
+        print("Directory:", directory)
+        
     elif len(params) > 1:
         output["error"] = "ls has too many parameters"
         return output
@@ -923,10 +925,6 @@ def parse_cmd(cmd_input):
         subparts = cmd.strip().split()
         d["cmd"] = subparts[0]
         
-        print(d["cmd"])
-        print(d["error"])
-        print(d["flags"])
-        print(d["params"])
         
         
         for item in subparts[1:]:

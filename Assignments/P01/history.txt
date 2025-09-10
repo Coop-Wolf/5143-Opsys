@@ -130,3 +130,4 @@ cd
 ls -lah
 ls -lah /workspaces/5143-Opsys
 ls -lah /workspaces/5143-Opsys
+ls -lah /workspaces
