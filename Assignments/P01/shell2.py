@@ -1014,42 +1014,33 @@ if __name__ == "__main__":
             ## YOUR CODE HERE
             ## Parse the command
             if(cmd):
+                
                 command_list = parse_cmd(cmd)
+                result = {}
+                
+                # Here we need to save the command to the history file.
             
-                # If there is only one command to execute
-                if len(command_list) == 1:
-                    
-                    # Getting directory from list
-                    command = command_list[0]
-                    
+                while len(command_list) != 0:
+            
+                    # Pop first command off of the command list
+                    command = command_list.pop(0)
+
+                        
                     if command.get("cmd") == "cd":
                         cd(command)
                     elif command.get("cmd") == "ls":
                         result = ls(command)
-                        
-                        if result["error"]:
-                            print(result["error"])
-                        else:
-                            print(result["output"])
-                        #for item in result:
-                            # Printing results to ls. but really needs to be a string thats stored and printed at the end.
-                            #print(f"{item[0]:<10} {item[1]:<3}{item[2]:<10}{item[3]:<10}{item[4]:>8} {item[5]:<12} {item[6]}")
+
                             
-                
-                # Piping
-                #else:
-                    
-                    
-            
-                # Checking if multiple commands
-              #  print(command_list)
-              #  print('This should be the first command within a pipe.')
-              #  print(command_list.pop(0))
-                #Push each dictionary from command list to a queue
-                
-            ## Figure out what your executing like finding pipes and redirects
-            
-            
+                            
+                            
+                # Printing result to screen
+                if result["error"]:
+                    print(result["error"])
+                elif result["output"]:
+                    print(result["output"])
+
+
 
             cmd = ""
             cursor_pos = 0
