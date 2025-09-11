@@ -646,7 +646,7 @@ def cmd_from_history(parts):
         if 0 <= index < len(h_cmds):
         
             # Returning cmd at given index
-            output["output"] = h_cmd[index].strip()
+            output["output"] = h_cmds[index].strip()
             return output
         else:
             output["error"] = f"Error. There are only {len(h_cmd)} commands in history."
