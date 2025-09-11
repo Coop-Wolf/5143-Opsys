@@ -1122,11 +1122,11 @@ if __name__ == "__main__":
                 result = {"output" : None, "error" : None}
                 
                 # Handle if user wants to run !x command
-                if len(command_list) == 1 and command_list.get("cmd").startswith("!"):
+                if len(command_list) == 1 and command_list[0].get("cmd").startswith("!"):
                     
                     # Get the cmd and send to function.
                     # It includes ! but we will remove in function
-                        result = cmd_from_history(command_list.get("cmd"))
+                        result = cmd_from_history(command_list[0].get("cmd"))
                         
                         #Setting cmd to 'x' command from !x
                         if result["error"]:
