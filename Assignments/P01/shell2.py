@@ -1141,6 +1141,7 @@ if __name__ == "__main__":
                         command["cmd"] = result["output"]
                         
                         print("This is command", command["cmd"])
+                        print(command.get("cmd"))
                         
                     elif command.get("cmd") == "cd":
                         result = cd(command)
