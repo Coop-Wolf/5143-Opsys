@@ -921,6 +921,51 @@ def parse_cmd(cmd_input):
     return command_list
                 
 
+def color(parts):
+    '''
+    input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
+    output dict: {"output" : string, "error" : string}
+    '''
+    
+    
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    output = {"output" : None, "error" : None}
+    
+    # Making sure nothing was passed besides the command 'color'
+    if not input and not flags and not params:
+        output["output"] = f"{Fore.Green}Color has been changed to green.\n To return to default color type command 'stop_color'."
+        return output
+    # User passed something besides 'color' command
+    else:
+        output["error"] = "Error. Color could not be changes. 'color' command takes not arguments."
+        return output
+    
+def stop_color(parts):
+    '''
+    input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
+    output dict: {"output" : string, "error" : string}
+    '''
+    
+    
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    output = {"output" : None, "error" : None}
+    
+    # Making sure nothing was passed besides the command 'color'
+    if not input and not flags and not params:
+        output["output"] = f"{Style.RESET_ALL}Color has been changed to default."
+    
+    # User passed something besides 'color' command
+    else:
+        output["error"] = "Error. Color could not be changes. 'color' command takes not arguments."
+        return output
+
+
 def visible_length(s):
     '''Helper function for print_cmd. This is needed to bring the terminal cursor to the correct
     position. Previously. it was offset by the length of ({Fore.CYAN}{Style.RESET_ALL}). So this
@@ -1143,6 +1188,10 @@ if __name__ == "__main__":
                         result = mkdir(command)
                     elif command.get("cmd") == "history":
                         result = history(command)
+                    elif command.get("cmd") == "color":
+                        result = color(command)
+                    elif command.get("cmd") == "stop_color":
+                        result = stop_color(command)
 
                             
                 # Printing result to screen
