@@ -1135,13 +1135,16 @@ if __name__ == "__main__":
                             
                             # Printing to the user what is about to be executed
                             for command in command_list:
+                                print()
+                                print("Command(s) being executed.")
+                                print()
+                                print("----------")
                                 print("Command:", command.get("cmd"))
                                 print("Flags:", command.get("flags"))
                                 print("Params:", command.get("params"))
                                 print("Input:", command.get("input"))
-                                print("---")
-
-                        
+                                print("----------")
+                                print()
 
             
                 while len(command_list) != 0:
