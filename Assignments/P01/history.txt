@@ -130,25 +130,4 @@ cd .. | ls -lah /workspaces/5143-Opsys
 cd | ls -l /workspaces/5143-Opsys/Assignments/P01
 cd .. | ls -lah /workspaces/5143-Opsys
 history
-history
-!128
-history
-!128
-history
-!128
-history
-!128
-!139
-history
-history
-!128
-history
-!128
-!128
-history
-!129
-history
-!149
-!129
-!129
-history
+cd | ls -l /workspaces
