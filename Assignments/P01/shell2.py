@@ -649,7 +649,7 @@ def cmd_from_history(parts):
             output["output"] = h_cmds[index].strip()
             return output
         else:
-            output["error"] = f"Error. There are only {len(h_cmd)} commands in history."
+            output["error"] = f"Error. There are only {len(h_cmds)} commands in history."
             return output
        
        
@@ -1121,8 +1121,24 @@ if __name__ == "__main__":
                 command_list = parse_cmd(cmd)
                 result = {"output" : None, "error" : None}
                 
-                
-                # Here we need to save the command to the history file.
+                # Handle if user wants to run !x command
+                if len(command_list) == 1 and command_list.get("cmd").startswith("!"):
+                    
+                    # Get the cmd and send to function.
+                    # It includes ! but we will remove in function
+                        result = cmd_from_history(command_list.get("cmd"))
+                        
+                        #Setting cmd to 'x' command from !x
+                        if result["error"]:
+                            
+                            # Set command list to zero
+                            command_list = []
+                            
+                        # Setting command_list to result command from !x command
+                        else:
+                            command_list = parse_cmd(result["output"])
+                        
+
             
                 while len(command_list) != 0:
             
@@ -1133,17 +1149,8 @@ if __name__ == "__main__":
                     if result["error"]:
                         break
 
-                    # Decide which command to run
-                    if command.get("cmd").startswith("!"):
-                        result = cmd_from_history(command)
                         
-                        #Setting cmd to 'x' command from !x
-                        command["cmd"] = result["output"]
-                        
-                        print("This is command", command["cmd"])
-                        print(command.get("cmd"))
-                        
-                    elif command.get("cmd") == "cd":
+                    if command.get("cmd") == "cd":
                         result = cd(command)
                     elif command.get("cmd") == "ls":
                         result = ls(command)
