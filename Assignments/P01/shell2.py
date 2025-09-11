@@ -1129,6 +1129,7 @@ if __name__ == "__main__":
                         # Setting command_list to result command from !x command
                         else:
                             command_list = parse_cmd(result["output"])
+                            cmd = result["output"]
                             
                             # Printing to the user what is about to be executed
                             print()
