@@ -948,49 +948,30 @@ def print_cmd(cmd, cursor_pos=0):
     """This function "cleans" off the command line, then prints
     whatever cmd that is passed to it to the bottom of the terminal.
     """
-#    
-#    
-#    # Setting width to terminal size
-#    width = shutil.get_terminal_size((80, 20)).columns  
-#
-#    # Clear line with spaces equal to width
-#    padding = " " * width
-#    sys.stdout.write("\r" + padding + "\r")
-#    
-#    # Update prompt with current working directory
-#    prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
-#
-#    # Print prompt
-#    sys.stdout.write(f"{prompt}{cmd}")
-#    
-#    # Move cursor to correct position
-#    sys.stdout.write("\r" + prompt + cmd[:cursor_pos])
-#    sys.stdout.flush()
-#
-#
 
     # Update prompt with current working directory
-    username = getpass.getuser()
+    username      = getpass.getuser()
     computer_name = socket.gethostname()
-    cwd = os.getcwd()
+    cwd           = os.getcwd()
     
     # store built prompt to prompt variable
     prompt = f"{Fore.CYAN}{username}@{computer_name}:{cwd}{Style.RESET_ALL}$ "
     
     
     # Print fix from ChatGPT
-    ###################################################################################
     
     # Move cursor to start, print prompt + command
-    sys.stdout.write("\r")           # go to start of line
+    sys.stdout.write("\r")
     sys.stdout.write(f"{prompt}{cmd}")
-    sys.stdout.write("\033[K")       # clear from cursor to end of line
-
-    # Move cursor to correct position
-    sys.stdout.write("\r")                               # go to start
-    sys.stdout.write(f"\033[{visible_length(prompt) + cursor_pos}C")  # move cursor to position
     
-    ##################################################################################
+    # clear everything to the right of the cursor
+    sys.stdout.write("\033[K")
+
+    # Move cursor to start
+    sys.stdout.write("\r")
+    
+    # Move cursor to the right the length of the prompt plus cursor_pos
+    sys.stdout.write(f"\033[{visible_length(prompt) + cursor_pos}C")
     
     # Flush
     sys.stdout.flush()
@@ -1095,8 +1076,6 @@ if __name__ == "__main__":
                 if cursor_pos > 0:
                     cursor_pos -= 1
                 print_cmd(cmd, cursor_pos)
-
-            print_cmd(cmd)  # print the command (again)
 
         elif char in "\r":  # return pressed
             

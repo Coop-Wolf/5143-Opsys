@@ -132,3 +132,5 @@ cd .. | ls -lah /workspaces/5143-Opsys
 history
 cd | ls -l /workspaces
 history
+pwd
+ls
