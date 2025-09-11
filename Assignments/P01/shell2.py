@@ -554,7 +554,7 @@ def history(parts):
                     command_number += 1
             
             # Appending the history command that was just executed
-            #history_list.append(f"{command_number} history")
+            history_list.append(f"{command_number} history")
             
             # Convert to string and return
             result = "\n".join(history_list)
