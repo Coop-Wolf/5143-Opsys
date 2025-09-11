@@ -554,7 +554,7 @@ def history(parts):
                     command_number += 1
             
             # Appending the history command that was just executed
-            history_list.append(f"{command_number} history")
+            #history_list.append(f"{command_number} history")
             
             # Convert to string and return
             result = "\n".join(history_list)
@@ -1132,6 +1132,15 @@ if __name__ == "__main__":
                         # Setting command_list to result command from !x command
                         else:
                             command_list = parse_cmd(result["output"])
+                            
+                            # Printing to the user what is about to be executed
+                            for command in command_list:
+                                print("Command:", command.get("cmd"))
+                                print("Flags:", command.get("flags"))
+                                print("Params:", command.get("params"))
+                                print("Input:", command.get("input"))
+                                print("---")
+
                         
 
             
