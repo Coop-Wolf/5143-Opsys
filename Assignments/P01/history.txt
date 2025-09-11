@@ -125,3 +125,7 @@ ls -lah
 cd | ls -l /workspaces/5143-Opsys/Assignments/P01
 cd | ls -l /workspaces
 cd
+pwd
+cd .. | ls -lah /workspaces/5143-Opsys
+cd | ls -l /workspaces/5143-Opsys/Assignments/P01
+cd .. | ls -lah /workspaces/5143-Opsys

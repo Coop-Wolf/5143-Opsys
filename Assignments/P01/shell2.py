@@ -504,7 +504,7 @@ def get_directory_items(directory = None, include_hidden = False):
         return non_hidden_items
     
         
-def history():
+def history(parts):
     """
     Display the command history from the history.txt file.
 
@@ -517,32 +517,59 @@ def history():
         None
     """
     
-    # Get the absolute path of the folder where the script is located
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Build the full path to history.txt inside your repo
-    history_file = os.path.join(script_dir, "history.txt")
-
-    history_list = []
-    command_number = 1
-
-    # Check if history file exists
-    if os.path.exists(history_file):
-        with open(history_file, "r") as file:
-            commands = file.readlines()
-            for command in commands:
-                history_list.append(f"{command_number} {command.strip()}")
-                command_number += 1
+    # These are lists
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
+    # If there exist any input flags and params in the dict, dont execute
+    if not input and not flags and not params:
         
-        # Appending the history command that was just executed
-        history_list.append(f"{command_number} history")
+        # Get the absolute path of the folder where the script is located
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
+        # Build the full path to history.txt inside your repo
+        history_file = os.path.join(script_dir, "history.txt")
+
+        history_list = []
+        command_number = 1
+
+        # Check if history file exists
+        if os.path.exists(history_file):
+            
+            # Opening history file
+            with open(history_file, "r") as file:
+                
+                # Storing contents into commands
+                commands = file.readlines()
+                
+                # Getting each line
+                for command in commands:
+                    
+                    # Appending the command alone with its command number to list
+                    history_list.append(f"{command_number} {command.strip()}")
+                    command_number += 1
+            
+            # Appending the history command that was just executed
+            history_list.append(f"{command_number} history")
+            
+            # Convert to string and return
+            result = "\n".join(history_list)
+            output["output"] = result
+            return output
+      
         
-        # Returning list
-        return history_list       
+        # If history_file does not exist, return None
+        else:
+            output["error"] = "Error, History file doesn't exist in the directory that this pythons script is in."
+            return output
         
-    # If history_file does not exist, return None
+    # If user added on top of history command
     else:
-        return None
+        output["error"] = "Error, history command must not have any params, input, or flags."
     
     
 def get_history_rev():
@@ -821,7 +848,6 @@ def print_cmd(cmd, cursor_pos=0):
     sys.stdout.flush()
 
 
-
 # Test function
 def ls_(parts):
     '''
@@ -884,8 +910,6 @@ def parse_cmd(cmd_input):
         
     return command_list
                 
-        
-
 
 def visible_length(s):
     '''Helper function for print_cmd. This is needed to bring the terminal cursor to the correct
@@ -940,6 +964,7 @@ def print_cmd(cmd, cursor_pos=0):
     computer_name = socket.gethostname()
     cwd = os.getcwd()
     
+    # store built prompt to prompt variable
     prompt = f"{Fore.CYAN}{username}@{computer_name}:{cwd}{Style.RESET_ALL}$ "
     
     
@@ -957,21 +982,22 @@ def print_cmd(cmd, cursor_pos=0):
     
     ##################################################################################
     
-
+    # Flush
     sys.stdout.flush()
 
 
-
+# Beginning of main
 if __name__ == "__main__":
     
     
-        # Allows for colored text in terminal and resets color after each print
+    # Allows for colored text in terminal and resets color after each print
     init(autoreset=True)
 
     # Print welcome message
     WelcomeMessage()
     
-    cmd = ""  # empty cmd variable
+    # Empty cmd variable
+    cmd = ""
     
     # For handling left/right arrow keys
     cursor_pos = 0
@@ -979,10 +1005,11 @@ if __name__ == "__main__":
     # For handling up/down arrow keys
     history_index = -1
     
+    # Print to terminal
+    print_cmd(cmd)
 
-    print_cmd(cmd)  # print to terminal
-
-    while True:  # loop forever
+    # Loop forever
+    while True:
 
         char = getch()  # read a character (but don't print)
 
@@ -1021,6 +1048,7 @@ if __name__ == "__main__":
                     # so set cmd to end of h_cmd list
                     cmd = h_cmd[-1]
                     
+                # Moving cursor to length of new cmd and print cmd
                 cursor_pos = len(cmd)
                 print_cmd(cmd, cursor_pos)
 
@@ -1042,6 +1070,7 @@ if __name__ == "__main__":
                     history_index = -1
                     cmd = ""
                     
+                # Moving cursor to length of new cmd and print cmd
                 cursor_pos = len(cmd)
                 print_cmd(cmd, cursor_pos)
 
@@ -1098,9 +1127,9 @@ if __name__ == "__main__":
                         result = pwd_()
                     elif command.get("cmd") == "mkdir":
                         result = mkdir(command)
+                    elif command.get("cmd") == "history":
+                        result = history(command)
 
-                            
-                            
                             
                 # Printing result to screen
                 if result["error"]:
@@ -1109,7 +1138,7 @@ if __name__ == "__main__":
                     print(result["output"])
 
 
-
+            # Setting cmd back to blank and cursor back to 0
             cmd = ""
             cursor_pos = 0
             
