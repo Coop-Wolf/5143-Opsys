@@ -10,6 +10,8 @@ import sys
 import pwd
 import grp
 import stat
+import socket
+import getpass
 from getch import Getch
 from colorama import init, Fore, Style
 import time
@@ -934,7 +936,11 @@ def print_cmd(cmd, cursor_pos=0):
 #
 
     # Update prompt with current working directory
-    prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
+    username = getpass.getuser()
+    computer_name = socket.gethostname()
+    cwd = os.getcwd()
+    
+    prompt = f"{Fore.CYAN}{username}@{computer_name}:{cwd}{Style.RESET_ALL}$ "
     
     
     # Print fix from ChatGPT
