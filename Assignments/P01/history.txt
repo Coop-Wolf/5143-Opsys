@@ -134,3 +134,8 @@ cd | ls -l /workspaces
 history
 pwd
 ls
+ls
+ls
+color
+color
+ls

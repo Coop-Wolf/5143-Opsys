@@ -22,6 +22,10 @@ import re
 ##################################################################################
 ##################################################################################
 
+# Global variable to track current shell color
+#CURRENT_COLOR = Style.RESET_ALL
+
+
 getch = Getch()  # create instance of our getch class
 
 prompt = "$"  # set default prompt
@@ -926,7 +930,7 @@ def color(parts):
     input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
     output dict: {"output" : string, "error" : string}
     '''
-    
+    #global CURRENT_COLOR
     
     input = parts.get("input", None)
     flags = parts.get("flags", None)
@@ -936,7 +940,8 @@ def color(parts):
     
     # Making sure nothing was passed besides the command 'color'
     if not input and not flags and not params:
-        output["output"] = f"{Fore.Green}Color has been changed to green.\n To return to default color type command 'stop_color'."
+        #CURRENT_COLOR = Fore.GREEN
+        output["output"] = f"Color has been changed to green.\nTo return to default color type command 'stop_color'."
         return output
     # User passed something besides 'color' command
     else:
@@ -948,7 +953,7 @@ def stop_color(parts):
     input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
     output dict: {"output" : string, "error" : string}
     '''
-    
+    #global CURRENT_COLOR
     
     input = parts.get("input", None)
     flags = parts.get("flags", None)
@@ -958,7 +963,8 @@ def stop_color(parts):
     
     # Making sure nothing was passed besides the command 'color'
     if not input and not flags and not params:
-        output["output"] = f"{Style.RESET_ALL}Color has been changed to default."
+        #CURRENT_COLOR = Style.RESET_ALL
+        output["output"] = f"Color has been changed to default."
     
     # User passed something besides 'color' command
     else:
