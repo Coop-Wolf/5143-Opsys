@@ -1134,17 +1134,16 @@ if __name__ == "__main__":
                             command_list = parse_cmd(result["output"])
                             
                             # Printing to the user what is about to be executed
+                            print()
+                            print("Command(s) being executed.")
+                            print("----------")
                             for command in command_list:
-                                print()
-                                print("Command(s) being executed.")
-                                print()
-                                print("----------")
                                 print("Command:", command.get("cmd"))
                                 print("Flags:", command.get("flags"))
                                 print("Params:", command.get("params"))
                                 print("Input:", command.get("input"))
                                 print("----------")
-                                print()
+                            print()
 
             
                 while len(command_list) != 0:
