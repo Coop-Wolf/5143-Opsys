@@ -615,7 +615,7 @@ def get_history_rev():
     
     
 # This functions works as the !x command
-def cmd_from_history(parts):
+def cmd_from_history(index):
     '''
     Functions handles the !x command by getting the index value from the command
     and retrieves the history commands then return the at index given
@@ -624,33 +624,28 @@ def cmd_from_history(parts):
     # directory to store output information
     output = {"output" : None, "error" : None}
     
-    index  = parts.get("cmd"   , None)
-    input  = parts.get("input" , None)
-    flags  = parts.get("flags" , None)
-    params = parts.get("params", None)
-    
     # setting index to only value, removing '!'
     index = index[1:]
     
-    # Running command with input flags and params are none
-    if not input and not flags and not params:
-        index = int(index)
-        index -= 1
-        h_cmds = get_history_rev() or []
+    index = int(index)
+    index -= 1
+    h_cmds = get_history_rev() or []
         
-        # Reverse list so commands are in chronological
-        if h_cmds:
-            h_cmds.reverse()
+    # Reverse list so commands are in chronological
+    if h_cmds:
+        h_cmds.reverse()
         
-        # Geting history commands
-        if 0 <= index < len(h_cmds):
+    # Geting history commands
+    if 0 <= index < len(h_cmds):
         
-            # Returning cmd at given index
-            output["output"] = h_cmds[index].strip()
-            return output
-        else:
-            output["error"] = f"Error. There are only {len(h_cmds)} commands in history."
-            return output
+        # Returning cmd at given index
+        output["output"] = h_cmds[index].strip()
+        return output
+    
+    # if index is out of range of history
+    else:
+        output["error"] = f"Error. There are only {len(h_cmds)} commands in history."
+        return output
        
        
 def write_to_history(cmd):
