@@ -1105,9 +1105,6 @@ if __name__ == "__main__":
             
             if cmd == "exit":
                 exit_shell()
-
-            # Writing command to history file
-            write_to_history(cmd)
                 
             # If there is a command to execute
             if(cmd):
@@ -1136,13 +1133,13 @@ if __name__ == "__main__":
                             # Printing to the user what is about to be executed
                             print()
                             print("Command(s) being executed.")
-                            print("----------")
+                            print("--------------------")
                             for command in command_list:
                                 print("Command:", command.get("cmd"))
                                 print("Flags:", command.get("flags"))
                                 print("Params:", command.get("params"))
                                 print("Input:", command.get("input"))
-                                print("----------")
+                                print("--------------------")
                             print()
 
             
@@ -1174,6 +1171,9 @@ if __name__ == "__main__":
                 elif result["output"]:
                     print(result["output"])
 
+
+            # Writing command to history
+            write_to_history(cmd)
 
             # Setting cmd back to blank and cursor back to 0
             cmd = ""
