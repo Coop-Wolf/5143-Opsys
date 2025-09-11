@@ -127,8 +127,8 @@ def cd(parts):
     elif os.path.isdir(str_params):
         os.chdir(str_params)
             
-    # Directory is invalid
-    elif not os.path.isdir(str_params):
+    # If path doesn't exist and params isn't empty
+    elif not os.path.isdir(str_params) and str_params != "":
         output["error"] = f"Error. {str_params} is not a directory."
         
     # Returning output dictionary

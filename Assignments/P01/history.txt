@@ -119,3 +119,9 @@ ls -lah
 cd ..
 cd ..
 mkdir P03
+cd .. | ls
+ls
+ls -lah
+cd | ls -l /workspaces/5143-Opsys/Assignments/P01
+cd | ls -l /workspaces
+cd
