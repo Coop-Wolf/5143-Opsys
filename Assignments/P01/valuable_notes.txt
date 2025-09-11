@@ -81,10 +81,12 @@ Commands that work correctly for Shell2.py
     cd directory
     pwd
     mkdir
+    history
+    !x
+    exit
 
 Next
-    implement history command.
-    implement !x command.
+    Figure out why left and right arrows isn't working.
 
 
 
