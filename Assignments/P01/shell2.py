@@ -1139,6 +1139,9 @@ if __name__ == "__main__":
                         
                         #Setting cmd to 'x' command from !x
                         command["cmd"] = result["output"]
+                        
+                        print("This is command", command["cmd"])
+                        
                     elif command.get("cmd") == "cd":
                         result = cd(command)
                     elif command.get("cmd") == "ls":
