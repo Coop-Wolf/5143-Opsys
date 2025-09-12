@@ -139,33 +139,3 @@ ls
 color
 color
 ls
-cd
-cd 5143-Opsys
-ls
-cd Java
-cd java
-ls
-cd ~
-test
-cd --help
-cd --help
-cd --help
-cd --help
-ls -lah
-ls -lah
-ls -a
-ls -lah
-ls -lah
-ls -ahl
-ls -alh
-ls -lah
-cd --help
-ls --help
-cd --help
-cd --help
-cd --help
-cd --help
-cd --help
-cd --help
-cd
-pwd

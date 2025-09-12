@@ -420,6 +420,194 @@ def ls(parts):
     return output
 
 
+def wc(parts):
+    '''
+    input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
+    output dict: {"output" : string, "error" : string}
+    '''
+    
+    # Parsing parts dictionary
+    input  = parts.get("input", None)
+    flags  = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    # Dictionary to store output
+    output = {"output" : None, "error" : None}
+    
+    # If multiple parameters
+    if len(params) > 1:
+        output["error"] = "Error. wc can only take one parameter."
+        return output
+    
+    # Variables to store count
+    line_count     = 0
+    word_count     = 0
+    char_count     = 0
+    
+    # Convert params to string
+    if params:
+        params = "".join(params)
+        params = params.strip("'")
+        
+    # Convert input to string
+    if input:
+        input = "".join(input)
+        input = input.strip("'")
+        
+    # Filtering out bad commands
+    if not params and not input:
+        output["error"] = "Error. wc needs either a input file or parameter file to process. Neither were provided. Run wc --help for more info."
+        return output
+    if params and input:
+        output["error"] = "Error. wc needs either a input file or parameter file to process. Both were provided. Run wc --help for more info."
+        return output
+    if flags and flags not in ["-w", "-l", "-wl", "-lw"]:
+        output["error"] = f"Error. {flags} is not a viable flag. Run wc --help for flag options"
+        return output
+    
+    # Checking if input or params in a file.
+    item = input or params
+    
+    # Determine if item is a file
+    if os.path.isfile(item):
+        
+        # Seeing if file is an absolute path
+        if os.path.isabs(item):
+            
+            # Getting the absolute path from argument
+            path = item
+
+        # if relative path, join with current working directory
+        elif not os.path.isabs(item):
+            
+            # Building absolute path
+            new_dir = item
+            cwd     = os.getcwd()
+            path    = os.path.join(cwd, new_dir)
+            
+        # If user ran a pipe and wc section only contains wc
+        # Example: ls | wc -w or wc -l fruit.txt
+        if flags and path:
+            
+            # Get countswhat
+            with open(path, 'r') as file:
+                for line in file:
+                    if "l" in flags:
+                        line_count += 1
+                    if "w" in flags:
+                        words = line.split()
+                        word_count += len(words)
+            
+            # Getting correct data to output | Code from ChatGPT           
+            output_values = []
+            output_values.append(str(line_count) if "l" in flags else None)
+            output_values.append(str(word_count) if "w" in flags else None)
+                            
+            # Store results to output and return | Code from ChatGPT
+            output["output"] = " ".join(filter(None, output_values))
+            return output
+            
+        # If user ran wc with flags
+        # Example wc fruit.txt or ls | wc
+        if not flags and path:
+            
+            # Get counts
+            with open(path, 'r') as file:
+                for line in file:
+                    line_count += 1
+                    words = line.split()
+                    word_count += len(words)
+                    char_count += len(line)
+                            
+            # Store results to output and return
+            output["output"] = f"{line_count} {word_count} {char_count} {input or params}"
+            return output            
+            
+    # Determine if item is a string   
+    elif isinstance(item, str):
+        
+        
+        # Split string in lines first 
+        lines = item.splitlines()
+        
+        # Removes characters used to color text
+        ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
+        item = ansi_escape.sub('', item)
+        
+        # Split string in lines first
+        lines = item.splitlines()
+    
+        # If user ran a pipe and wc section only contains wc
+        # Example: ls | wc -w or wc -l fruit.txt
+        if flags and item:
+            
+            # Getting line count
+            if "l" in flags:
+                
+                # If item has multiple lines get length
+                if len(lines) > 1:
+                    line_count = len(lines)
+                    
+                # Else its just one line
+                else:
+                    line_count = 1
+                    
+            # Getting word count
+            if "w" in flags:
+                
+                # Count words in each line
+                if len(lines) > 1:
+                    for line in lines:
+                        for words in line.split():
+                            word_count += len(words)
+                            
+                # Only one line      
+                else:
+                    word_count = len(lines)
+                            
+            # Getting correct data to output | Code from ChatGPT           
+            output_values = []
+            output_values.append(str(line_count) if "l" in flags else None)
+            output_values.append(str(word_count) if "w" in flags else None)
+                            
+            # Store results to output and return | Code from ChatGPT
+            output["output"] = " ".join(filter(None, output_values))
+            return output
+            
+        # If user ran wc with flags
+        # Example wc fruit.txt or ls | wc
+        if not flags and item:
+            
+            # If item has multiple lines cound them
+            if len(lines) > 1:
+                line_count = len(lines)
+                
+            # If item has one line only add one
+            else:
+                line_count = 1
+                
+            # Count words in each line
+            if len(lines) > 1:
+                for line in lines:
+                    for words in line.split():
+                        word_count += len(words)
+                        
+            else:
+                word_count = len(lines)
+            
+            # Count all characters in string
+            char_count = len(item)
+                            
+            # Store results to output and return
+            output["output"] = f"{line_count} {word_count} {char_count}"
+            return output
+    
+    # item was not a string or file
+    else:
+        output["error"] = f"Error. {item} is not a string or file path that exists. See wc --help for more info."
+        return output
+                        
+
 # Helper function for ls_with_args
 def color_filename(item, full_path):
     '''
@@ -868,7 +1056,6 @@ def help(parts):
         return output
         
 
-
 def visible_length(s):
     '''Helper function for print_cmd. This is needed to bring the terminal cursor to the correct
     position. Previously. it was offset by the length of ({Fore.CYAN}{Style.RESET_ALL}). So this
@@ -892,8 +1079,16 @@ def visible_length(s):
     return len(ansi_escape.sub('', s))
 
 
-
 def parse_cmd(cmd_input):
+    
+    '''
+    Defining input as values that can only be inputted by the program
+    User cannot provide input. That is considered a parameter. For the case
+    of wc command. If the user types: wc fruits.txt. fruits.txt is considered
+    a parameter. But in the user types: ls | wc. The output of ls is the input in 
+    wc.
+    '''
+    
     
     command_list = []
     
@@ -1186,6 +1381,11 @@ if __name__ == "__main__":
                     # Making sure valid command
                     if command.get("cmd") not in available_commands:
                         result["error"] = f"Error. command '{command.get("cmd")}' is not in list of avaiable commands."
+                        
+                    # If there is output in the previous command and command has not input
+                    # make the output to the previous command the input to the next
+                    if result["output"] and not command["input"]:
+                        command["input"] = result["output"] 
                     
                     # Kill execution if error
                     if result["error"]:
@@ -1204,10 +1404,12 @@ if __name__ == "__main__":
                         result = mkdir(command)
                     elif command.get("cmd") == "history":
                         result = history(command)
-                    elif command.get("cmd") == "color":
-                        result = color(command)
-                    elif command.get("cmd") == "stop_color":
-                        result = stop_color(command)
+                    elif command.get("cmd") == "wc":
+                        result = wc(command)
+                    #elif command.get("cmd") == "color":
+                    #    result = color(command)
+                    #elif command.get("cmd") == "stop_color":
+                    #    result = stop_color(command)
 
 
                             
