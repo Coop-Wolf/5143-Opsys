@@ -227,7 +227,7 @@ def ls(parts):
         all_directory_list = get_directory_items(ls_directory, include_hidden = True)
         
         # Using -h alone prints the same as no args
-        if option == "h": 
+        if option == "-h": 
             
             # list to store items
             items = []
@@ -247,7 +247,7 @@ def ls(parts):
                 
                 
         # Using -a alone or with -h prints all files including hidden
-        elif option in ("a","ah", "ha"):
+        elif option in ("-a","-ah", "-ha"):
             
             # list to store directory items
             items = []
@@ -305,7 +305,7 @@ def ls(parts):
         
             
         # Using -al or -la prints all files in long format
-        elif option in ("al", "la"):
+        elif option in ("-al", "-la"):
                 
             total_size = 0
             items = []
@@ -340,7 +340,7 @@ def ls(parts):
             return output
             
         # Using -lh or -hl prints files in long format with human readable sizes
-        elif option in ("lh", "hl"):
+        elif option in ("-lh", "-hl"):
             
             total_size = 0
             items = []
@@ -376,7 +376,7 @@ def ls(parts):
             return output
             
         # Using -alh or any combo of those three prints all files in long format with human readable sizes
-        elif option in ("alh", "ahl", "lah", "lha", "hal", "hla"):
+        elif option in ( "-lah", "-alh", "-ahl", "-ah", "-lha", "-hal", "-hla"):
             
             total_size = 0
             items = []
@@ -798,72 +798,71 @@ def help(parts):
     input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
     output dict: {"output" : string, "error" : string}
     '''
-    #global CURRENT_COLOR
     
     input  = parts.get("input", None)
     flags  = parts.get("flags", None)
     params = parts.get("params", None)
-    cmd    = parts.get("parms", None)
-    
-    print(cmd)
-    print(flags)
+    cmd    = parts.get("cmd", None)
     
     output = {"output" : None, "error" : None}
+    
+    print("    ------------------------------", end= " ")
     
     if not input and not params and flags == "--help":
         if cmd == "cd":
             output["output"] = cd.__doc__
-            return output
         if cmd == "ls":
             output["output"] = ls.__doc__
-            return output
+
         if cmd == "pwd":
             output["output"] = pwd_.__doc__
-            return output
+
         if cmd == "mkdir":
             output["output"] = mkdir.__doc__
-            return output
         '''
         if cmd == "cp":
             output["output"] = cp.__doc__
-            return output
+
         if cmd == "mv":
             output["output"] = mv.__doc__
-            return output
+
         if cmd == "rm":
             output["output"] = rm.__doc__
-            return output
+
         if cmd == "cat":
             output["output"] = cat.__doc__
-            return output
+
         if cmd == "head":
             output["output"] = head.__doc__
-            return output
+
         if cmd == "tail":
             output["output"] = tail.__doc__
-            return output
+
         if cmd == "grep":
             output["output"] = grep.__doc__
-            return output
+
         if cmd == "wc":
             output["output"] = wc.__doc__
-            return output
+
         if cmd == "chmod":
             output["output"] = chmod.__doc__
-            return output
+
         if cmd == "history":
             output["output"] = history.__doc__
-            return output
+
         if cmd == "exit":
             output["output"] = exit_shell.__doc__
-            return output
+
         if cmd == "more":
             output["output"] = more.__doc__
-            return output
+
         if cmd == "less":
             output["output"] = less.__doc__
-            return output
+
         '''
+        
+        output["output"] += "------------------------------"
+        return output
     else:
         output["error"] = f"Error, help for command {cmd} could not be found."
         return output
@@ -893,52 +892,6 @@ def visible_length(s):
     return len(ansi_escape.sub('', s))
 
 
-def print_cmd(cmd, cursor_pos=0):
-    """This function "cleans" off the command line, then prints
-    whatever cmd that is passed to it to the bottom of the terminal.
-    """
-#    
-#    
-#    # Setting width to terminal size
-#    width = shutil.get_terminal_size((80, 20)).columns  
-#
-#    # Clear line with spaces equal to width
-#    padding = " " * width
-#    sys.stdout.write("\r" + padding + "\r")
-#    
-#    # Update prompt with current working directory
-#    prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
-#
-#    # Print prompt
-#    sys.stdout.write(f"{prompt}{cmd}")
-#    
-#    # Move cursor to correct position
-#    sys.stdout.write("\r" + prompt + cmd[:cursor_pos])
-#    sys.stdout.flush()
-#
-#
-
-    # Update prompt with current working directory
-    prompt = f"{Fore.CYAN}{os.getcwd()}{Style.RESET_ALL}$ "
-    
-    
-    # Print fix from ChatGPT
-    ###################################################################################
-    
-    # Move cursor to start, print prompt + command
-    sys.stdout.write("\r")           # go to start of line
-    sys.stdout.write(f"{prompt}{cmd}")
-    sys.stdout.write("\033[K")       # clear from cursor to end of line
-
-    # Move cursor to correct position
-    sys.stdout.write("\r")                               # go to start
-    sys.stdout.write(f"\033[{visible_length(prompt) + cursor_pos}C")  # move cursor to position
-    
-    ##################################################################################
-    
-
-    sys.stdout.flush()
-
 
 def parse_cmd(cmd_input):
     
@@ -958,7 +911,7 @@ def parse_cmd(cmd_input):
         for item in subparts[1:]:
             
             if item.startswith("-"):
-                d["flags"] = item[1:]
+                d["flags"] = item
             else:
                 d["params"].append(item)
                 
@@ -1107,6 +1060,7 @@ if __name__ == "__main__":
 
         # Exit shell on ctrl-c command
         if char == "\x03":
+            print()
             exit_shell()
 
         # If back space pressed, remove the character to the left of the cursor
@@ -1237,8 +1191,10 @@ if __name__ == "__main__":
                     if result["error"]:
                         break
 
-                        
-                    if command.get("cmd") == "cd":
+                    # Executing command depending on cmd input
+                    if command.get("flags") == "--help" and not command.get("params") and not command.get("input"):
+                        result = help(command)                        
+                    elif command.get("cmd") == "cd":
                         result = cd(command)
                     elif command.get("cmd") == "ls":
                         result = ls(command)
@@ -1252,8 +1208,7 @@ if __name__ == "__main__":
                         result = color(command)
                     elif command.get("cmd") == "stop_color":
                         result = stop_color(command)
-                    elif command.get("flags") == "--help" and not command.get("params") and not command.get("input"):
-                        result = help(command)
+
 
                             
                 # Printing result to screen
