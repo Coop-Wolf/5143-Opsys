@@ -139,3 +139,10 @@ ls
 color
 color
 ls
+cd
+cd 5143-Opsys
+ls
+cd Java
+cd java
+ls
+cd ~

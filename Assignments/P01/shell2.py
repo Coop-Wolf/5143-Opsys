@@ -28,7 +28,7 @@ import re
 
 getch = Getch()  # create instance of our getch class
 
-prompt = "$"  # set default prompt
+#prompt = "$"  # set default prompt
 
 
 def WelcomeMessage():
@@ -119,9 +119,10 @@ def cd(parts):
     
         
     # User wants to go to home directory
-    if str_params == "":
+    if str_params == "" or str_params == "~":
         homedir = os.path.expanduser("~")
         os.chdir(homedir)
+        return output
         
         # User wants to go to parent directory
     if str_params == "..":
@@ -792,6 +793,83 @@ def human_readable(size):
         return f"{size:.1f}{units[i-1]}"
 
 
+def help(parts):
+    '''
+    input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
+    output dict: {"output" : string, "error" : string}
+    '''
+    #global CURRENT_COLOR
+    
+    input  = parts.get("input", None)
+    flags  = parts.get("flags", None)
+    params = parts.get("params", None)
+    cmd    = parts.get("parms", None)
+    
+    print(cmd)
+    print(flags)
+    
+    output = {"output" : None, "error" : None}
+    
+    if not input and not params and flags == "--help":
+        if cmd == "cd":
+            output["output"] = cd.__doc__
+            return output
+        if cmd == "ls":
+            output["output"] = ls.__doc__
+            return output
+        if cmd == "pwd":
+            output["output"] = pwd_.__doc__
+            return output
+        if cmd == "mkdir":
+            output["output"] = mkdir.__doc__
+            return output
+        '''
+        if cmd == "cp":
+            output["output"] = cp.__doc__
+            return output
+        if cmd == "mv":
+            output["output"] = mv.__doc__
+            return output
+        if cmd == "rm":
+            output["output"] = rm.__doc__
+            return output
+        if cmd == "cat":
+            output["output"] = cat.__doc__
+            return output
+        if cmd == "head":
+            output["output"] = head.__doc__
+            return output
+        if cmd == "tail":
+            output["output"] = tail.__doc__
+            return output
+        if cmd == "grep":
+            output["output"] = grep.__doc__
+            return output
+        if cmd == "wc":
+            output["output"] = wc.__doc__
+            return output
+        if cmd == "chmod":
+            output["output"] = chmod.__doc__
+            return output
+        if cmd == "history":
+            output["output"] = history.__doc__
+            return output
+        if cmd == "exit":
+            output["output"] = exit_shell.__doc__
+            return output
+        if cmd == "more":
+            output["output"] = more.__doc__
+            return output
+        if cmd == "less":
+            output["output"] = less.__doc__
+            return output
+        '''
+    else:
+        output["error"] = f"Error, help for command {cmd} could not be found."
+        return output
+        
+
+
 def visible_length(s):
     '''Helper function for print_cmd. This is needed to bring the terminal cursor to the correct
     position. Previously. it was offset by the length of ({Fore.CYAN}{Style.RESET_ALL}). So this
@@ -862,41 +940,6 @@ def print_cmd(cmd, cursor_pos=0):
     sys.stdout.flush()
 
 
-# Test function
-def ls_(parts):
-    '''
-    input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
-    output dict: {"output" : string, "error" : string}
-    '''
-    
-    
-    input = parts.get("input", None)
-    flags = parts.get("flags", None)
-    params = parts.get("params", None)
-    
-    if input:
-        pass
-        
-    if len(params) > 0:
-        
-        return {"output": None, "error" : "Directionary doesn't exist"}
-        
-    if flags:
-        if '-a' in flags:
-            pass
-        if '-h' in flags:
-            pass
-        if '-l' in flags:
-            pass
-        
-    if params:
-        
-        
-        output = "something"
-        
-    return {"output" : output}
-
-
 def parse_cmd(cmd_input):
     
     command_list = []
@@ -947,6 +990,7 @@ def color(parts):
     else:
         output["error"] = "Error. Color could not be changes. 'color' command takes not arguments."
         return output
+    
     
 def stop_color(parts):
     '''
@@ -1037,6 +1081,12 @@ if __name__ == "__main__":
 
     # Print welcome message
     WelcomeMessage()
+    
+    # List of commands user may request to execute
+    available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
+                          "head", "tail", "grep", "wc", "chmod", "history",
+                          "exit", "more", "less"]
+
     
     # Empty cmd variable
     cmd = ""
@@ -1179,6 +1229,10 @@ if __name__ == "__main__":
                     # Pop first command off of the command list
                     command = command_list.pop(0)
                     
+                    # Making sure valid command
+                    if command.get("cmd") not in available_commands:
+                        result["error"] = f"Error. command '{command.get("cmd")}' is not in list of avaiable commands."
+                    
                     # Kill execution if error
                     if result["error"]:
                         break
@@ -1198,6 +1252,8 @@ if __name__ == "__main__":
                         result = color(command)
                     elif command.get("cmd") == "stop_color":
                         result = stop_color(command)
+                    elif command.get("flags") == "--help" and not command.get("params") and not command.get("input"):
+                        result = help(command)
 
                             
                 # Printing result to screen
