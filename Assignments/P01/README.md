@@ -33,8 +33,8 @@ Run the `shell.py` file and use the following commands...
 | `head -n`             | Display the first n lines of a file.                |          |
 | `tail -n`             | Display the last n lines of a file.                 |          |
 | `grep 'pattern' file` | Search for a pattern in a file.                     |          |
-| `wc -l`               | Count lines in a file.                              |          |
-| `wc -w`               | Count words in a file.                              |          |
+| `wc -l`               | Count lines in a file.                              | Cooper   |
+| `wc -w`               | Count words in a file.                              | Cooper   |
 | `chmod xxx`           | Change file permissions.                            |          |
 | `history`             | Show previously used commands.                      | Cooper   |
 | `!x`                  | Re-run command number *x* from history.             | Cooper   |
@@ -63,7 +63,6 @@ less
 "<"
 ">"
 hfind
-commands with piping
 
 
 ## References:

@@ -1,78 +1,21 @@
-for piping. split the command using split("|")
-
 Using man linux and copy and paste for there.
-
 "&" at the end of a command is a backgroup process [not for sure yet if we'll be implementing this.]
-
-functions needs to return strings and have no arguments
-
 sort command [sort <file>]
-
 cat [file 1] [file 2] concatinates. can take zero or more files
-
-wc without params. words lines and characters. 
-
 chmod can do system call.
-
-have to keep a history that survives when shell detailed [CHECK]
-    - history has line numbers
-    - have a history.txt file that reads it in and loads into list.
-    - append command to the list and auto write out so if shell breaks all those previous commands are in there
-    - starting shell and hitting up arrow should go to 
-
-
-
-run like a real command shell.
-
-rich does colors tabular data.
 ------------------------------------------------------------------------------
 
 
 
-
-
 Need to fix:
-    All functions must return strings.
-    As of now, the functions are returning lists
-
-    For the command functions that are taking in a parameter,
-    They may need to be broken up more into separate functions.
-    Example: ls_a(), ls_la() instead of one ls_with_args(args).
-    This means i'll need to determine which one to run from
-    main program.
-
-    ls function is in correct. ls -ls Assignment/shell_project/  {command, flag, parameter, input}
-    the parser is going to split command into cmd, flag, param, input. 
-    The dictionary will get passed to every function?
-
-    Every command will have the parsed dictionary command as parameter.
-
-
-
+    ls -l and all its variations print the size. Need to add that to the output string not print.
+    wc isn't quite correct. Number are a little off.
 
 Errors (bugs):
-    weird results when doign left arrow then deleting
-
-
 
 
 Added Features:
-    left and right arrows
     colored info when doing ls depending on what type it is
-
-
-Commands that work correctly:
-    history
-    mkdir
-    cd (with or without arguments)
-    pwd
-    ls -a
-    ls -l
-    ls -al
-    ls -alh
-    exit
-    !x
-
 
 Commands that work correctly for Shell2.py
     ls -alh
@@ -85,31 +28,5 @@ Commands that work correctly for Shell2.py
     !x
     exit
 
-Next
-    Figure out why left and right arrows isn't working.
-
-
-
-May not have to confront this problem since vscode runs bash. May not have to use wsl.
-Issues:
-    Running into problems with the history.txt file
-    Been running the shell py in wsl on path /home/coope/OS/
-    This is where ive cloned my repository.
-    Doing dev through vs code and running commits that sync changes to wsl directory
-    However when adding the history.txt file and trying to write out to it.
-    that file its writing out to is scored on the wsl directory only and needs to be
-    pushed to the github repo. When trying to do this i have to entry my username and password
-    but github has made changes where the password has to be a token. I created the token thorugh dev
-    settings in github but showed to be invalid when trying to enter in when prompted for password in order
-    to push the history.txt. 
-    Not been able to figure that out. 
-    Right now im going to run the shell through vs code and save the history.txt file to the correct place where
-    it copies directory and I don't have to push.
-
-
-
-
-First, need to parse correctly, then need to change all functions that contain commands to have parts has parameter
-will condense all cd functions into one. cd() and cd_with_args(args) will just be one function.
 
 ------------------------------------------------------------------------------------------------------
