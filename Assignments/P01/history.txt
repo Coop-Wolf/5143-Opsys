@@ -166,3 +166,20 @@ wc shel2.py
 wc valuable_notes.txt
 wc shell2.py
 wc test.txt
+wc --help
+clear
+clear
+clear
+cd ..
+ls
+ls -lah
+ls | wc -l
+clear
+cd P01
+ls
+l
+wc 
+ls |wc
+ls|wc
+wc --help
+wc --help | wc

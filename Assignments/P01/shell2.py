@@ -990,58 +990,58 @@ def help(parts):
     
     output = {"output" : None, "error" : None}
     
-    print("    ------------------------------", end= " ")
+    output["output"] = "    ------------------------------"
     
     if not input and not params and flags == "--help":
         if cmd == "cd":
-            output["output"] = cd.__doc__
+            output["output"] += cd.__doc__
         if cmd == "ls":
-            output["output"] = ls.__doc__
+            output["output"] += ls.__doc__
 
         if cmd == "pwd":
-            output["output"] = pwd_.__doc__
+            output["output"] += pwd_.__doc__
 
         if cmd == "mkdir":
-            output["output"] = mkdir.__doc__
+            output["output"] += mkdir.__doc__
+            
+        if cmd == "wc":
+            output["output"] += wc.__doc__
+            
+        if cmd == "history":
+            output["output"] += history.__doc__
         '''
         if cmd == "cp":
-            output["output"] = cp.__doc__
+            output["output"] += cp.__doc__
 
         if cmd == "mv":
-            output["output"] = mv.__doc__
+            output["output"] += mv.__doc__
 
         if cmd == "rm":
-            output["output"] = rm.__doc__
+            output["output"] += rm.__doc__
 
         if cmd == "cat":
-            output["output"] = cat.__doc__
+            output["output"] += cat.__doc__
 
         if cmd == "head":
-            output["output"] = head.__doc__
+            output["output"] += head.__doc__
 
         if cmd == "tail":
-            output["output"] = tail.__doc__
+            output["output"] += tail.__doc__
 
         if cmd == "grep":
-            output["output"] = grep.__doc__
-
-        if cmd == "wc":
-            output["output"] = wc.__doc__
+            output["output"] += grep.__doc__
 
         if cmd == "chmod":
-            output["output"] = chmod.__doc__
-
-        if cmd == "history":
-            output["output"] = history.__doc__
+            output["output"] += chmod.__doc__
 
         if cmd == "exit":
-            output["output"] = exit_shell.__doc__
+            output["output"] += exit_shell.__doc__
 
         if cmd == "more":
-            output["output"] = more.__doc__
+            output["output"] += more.__doc__
 
         if cmd == "less":
-            output["output"] = less.__doc__
+            output["output"] += less.__doc__
 
         '''
         
