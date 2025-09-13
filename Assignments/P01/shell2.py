@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 """
-This file is about using getch to capture input and handle certain keys 
-when the are pushed. The 'command_helper.py' was about parsing and calling functions.
-This file is about capturing the user input so that you can mimic shell behavior.
+This py file is the development environment for the shell program.
+I do all my dev and testing on this script then push it to 
+production script when testing is sucessful
 
 """
 import os 
@@ -17,18 +17,13 @@ from colorama import init, Fore, Style
 import time
 from time import sleep
 import re
-#from rich import print
 
-##################################################################################
-##################################################################################
 
 # Global variable to track current shell color
 #CURRENT_COLOR = Style.RESET_ALL
 
 
 getch = Getch()  # create instance of our getch class
-
-#prompt = "$"  # set default prompt
 
 
 def WelcomeMessage():
@@ -437,13 +432,13 @@ def wc(parts):
     
     # If multiple parameters
     if len(params) > 1:
-        output["error"] = "Error. wc can only take one parameter."
+        output["error"] = "Error: 'wc' can only take one parameter."
         return output
     
     # Variables to store count
-    line_count     = 0
-    word_count     = 0
-    char_count     = 0
+    line_count = 0
+    word_count = 0
+    char_count = 0
     
     # Convert params to string
     if params:
@@ -457,13 +452,13 @@ def wc(parts):
         
     # Filtering out bad commands
     if not params and not input:
-        output["error"] = "Error. wc needs either a input file or parameter file to process. Neither were provided. Run wc --help for more info."
+        output["error"] = f"{Fore.RED}Error: 'wc' needs either an input file or parameter file to process.{Style.RESET_ALL} \nRun 'wc --help' for more info."
         return output
     if params and input:
-        output["error"] = "Error. wc needs either a input file or parameter file to process. Both were provided. Run wc --help for more info."
+        output["error"] = f"{Fore.RED}Error: 'wc' needs either an input file or parameter file to process.{Style.RESET_ALL} \nRun 'wc --help' for more info."
         return output
     if flags and flags not in ["-w", "-l", "-wl", "-lw"]:
-        output["error"] = f"Error. {flags} is not a viable flag. Run wc --help for flag options"
+        output["error"] = f"{Fore.RED}Error: {flags} is not a viable flag.{Style.RESET_ALL} Run 'wc --help' for flag options"
         return output
     
     # Checking if input or params in a file.
@@ -524,8 +519,8 @@ def wc(parts):
             output["output"] = f"{line_count} {word_count} {char_count} {input or params}"
             return output            
             
-    # Determine if item is a string   
-    elif isinstance(item, str):
+    # Determine if item is a string and its from input
+    elif isinstance(item, str) and input and not params:
         
         
         # Split string in lines first 
@@ -605,7 +600,7 @@ def wc(parts):
     
     # item was not a string or file
     else:
-        output["error"] = f"Error. {item} is not a string or file path that exists. See wc --help for more info."
+        output["error"] = f"{Fore.RED}Error: {item}: No such file or directory.{Style.RESET_ALL}\nRun 'wc --help' for more info."
         return output
                         
 

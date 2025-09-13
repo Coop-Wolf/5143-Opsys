@@ -145,3 +145,18 @@ ls -l
 ls -lah
 ls -l | wc
 ls -lah | wc
+wc
+wc
+ls | wc valuable_notes.txt
+cd --help
+wc -l
+wc -lah
+wc -lah valuable_notes.txt
+wc - valuable_notes.txt
+wc -l valiable.txt
+wc -l valiable.txt
+cd | wc -l
+ls | wc val
+cd .. | cd P02 | ls -l | wc -l
+ls -l
+cd .. | cd P02 | ls -l | wc -l | cd .. 

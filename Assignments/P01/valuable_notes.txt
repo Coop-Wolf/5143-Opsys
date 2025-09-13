@@ -5,6 +5,12 @@ cat [file 1] [file 2] concatinates. can take zero or more files
 chmod can do system call.
 ------------------------------------------------------------------------------
 
+Pushes to Production shell:
+    1. Add If-statement in ls(): if input:
+                                output["error"] = "Error. ls doesn't take input."
+                                return output
+    2. Edit Total size logic: instead of printing the size, save it to variable and return in output.
+
 
 
 Need to fix:
