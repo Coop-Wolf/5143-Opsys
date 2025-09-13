@@ -160,3 +160,4 @@ ls | wc val
 cd .. | cd P02 | ls -l | wc -l
 ls -l
 cd .. | cd P02 | ls -l | wc -l | cd .. 
+ls -lah | cd
