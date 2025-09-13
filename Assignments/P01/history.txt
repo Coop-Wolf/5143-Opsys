@@ -140,3 +140,8 @@ color
 color
 ls
 cd | ls -alh | wc -l
+ls -l
+ls -l
+ls -lah
+ls -l | wc
+ls -lah | wc
