@@ -432,7 +432,7 @@ def wc(parts):
     
     # If multiple parameters
     if len(params) > 1:
-        output["error"] = "Error: 'wc' can only take one parameter."
+        output["error"] = f"{Fore.RED}Error: 'wc' can only take one parameter.{Style.RESET_ALL} \nRun 'wc --help' for more info."
         return output
     
     # Variables to store count

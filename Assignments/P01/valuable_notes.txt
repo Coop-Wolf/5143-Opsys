@@ -14,8 +14,7 @@ Pushes to Production shell:
 
 
 Need to fix:
-    ls -l and all its variations print the size. Need to add that to the output string not print.
-    wc isn't quite correct. Number are a little off.
+
 
 Errors (bugs):
 
@@ -33,6 +32,11 @@ Commands that work correctly for Shell2.py
     history
     !x
     exit
+
+Cool stuff:
+    terminal wc doesn't run correctly. 
+    when running in the regular shell: wc test.txt: it says there are 6 lines but there are really 7
+    my wc command gets the correct result for the line numeber.
 
 
 ------------------------------------------------------------------------------------------------------
