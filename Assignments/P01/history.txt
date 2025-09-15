@@ -221,3 +221,6 @@ grep test test.txt valuable_notes.txt
 ls -lah
 ls -lah
 ls -la
+wc string
+wc string
+wc this is my string

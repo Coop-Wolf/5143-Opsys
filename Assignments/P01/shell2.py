@@ -520,7 +520,7 @@ def wc(parts):
             output["output"] = f"{line_count} {word_count} {char_count} {input or params}"
             return output            
             
-    # Determine if item is a string and its from input
+    # Determine if item is a string
     elif isinstance(item, str) and input and not params:
         
         
