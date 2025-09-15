@@ -203,3 +203,18 @@ ls
 pwd
 clear
 ls -lah | grep a test.txt valuable_notes.txt
+ls -lah | grep code | wc -l
+ls -lah | grep code
+ls -lah | grep shell | wc -l
+ls -lah | grep code
+ls -lah | grep shell
+greb test this valuable_notes.txt
+greb "test this" valuable_notes.txt
+grep "test this" valuable_notes.txt
+grep "test this" valuable_notes.txt
+ls -lah | grep shell
+ls -lah | grep Sep 15
+greb test test.txt valuable_notes.txt
+grep test this valuable_notes.txt
+greb test test.txt valuable_notes.txt
+grep test test.txt valuable_notes.txt

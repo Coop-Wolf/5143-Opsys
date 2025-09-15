@@ -19,10 +19,10 @@ Run the `shell.py` file and use the following commands...
 | Command               | Description                                         | Author   |
 |-----------------------|-----------------------------------------------------|----------|
 | `ls`                  | List files and directories                          | Cooper   |
-| `pwd`                 | Print working directory                             | Cooper   |
 | `ls -a`               | List all files, including hidden ones.              | Cooper   |
 | `ls -l`               | Long listing format.                                | Cooper   |
 | `ls -h`               | Human-readable file sizes.                          | Cooper   |
+| `pwd`                 | Print working directory                             | Cooper   |
 | `mkdir`               | Create a directory.                                 | Cooper   |
 | `cd directory`        | Change to a named directory.                        | Cooper   |
 | `cd`                  | Change to the home directory if no argument given.  | Cooper   |
@@ -32,21 +32,20 @@ Run the `shell.py` file and use the following commands...
 | `cat file`            | Display contents of a file.                         | Harika   |
 | `head -n`             | Display the first n lines of a file.                |          |
 | `tail -n`             | Display the last n lines of a file.                 |          |
-| `grep 'pattern' file` | Search for a pattern in a file.                     |          |
+| `grep 'pattern' file` | Search for a pattern in a file.                     | Cooper   |
 | `wc -l`               | Count lines in a file.                              | Cooper   |
 | `wc -w`               | Count words in a file.                              | Cooper   |
-| `chmod xxx`           | Change file permissions.                            |          |
 | `history`             | Show previously used commands.                      | Cooper   |
 | `!x`                  | Re-run command number *x* from history.             | Cooper   |
 | `exit`                | Exits the shell.                                    | Cooper   |
 | `up & down arrows`    | Navigate previous command                           | Cooper   |
 | `left & right arrows` | Move cursor                                         | Cooper   |
+| `chmod xxx`           | Change file permissions.                            |          |
 | `more`                |                                                     |          |
 | `less`                |                                                     |          |
 | `[program] > file`    |                                                     |          |
 | `[program] < file`    |                                                     |          |
 | `hfind`               |                                                     |          |
-| `piping`              |                                                     |          |
 
 ## Non-Working Components:
 cp

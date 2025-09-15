@@ -737,27 +737,23 @@ def grep(parts):
     if len(params) > 50:
         output["error"] = f"{Fore.RED}Error: Params list too long.{Style.RESET_ALL} \nRun 'grep --help' for more info."
     
+    # list to store split params
+    files = []
+    pattern_parts = []
     
-    # split params to pattern and file(s)
-    if len(params) == 1:
-        pattern = params[0]
-    
-    if len(params) > 1:
-        pattern = params[0]
-        files = params[1:]
+    # Loop through params to clean and append to correct list
+    for param in params:
+        clean = param.strip("'\"")
         
-        # Convert pattern to string
-        pattern = "".join(pattern)
-        pattern = pattern.strip("'")
-        
-        # Convert list of files to list of strings
-        for file in files:
-            file = "".join(file)
-            file = file.strip("'")      
-    
-    # check is pattern is persent
-    if not pattern:
-        output["error"] = f"{Fore.RED}Error: No pattern was given.{Style.RESET_ALL} \nRun 'grep --help' for more info."
+        # If param is file append to files list | logic From ChatGPT
+        if os.path.isfile(param) or os.path.exists(clean):
+            files.append(param)
+            
+        # Else param is part of the pattern
+        else:
+            pattern_parts.append(param)
+            
+    pattern = " ".join(pattern_parts)  
         
     # Convert input to string
     if input:
@@ -825,7 +821,7 @@ def grep(parts):
             
         # Error if one of the files does not exist
         else:
-            output["error"] = f"{Fore.RED}Error: {file} is not a directory.{Style.RESET_ALL} \nRun 'grep --help' for more info."
+            output["error"] = f"{Fore.RED}Error: {file} is not a file.{Style.RESET_ALL} \nRun 'grep --help' for more info."
             return output
         
     # Converting to string and returning
@@ -853,6 +849,7 @@ def help(parts):
     if not input and not params and flags == "--help":
         if cmd == "cd":
             output["output"] += cd.__doc__
+            
         if cmd == "ls":
             output["output"] += ls.__doc__
 
@@ -867,6 +864,9 @@ def help(parts):
             
         if cmd == "history":
             output["output"] += history.__doc__
+            
+        if cmd == "grep":
+            output["output"] += grep.__doc__
         '''
         if cmd == "cp":
             output["output"] += cp.__doc__
@@ -885,9 +885,6 @@ def help(parts):
 
         if cmd == "tail":
             output["output"] += tail.__doc__
-
-        if cmd == "grep":
-            output["output"] += grep.__doc__
 
         if cmd == "chmod":
             output["output"] += chmod.__doc__
