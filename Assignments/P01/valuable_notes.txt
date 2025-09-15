@@ -5,13 +5,20 @@ cat [file 1] [file 2] concatinates. can take zero or more files
 chmod can do system call.
 ------------------------------------------------------------------------------
 
+Work on next:
+    sort
+    chmod
+    <
+    >
+
+
 Pushes to Production shell:
 
 
 
 
 Need to fix:
-    wc needs to read std in when no input or file is provided.
+    wc needs to read std in when no input or file is provided. (not a high priority)
 
 
 Need to Add:

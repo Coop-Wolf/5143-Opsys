@@ -46,6 +46,7 @@ Run the `shell.py` file and use the following commands...
 | `[program] > file`    |                                                     |          |
 | `[program] < file`    |                                                     |          |
 | `hfind`               |                                                     |          |
+| `sort `               |                                                     |          |
 
 ## Non-Working Components:
 cp
