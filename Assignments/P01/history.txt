@@ -218,3 +218,6 @@ greb test test.txt valuable_notes.txt
 grep test this valuable_notes.txt
 greb test test.txt valuable_notes.txt
 grep test test.txt valuable_notes.txt
+ls -lah
+ls -lah
+ls -la

@@ -292,7 +292,7 @@ def ls(parts):
             
             format_list = []
             for item in items:
-                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
+                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8} {item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
                 format_list.append(line)
                 
             # Convert to string and return
@@ -328,7 +328,7 @@ def ls(parts):
             # formatting list before converting to string
             format_list = []
             for item in items:
-                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
+                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8} {item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
                 format_list.append(line)
             
             # Converting to string and returning
@@ -364,7 +364,7 @@ def ls(parts):
             # formatting list before converting to string
             format_list = []
             for item in items:
-                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
+                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8} {item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
                 format_list.append(line)
             
             # Convert to string and return
@@ -400,7 +400,7 @@ def ls(parts):
             # formatting list before converting to string
             format_list = []
             for item in items:
-                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8}{item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
+                line = f"{item[0]:<10} {item[1]:<3}{item[2]:<8} {item[3]:<8}{item[4]:>8} {item[5]:<12} {item[6]}"
                 format_list.append(line)
             
             # Convert to string and return
@@ -829,7 +829,6 @@ def grep(parts):
     output["output"] = result
     return output
         
-
 
 def help(parts):
     '''
