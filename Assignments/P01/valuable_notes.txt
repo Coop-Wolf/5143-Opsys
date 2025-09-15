@@ -6,21 +6,28 @@ chmod can do system call.
 ------------------------------------------------------------------------------
 
 Pushes to Production shell:
-    1. Add If-statement in ls(): if input:
-                                output["error"] = "Error. ls doesn't take input."
-                                return output
-    2. Edit Total size logic: instead of printing the size, save it to variable and return in output.
+
 
 
 
 Need to fix:
+    Spacing in ls() output
+    wc needs to read std in when no input or file is provided.
 
+
+Need to Add:
+    if statement in cp(parts) to make sure there are 2 and only 2 params
+        if len(params) < 1 or len(params) > 2:
+            output["error"] = f"Error: cp takes only two params. 
 
 Errors (bugs):
+    cat valiable_notes.txt is printing 908 for word count when it should be 166
+    Not sure if cat should read input. should just be a file. or input from previous command.
 
 
 Added Features:
     colored info when doing ls depending on what type it is
+
 
 Commands that work correctly for Shell2.py
     ls -alh
@@ -32,6 +39,7 @@ Commands that work correctly for Shell2.py
     history
     !x
     exit
+
 
 Cool stuff:
     terminal wc doesn't run correctly. 

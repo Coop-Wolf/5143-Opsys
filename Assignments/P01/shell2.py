@@ -17,6 +17,7 @@ from colorama import init, Fore, Style
 import time
 from time import sleep
 import re
+import shutil
 
 
 # Global variable to track current shell color
@@ -602,284 +603,35 @@ def wc(parts):
     else:
         output["error"] = f"{Fore.RED}Error: {item}: No such file or directory.{Style.RESET_ALL}\nRun 'wc --help' for more info."
         return output
-                        
 
-# Helper function for ls_with_args
-def color_filename(item, full_path):
+
+def cat(file):
     '''
-    Returns a colored string for a filename based on its type.
-    
-    - Directories → Blue
-    - Executable files → Green
-    - Other files → Default color
+    Usage: cat [FILE]...
+
+    Example:
+        cat f - g   Output f's contents, then standard input, then g's contents.
+        cat         Copy standard input to standard output.
     '''
-    
-    # Coloring the directories blue
-    if os.path.isdir(full_path):
-        return Fore.BLUE + item + Style.RESET_ALL
-    
-    # Coloring the executables green
-    elif os.access(full_path, os.X_OK):
-        return Fore.GREEN + item + Style.RESET_ALL
-    
-    # Leaving all other itms default color
-    return item
-    
+    output = {"output": None, "error": None}
 
-# Helper functin for ls_with_args
-def format_long_listing(full_path, human = False):
-    '''
-    Returns detailed metadata for a file in "long listing" format.
-    
-    Parameters:
-        item (str): The filename.
-        human (bool): If True, convert file size to human-readable format.
-    
-    Returns:
-        list: [permissions, links, owner, group, size, mod_time, colored_name]
-    '''
-    
-    # Getting full path of the item and info about the item
-    file_info = os.stat(full_path)
-
-    # Retreiving info about item
-    permissions = stat.filemode(file_info.st_mode)
-    links       = file_info.st_nlink
-    owner       = pwd.getpwuid(file_info.st_uid).pw_name
-    group       = grp.getgrgid(file_info.st_gid).gr_name
-    size        = human_readable(file_info.st_size) if human else file_info.st_size
-    mod_time    = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
-    
-    # coloring item name depending on type
-    name        = color_filename(os.path.basename(full_path), full_path)
-
-    # Returning all item information
-    return [permissions, links, owner, group, size, mod_time, name]
-    #return f"{permissions} {links} {owner} {group} {size} {mod_time} {name}"
-
-
-# Helper function for ls_with_args
-def get_directory_items(directory = None, include_hidden = False):
-    '''
-    Returns a list of items in the current directory.
-    
-    Parameters:
-        include_hidden (bool): If True, include hidden files along with "." and "..".
-    
-    Returns:
-        list: Filenames in the directory.
-    '''
-    
-    # Storing items from directory into items list
-    if directory:
-        items = os.listdir(directory)
-    
-    if not directory:
-        items = os.listdir()
-        
-        
-    non_hidden_items = []
-    
-    # If wanting all items return items + . and ..
-    if include_hidden:
-        return ['.', '..'] + items
-    
-    # Return only non hidden items
-    else:
-        for item in items:
-            if not item.startswith('.'):
-                non_hidden_items.append(item)
-                
-        return non_hidden_items
-    
-        
-def history(parts):
-    """
-    Display the command history from the history.txt file.
-
-    This function reads the history.txt file and prints each command
-    stored in it. If the file does not exist, it informs the user.
-
-    Parameters:
-        None
-    Returns:
-        None
-    """
-    
-    # These are lists
-    input = parts.get("input", None)
-    flags = parts.get("flags", None)
-    params = parts.get("params", None)
-    
-    # Dictionary to return
-    output = {"output" : None, "error" : None}
-    
-    # If there exist any input flags and params in the dict, dont execute
-    if not input and not flags and not params:
-        
-        # Get the absolute path of the folder where the script is located
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-
-        # Build the full path to history.txt inside your repo
-        history_file = os.path.join(script_dir, "history.txt")
-
-        history_list = []
-        command_number = 1
-
-        # Check if history file exists
-        if os.path.exists(history_file):
-            
-            # Opening history file
-            with open(history_file, "r") as file:
-                
-                # Storing contents into commands
-                commands = file.readlines()
-                
-                # Getting each line
-                for command in commands:
-                    
-                    # Appending the command alone with its command number to list
-                    history_list.append(f"{command_number} {command.strip()}")
-                    command_number += 1
-            
-            # Appending the history command that was just executed
-            history_list.append(f"{command_number} history")
-            
-            # Convert to string and return
-            result = "\n".join(history_list)
-            output["output"] = result
-            return output
-      
-        
-        # If history_file does not exist, return None
+     #if no file provided, read from stdin once
+    if not file:
+        output["output"] = sys.stdin.read()
+        return output
+    for f in file:
+        if f == '-':
+            #read from standard input here
+            output["output"] = sys.stdin.read()
         else:
-            output["error"] = "Error, History file doesn't exist in the directory that this pythons script is in."
-            return output
-        
-    # If user added on top of history command
-    else:
-        output["error"] = "Error, history command must not have any params, input, or flags."
-    
-    
-def get_history_rev():
-    """
-    Opens history text file and returns the contents.
-
-    This function retrieves the previous command from the history file
-    and returns it. If there is no previous command, it returns None.
-
-    Parameters:
-        None
-    Returns:
-        List of all commands in history file.
-    """
-    
-    # Get the absolute path of the folder where the script is located
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Build the full path to history.txt inside your repo
-    history_file = os.path.join(script_dir, "history.txt")
-
-    # Check if history file exists
-    if os.path.exists(history_file):
-        with open(history_file, "r") as file:
-            h_cmds = file.readlines()
-            
-            # Remove the last value if its empty
-            if h_cmds and h_cmds[-1].strip() == "":
-                h_cmds.pop()
-            
-            # Removing '\n' at the end of each command
-            h_cmds = [item.strip() for item in h_cmds]
-            
-            # Reversing list
-            h_cmds.reverse()
-            
-            # Return list of all commands in history in reverse order
-            return h_cmds
-            
-    else:
-        # History file doesn't exist
-        return None
-    
-    
-# This functions works as the !x command
-def cmd_from_history(index):
-    '''
-    Functions handles the !x command by getting the index value from the command
-    and retrieves the history commands then return the at index given
-    '''
-    
-    # directory to store output information
-    output = {"output" : None, "error" : None}
-    
-    # setting index to only value, removing '!'
-    index = index[1:]
-    
-    index = int(index)
-    index -= 1
-    h_cmds = get_history_rev() or []
-        
-    # Reverse list so commands are in chronological
-    if h_cmds:
-        h_cmds.reverse()
-        
-    # Geting history commands
-    if 0 <= index < len(h_cmds):
-        
-        # Returning cmd at given index
-        output["output"] = h_cmds[index].strip()
-        return output
-    
-    # if index is out of range of history
-    else:
-        output["error"] = f"Error. There are only {len(h_cmds)} commands in history."
-        return output
-       
-       
-def write_to_history(cmd):
-    '''
-    # write out the command to the history file
-    # so you can access it later with the up/down arrows
-    '''
-          
-    # Get the absolute path of the folder where the script is located
-    # Since this script and the history file are in the same directory:
-    script_dir = os.path.dirname(os.path.abspath(__file__))
-
-    # Build the full path to history.txt inside your repo
-    history_file = os.path.join(script_dir, "history.txt")
-
-    # Append command to the file
-    with open(history_file, "a") as file:
-        file.write(cmd + "\n")
-       
-    
-def clear():
-    """
-    Clear the terminal screen.
-    This function clears the terminal screen by executing the appropriate system command.
-    Parameters:
-        None
-    Returns:
-        None
-    """
-    os.system("clear")
-    
-    
-def exit_shell():
-    """
-    Exits the shell program.
-
-    This function prints a goodbye message and exits the program.
-
-    Parameters:
-        None
-    Returns:
-        None
-    """
-
-    raise SystemExit(f"{Fore.GREEN}Exiting Shell. Goodbye!")
+            try:
+                with open(f,'r') as file_handle:
+                    output["output"] = file_handle.read()
+            except FileNotFoundError:
+                output["error"] = f"cat: {f}: No such file or directory\n"
+            except Exception as e:
+                output["error"] = f"cat: {f}: {str(e)}\n"
+    return output              
 
 
 def mkdir(parts):
@@ -940,41 +692,6 @@ def mkdir(parts):
         
         
     return output
-        
-        
-def human_readable(size):
-    """
-    Convert a file size in bytes to a human-readable format.
-
-    This function takes a file size in bytes and converts it to a more
-    human-friendly format (e.g., K, M, G) with two decimal places.
-
-    Parameters:
-        size (int): The file size in bytes.
-
-    Returns:
-        str: The file size in a human-readable format.
-    """
-    
-    # Convert size to float for division
-    size = float(size)
-    
-    # Define units for conversion
-    units = ["K", "M", "G"]
-    i = 0
-
-    # Loop to convert size to appropriate unit
-    while size >= 1024 and i < len(units):
-        size /= 1024
-        i += 1
-
-    # If size is less than 1K, show in bytes without decimal
-    if i == 0:
-        return f"{int(size)}"
-    
-    # Otherwise, show with one decimal place and appropriate unit
-    else:
-        return f"{size:.1f}{units[i-1]}"
 
 
 def help(parts):
@@ -1050,6 +767,354 @@ def help(parts):
     else:
         output["error"] = f"Error, help for command {cmd} could not be found."
         return output
+
+
+def history(parts):
+    """
+    Display the command history from the history.txt file.
+
+    This function reads the history.txt file and prints each command
+    stored in it. If the file does not exist, it informs the user.
+
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    
+    # These are lists
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
+    # If there exist any input flags and params in the dict, dont execute
+    if not input and not flags and not params:
+        
+        # Get the absolute path of the folder where the script is located
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+
+        # Build the full path to history.txt inside your repo
+        history_file = os.path.join(script_dir, "history.txt")
+
+        history_list = []
+        command_number = 1
+
+        # Check if history file exists
+        if os.path.exists(history_file):
+            
+            # Opening history file
+            with open(history_file, "r") as file:
+                
+                # Storing contents into commands
+                commands = file.readlines()
+                
+                # Getting each line
+                for command in commands:
+                    
+                    # Appending the command alone with its command number to list
+                    history_list.append(f"{command_number} {command.strip()}")
+                    command_number += 1
+            
+            # Appending the history command that was just executed
+            history_list.append(f"{command_number} history")
+            
+            # Convert to string and return
+            result = "\n".join(history_list)
+            output["output"] = result
+            return output
+      
+        
+        # If history_file does not exist, return None
+        else:
+            output["error"] = "Error, History file doesn't exist in the directory that this pythons script is in."
+            return output
+        
+    # If user added on top of history command
+    else:
+        output["error"] = "Error, history command must not have any params, input, or flags."
+
+
+def cmd_from_history(index):
+    '''
+    Functions handles the !x command by getting the index value from the command
+    and retrieves the history commands then return the at index given
+    '''
+    
+    # directory to store output information
+    output = {"output" : None, "error" : None}
+    
+    # setting index to only value, removing '!'
+    index = index[1:]
+    
+    index = int(index)
+    index -= 1
+    h_cmds = get_history_rev() or []
+        
+    # Reverse list so commands are in chronological
+    if h_cmds:
+        h_cmds.reverse()
+        
+    # Geting history commands
+    if 0 <= index < len(h_cmds):
+        
+        # Returning cmd at given index
+        output["output"] = h_cmds[index].strip()
+        return output
+    
+    # if index is out of range of history
+    else:
+        output["error"] = f"Error. There are only {len(h_cmds)} commands in history."
+        return output
+
+
+def cp(parts):
+    '''
+    Copy SOURCE to DEST.
+
+          --help        display this help and exit
+    '''
+
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    output = {"output" : None, "error" : None}
+
+    if input:
+        output["error"] = "Error. Command should not have an input."
+        return output
+    
+    if flags:
+        output["error"] = "Error. Command doesn't take flags."
+        return output
+
+    try:
+        shutil.copy(params[0], params[1])
+    except FileNotFoundError:
+        output["error"] = f"Error: File {params[0]} not found."
+    except PermissionError:
+        output["error"] = f"Error: Permission denied when copying {params[0]} to {params[1]}."
+    except shutil.SameFileError:
+        output["error"] = f"Error: Source and destination {params[0]} are the same file."
+    except IsADirectoryError:
+        output["error"] = f"Error: One of the paths provided is a directory, not a file."
+    except Exception as e:
+        output["error"] = f"An unexpected error occurred: {e}"
+
+    return output
+
+
+# Helper functions
+
+def color_filename(item, full_path):
+    '''
+    Returns a colored string for a filename based on its type.
+    
+    - Directories → Blue
+    - Executable files → Green
+    - Other files → Default color
+    '''
+    
+    # Coloring the directories blue
+    if os.path.isdir(full_path):
+        return Fore.BLUE + item + Style.RESET_ALL
+    
+    # Coloring the executables green
+    elif os.access(full_path, os.X_OK):
+        return Fore.GREEN + item + Style.RESET_ALL
+    
+    # Leaving all other itms default color
+    return item
+    
+
+def format_long_listing(full_path, human = False):
+    '''
+    Returns detailed metadata for a file in "long listing" format.
+    
+    Parameters:
+        item (str): The filename.
+        human (bool): If True, convert file size to human-readable format.
+    
+    Returns:
+        list: [permissions, links, owner, group, size, mod_time, colored_name]
+    '''
+    
+    # Getting full path of the item and info about the item
+    file_info = os.stat(full_path)
+
+    # Retreiving info about item
+    permissions = stat.filemode(file_info.st_mode)
+    links       = file_info.st_nlink
+    owner       = pwd.getpwuid(file_info.st_uid).pw_name
+    group       = grp.getgrgid(file_info.st_gid).gr_name
+    size        = human_readable(file_info.st_size) if human else file_info.st_size
+    mod_time    = time.strftime("%b %d %H:%M", time.localtime(file_info.st_mtime))
+    
+    # coloring item name depending on type
+    name        = color_filename(os.path.basename(full_path), full_path)
+
+    # Returning all item information
+    return [permissions, links, owner, group, size, mod_time, name]
+    #return f"{permissions} {links} {owner} {group} {size} {mod_time} {name}"
+
+
+def get_directory_items(directory = None, include_hidden = False):
+    '''
+    Returns a list of items in the current directory.
+    
+    Parameters:
+        include_hidden (bool): If True, include hidden files along with "." and "..".
+    
+    Returns:
+        list: Filenames in the directory.
+    '''
+    
+    # Storing items from directory into items list
+    if directory:
+        items = os.listdir(directory)
+    
+    if not directory:
+        items = os.listdir()
+        
+        
+    non_hidden_items = []
+    
+    # If wanting all items return items + . and ..
+    if include_hidden:
+        return ['.', '..'] + items
+    
+    # Return only non hidden items
+    else:
+        for item in items:
+            if not item.startswith('.'):
+                non_hidden_items.append(item)
+                
+        return non_hidden_items
+    
+    
+def get_history_rev():
+    """
+    Opens history text file and returns the contents.
+
+    This function retrieves the previous command from the history file
+    and returns it. If there is no previous command, it returns None.
+
+    Parameters:
+        None
+    Returns:
+        List of all commands in history file.
+    """
+    
+    # Get the absolute path of the folder where the script is located
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Build the full path to history.txt inside your repo
+    history_file = os.path.join(script_dir, "history.txt")
+
+    # Check if history file exists
+    if os.path.exists(history_file):
+        with open(history_file, "r") as file:
+            h_cmds = file.readlines()
+            
+            # Remove the last value if its empty
+            if h_cmds and h_cmds[-1].strip() == "":
+                h_cmds.pop()
+            
+            # Removing '\n' at the end of each command
+            h_cmds = [item.strip() for item in h_cmds]
+            
+            # Reversing list
+            h_cmds.reverse()
+            
+            # Return list of all commands in history in reverse order
+            return h_cmds
+            
+    else:
+        # History file doesn't exist
+        return None
+       
+       
+def write_to_history(cmd):
+    '''
+    # write out the command to the history file
+    # so you can access it later with the up/down arrows
+    '''
+          
+    # Get the absolute path of the folder where the script is located
+    # Since this script and the history file are in the same directory:
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+    # Build the full path to history.txt inside your repo
+    history_file = os.path.join(script_dir, "history.txt")
+
+    # Append command to the file
+    with open(history_file, "a") as file:
+        file.write(cmd + "\n")
+       
+    
+def clear():
+    """
+    Clear the terminal screen.
+    This function clears the terminal screen by executing the appropriate system command.
+    Parameters:
+        None
+    Returns:
+        None
+    """
+    os.system("clear")
+    
+    
+def exit_shell():
+    """
+    Exits the shell program.
+
+    This function prints a goodbye message and exits the program.
+
+    Parameters:
+        None
+    Returns:
+        None
+    """
+
+    raise SystemExit(f"{Fore.GREEN}Exiting Shell. Goodbye!")
+        
+        
+def human_readable(size):
+    """
+    Convert a file size in bytes to a human-readable format.
+
+    This function takes a file size in bytes and converts it to a more
+    human-friendly format (e.g., K, M, G) with two decimal places.
+
+    Parameters:
+        size (int): The file size in bytes.
+
+    Returns:
+        str: The file size in a human-readable format.
+    """
+    
+    # Convert size to float for division
+    size = float(size)
+    
+    # Define units for conversion
+    units = ["K", "M", "G"]
+    i = 0
+
+    # Loop to convert size to appropriate unit
+    while size >= 1024 and i < len(units):
+        size /= 1024
+        i += 1
+
+    # If size is less than 1K, show in bytes without decimal
+    if i == 0:
+        return f"{int(size)}"
+    
+    # Otherwise, show with one decimal place and appropriate unit
+    else:
+        return f"{size:.1f}{units[i-1]}"
         
 
 def visible_length(s):
@@ -1402,6 +1467,11 @@ if __name__ == "__main__":
                         result = history(command)
                     elif command.get("cmd") == "wc":
                         result = wc(command)
+                    elif command.get("cmd") == "cp":
+                        result = cp(command)
+                    elif command.get("cmd") == "cat":
+                        file = command.get("params")
+                        result = cat(file)
                     #elif command.get("cmd") == "color":
                     #    result = color(command)
                     #elif command.get("cmd") == "stop_color":

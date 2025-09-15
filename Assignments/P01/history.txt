@@ -183,3 +183,22 @@ ls |wc
 ls|wc
 wc --help
 wc --help | wc
+cp /test.txt /P01/
+cp test.txt /P01/
+cp /workspaces/5143-Opsys/Assignments/P01/test.txt /workspaces/5143-Opsys/Assignments/P02/
+ls
+cd ..
+ls
+cd P02
+ls
+cat test.txt
+cat valuable_notes.txt
+cat valuable_notes.txt | wc
+wc valuable_notes.txt
+cat testthistring
+cd ..
+cd ..
+history
+ls
+pwd
+clear

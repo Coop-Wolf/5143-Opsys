@@ -26,10 +26,10 @@ Run the `shell.py` file and use the following commands...
 | `mkdir`               | Create a directory.                                 | Cooper   |
 | `cd directory`        | Change to a named directory.                        | Cooper   |
 | `cd`                  | Change to the home directory if no argument given.  | Cooper   |
-| `cp file1 file2`      | Copy file1 to file2.                                |          |
-| `mv file1 file2`      | Move or rename file1 to file2.                      |          |
-| `rm -r`               | Recursively delete a directory.                     |          |
-| `cat file`            | Display contents of a file.                         |          |
+| `cp file1 file2`      | Copy file1 to file2.                                | Tim      |
+| `mv file1 file2`      | Move or rename file1 to file2.                      | Tim      |
+| `rm -r`               | Recursively delete a directory.                     | Tim      |
+| `cat file`            | Display contents of a file.                         | Harika   |
 | `head -n`             | Display the first n lines of a file.                |          |
 | `tail -n`             | Display the last n lines of a file.                 |          |
 | `grep 'pattern' file` | Search for a pattern in a file.                     |          |
