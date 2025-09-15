@@ -202,3 +202,4 @@ history
 ls
 pwd
 clear
+ls -lah | grep a test.txt valuable_notes.txt
