@@ -16,7 +16,10 @@ Work on next:
 
 
 Pushes to Production shell:
-    
+    ip, date implementation
+    ip, date help
+    ip, date in main
+    ip, date in command list
 
 
 Need to fix:
@@ -36,6 +39,8 @@ Added Features:
     colored info when doing ls depending on what type it is
     ls -merica
         colors list in red white blue
+    ip command
+    date
 
 
 Commands that work correctly for Shell2.py

@@ -19,13 +19,10 @@ from time import sleep
 import re
 import shutil
 
-
 # Global variable to track current shell color
 #CURRENT_COLOR = Style.RESET_ALL
 
-
 getch = Getch()  # create instance of our getch class
-
 
 def WelcomeMessage():
     """
@@ -238,8 +235,7 @@ def ls(parts):
             result = " ".join(items)
             output["output"] = result
             return output
-                
-                
+                      
         # Using -a alone or with -h prints all files including hidden
         elif option in ("-a","-ah", "-ha"):
             
@@ -297,7 +293,6 @@ def ls(parts):
             output["output"] = result
             return output
         
-            
         # Using -al or -la prints all files in long format
         elif option in ("-al", "-la"):
                 
@@ -1035,6 +1030,12 @@ def help(parts):
             
         if cmd == "chmod":
             output["output"] += chmod.__doc__
+        
+        if cmd == "help":
+            output["output"] += help.__doc__
+            
+        if cmd == "date":
+            output["output"] += date.__doc__
         '''
         if cmd == "cp":
             output["output"] += cp.__doc__
@@ -1288,6 +1289,64 @@ def chmod(parts):
         output["error"] = f"An unexpected error occurred: {e}"
 
     # Return success case
+    return output
+
+def ip(parts):
+    '''
+    Display the IP address of the machine.
+    '''
+    
+    # Getting parsed parts
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)    
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
+    # Filter out bad commands
+    if input or flags or params:
+        output["error"] = f"{Fore.RED}Error. Command should not have any input, flags, or params .{Style.RESET_ALL}\nRun 'ip --help' for more info."
+        return output
+    
+    # Getting hostname and IP address
+    try:
+        hostname = socket.gethostname()
+        ip_addr  = socket.gethostbyname(hostname)
+        output["output"] = f"IP Address: {ip_addr}"
+    except Exception as e:
+        output["error"] = f"{Fore.RED}An error occurred while retrieving the IP address: {e}{Style.RESET_ALL}"
+    
+    # Return final output
+    return output
+
+def date(parts):
+    '''
+    Display the current date and time.
+    '''
+    
+    # Getting parsed parts
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)    
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
+    # Filter out bad commands
+    if input or flags or params:
+        output["error"] = f"{Fore.RED}Error. Command should not have any input, flags, or params .{Style.RESET_ALL}\nRun 'date --help' for more info."
+        return output
+    
+    # Getting current date and time
+    # Got time functions from chatGPT
+    try:
+        current_time = time.strftime("%m-%d-%y %H:%M:%S", time.localtime())
+        output["output"] = f"{current_time}"
+    except Exception as e:
+        output["error"] = f"{Fore.RED}An error occurred while retrieving the date and time: {e}{Style.RESET_ALL}"
+    
+    # Return final output
     return output
 
 ##### Helper functions for above commands #####
@@ -1664,7 +1723,7 @@ if __name__ == "__main__":
     # List of commands user may request to execute
     available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
                           "head", "tail", "grep", "wc", "chmod", "history",
-                          "exit", "more", "less", "sort", "help"]
+                          "exit", "more", "less", "sort", "help", "ip", "date"]
 
     
     # Empty cmd variable
@@ -1848,6 +1907,10 @@ if __name__ == "__main__":
                         result = sort(command)
                     elif command.get("cmd") == "chmod":
                         result = chmod(command)
+                    elif command.get("cmd") == "ip":
+                        result = ip(command)
+                    elif command.get("cmd") == "date":
+                        result = date(command)
                     #elif command.get("cmd") == "color":
                     #    result = color(command)
                     #elif command.get("cmd") == "stop_color":

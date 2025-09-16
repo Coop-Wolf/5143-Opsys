@@ -331,3 +331,13 @@ ls -d
 ls -d
 ls -merica
 ls -merica
+ip
+ip | wc
+ls | wc
+date
+date
+date
+date | wc
+date
+date
+date
