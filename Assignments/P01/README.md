@@ -54,9 +54,12 @@ less
 hfind
 
 ## Extras
-Color ls contents if they are directory or executable
+- Color ls contents if they are directory or executable
+- 'ls -merica' colors list contents red white and blue
+- date command that displays date and time
+- clear command that clears the screen
+- ip command that displays ip address
 
-ls -merica colors list contents red white and blue
 
 
 ## References:

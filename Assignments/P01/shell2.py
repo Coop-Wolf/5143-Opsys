@@ -1008,35 +1008,38 @@ def help(parts):
         if cmd == "cd":
             output["output"] += cd.__doc__
             
-        if cmd == "ls":
+        elif cmd == "ls":
             output["output"] += ls.__doc__
 
-        if cmd == "pwd":
+        elif cmd == "pwd":
             output["output"] += pwd_.__doc__
 
-        if cmd == "mkdir":
+        elif cmd == "mkdir":
             output["output"] += mkdir.__doc__
             
-        if cmd == "wc":
+        elif cmd == "wc":
             output["output"] += wc.__doc__
             
-        if cmd == "history":
+        elif cmd == "history":
             output["output"] += history.__doc__
             
-        if cmd == "grep":
+        elif cmd == "grep":
             output["output"] += grep.__doc__
             
-        if cmd == "sort":
+        elif cmd == "sort":
             output["output"] += sort.__doc__
             
-        if cmd == "chmod":
+        elif cmd == "chmod":
             output["output"] += chmod.__doc__
         
-        if cmd == "help":
+        elif cmd == "help":
             output["output"] += help.__doc__
             
-        if cmd == "date":
+        elif cmd == "date":
             output["output"] += date.__doc__
+        
+        elif cmd == "clear":
+            output["output"] += clear.__doc__
         '''
         if cmd == "cp":
             output["output"] += cp.__doc__
@@ -1346,6 +1349,30 @@ def date(parts):
         output["output"] = f"{current_time}"
     except Exception as e:
         output["error"] = f"{Fore.RED}An error occurred while retrieving the date and time: {e}{Style.RESET_ALL}"
+    
+    # Return final output
+    return output
+
+def clear_screen(parts):
+    '''
+    Clear the terminal screen.
+    '''
+    
+    # Getting parsed parts
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)    
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
+    # Filter out bad commands
+    if input or flags or params:
+        output["error"] = f"{Fore.RED}Error. Command should not have any input, flags, or params .{Style.RESET_ALL}\nRun 'clear --help' for more info."
+        return output
+    
+    # Clear the screen
+    clear()
     
     # Return final output
     return output
@@ -1724,7 +1751,7 @@ if __name__ == "__main__":
     # List of commands user may request to execute
     available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
                           "head", "tail", "grep", "wc", "chmod", "history",
-                          "exit", "more", "less", "sort", "help", "ip", "date"]
+                          "exit", "more", "less", "sort", "help", "ip", "date", "clear"]
 
     
     # Empty cmd variable
@@ -1912,6 +1939,8 @@ if __name__ == "__main__":
                         result = ip(command)
                     elif command.get("cmd") == "date":
                         result = date(command)
+                    elif command.get("cmd") == "clear":
+                        result = clear_screen(command)
                     #elif command.get("cmd") == "color":
                     #    result = color(command)
                     #elif command.get("cmd") == "stop_color":

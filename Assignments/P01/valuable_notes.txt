@@ -6,20 +6,17 @@ chmod can do system call.
 ------------------------------------------------------------------------------
 
 Work on next:
-    test Commands
-    add bonus stuff
-        bonus ideas:
-            1. command - Merica
-                colors text red white and blue
-            2. Ipconfig
-            3. Uptime
+    1. Test Commands
+    2. Add bonus stuff
+        2.1 Bonus ideas:
+
 
 
 Pushes to Production shell:
-    ip, date implementation
-    ip, date help
-    ip, date in main
-    ip, date in command list
+    ip, date, clear implementation
+    ip, date, clear help
+    ip, date, clear in main
+    ip, date, clear in command list
 
 
 Need to fix:
@@ -57,6 +54,9 @@ Commands that work correctly for Shell2.py
     cat
     wc
     chmod
+    date
+    ip
+    clear
 
 
 Reasons why some functions dont give same result as bash terminal:

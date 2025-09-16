@@ -343,3 +343,7 @@ date
 date
 run_app firefox
 run_app notepad
+clear
+ls
+cd test.txt
+ls -llll
