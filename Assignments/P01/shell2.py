@@ -1377,6 +1377,41 @@ def clear_screen(parts):
     # Return final output
     return output
 
+def run_app(parts):
+    
+    
+    # Getting parsed parts
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)    
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
+    program = params[0]
+    
+    if input and flags:
+        output["error"] = f"{Fore.RED}Error. Command should not have any input or flags .{Style.RESET_ALL}\nRun 'run_app --help' for more info."
+        return output
+
+    # Check if DISPLAY exists for GUI
+    if "DISPLAY" not in os.environ:
+        print("Cannot run GUI apps: no display found.")
+        return
+
+    # Check if program exists
+    if shutil.which(program):
+        try:
+            subprocess.Popen(parts)  # Launches GUI app in background
+            print(f"Launching {program}...")
+        except Exception as e:
+            print(f"Error launching {program}: {e}")
+    else:
+        print(f"Program '{program}' not found in PATH")
+        
+    output["output"] = f"Launching {program}..."
+    return output
+
 ##### Helper functions for above commands #####
 
 def color_filename(item, full_path):
@@ -1751,7 +1786,7 @@ if __name__ == "__main__":
     # List of commands user may request to execute
     available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
                           "head", "tail", "grep", "wc", "chmod", "history",
-                          "exit", "more", "less", "sort", "help", "ip", "date", "clear"]
+                          "exit", "more", "less", "sort", "help", "ip", "date", "clear", "run_app"]
 
     
     # Empty cmd variable
@@ -1941,6 +1976,8 @@ if __name__ == "__main__":
                         result = date(command)
                     elif command.get("cmd") == "clear":
                         result = clear_screen(command)
+                    elif command.get("cmd") == "run_app":
+                        result = run_app(command)
                     #elif command.get("cmd") == "color":
                     #    result = color(command)
                     #elif command.get("cmd") == "stop_color":

@@ -6,6 +6,10 @@ chmod can do system call.
 ------------------------------------------------------------------------------
 
 Work on next:
+
+    try to get firefox to work in wsl. 
+    need to fix the diverging paths stuff.
+
     1. Test Commands
     2. Add bonus stuff
         2.1 Bonus ideas:
