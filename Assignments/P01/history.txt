@@ -224,3 +224,43 @@ ls -la
 wc string
 wc string
 wc this is my string
+ls
+pwd
+cd ..
+sort test.txt
+sort test.txt
+sort test.txt
+sort test.txt
+sort test.txt
+cat test.txt
+ls -l | sort
+mkdir bacon.txt
+mkdir numtext.txt
+sort numtext.txt
+sort numtext
+sort numtext
+sort numtext
+sort numtext
+sort numtext
+sort -n numtext
+sort -n numtext
+sort -n numtext | wc
+sort -n numtext | wc
+sort -n numtext
+sort -n numtext 
+sort -n numtext
+sort -n numtext
+sort test.txt
+sort test.txt
+sort test.txt
+sort test.txt
+sort test.txt
+sort test.txt
+sort test.txt
+sort test.txt
+sort test.txt
+sort -r test.txt
+sort -r test.txt
+sort -test.txt
+sort test.txt
+wc test.txt

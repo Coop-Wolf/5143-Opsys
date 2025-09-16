@@ -18,6 +18,14 @@ Pushes to Production shell:
 
 
 Need to fix:
+
+    sort is not correct. doesn't do things correctly when there is a new line
+    character at the end of the file.
+
+    wc isnt functioning correctly. need to do same implementation for the with open look.
+    the problem is that its not behaving correctly when there is a new line at the last line
+    of the file.
+
     wc needs to read std in when no input or file is provided. (not a high priority)
 
 

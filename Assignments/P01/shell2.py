@@ -766,7 +766,7 @@ def grep(parts):
     if not source:
         output["error"] = f"{Fore.RED}Error: Could not get the file or string to process.{Style.RESET_ALL} \nRun 'grep --help' for more info."
     
-    # if source exists and is a string
+    # if source is a string
     if isinstance(source, str):
         
         # Split the lines of the source and process
@@ -829,6 +829,114 @@ def grep(parts):
     output["output"] = result
     return output
         
+        
+def sort(parts):
+    '''
+    
+    '''        
+            
+    # These are lists
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
+    # List to store sorted data
+    sorted_list = []
+    
+    # Filter out bad commands
+    if (input and params) or (not input and not params):
+        output["error"] = f"{Fore.RED}Error: 'sort' needs either input or params.{Style.RESET_ALL} \nRun 'sort --help' for more info."
+        
+    if flags not in ["-r", "-n", None]:
+        output["error"] = f"{Fore.RED}Error: Invalid flag: '{flags}'.{Style.RESET_ALL} \nRun 'sort --help' for more info."  
+        
+    # Storing the input or param into data
+    data = input or params
+    
+    # Converting data from list to string
+    data = "".join(data)
+    data = data.strip("'")
+    
+    # Process if data is file
+    if os.path.isfile(data):
+        
+        # Seeing if file is an absolute path
+        if os.path.isabs(data):
+            
+            # Getting the absolute path from argument
+            path = data
+
+        # if relative path, join with current working directory
+        elif not os.path.isabs(data):
+            
+            # Building absolute path
+            new_dir = data
+            cwd     = os.getcwd()
+            path    = os.path.join(cwd, new_dir)
+                
+        # Match patter with contents in file
+        if path:
+            
+            # From Chat
+            with open(path, 'r') as file_:
+                for line in file_:
+                    if line.endswith("\n"):
+                        sorted_list.append(line)
+                    else:
+                        line = line + "\n"
+                        sorted_list.append(line)
+                    
+            # Sort alphebetically
+            if flags in ["-a", None]:
+                sorted_list.sort()
+            
+            # Reverse list
+            elif flags == "-r":
+                sorted_list.sort(reverse=True)
+                
+            # Sort numerically
+            elif flags == "-n":
+                sorted_list.sort(key=int)
+                
+        # Error if path not found
+        else:
+            output["error"] = f"{Fore.RED}Error: {data} is not a file.{Style.RESET_ALL} \nRun 'sort --help' for more info."
+                
+        # Converting to string and returning
+        result = "".join(sorted_list)
+        output["output"] = result
+        return output
+    
+    # if source exists and is a string
+    elif isinstance(data, str):
+        
+        # Split the lines of the string and append to list
+        for line in data.splitlines():
+            sorted_list.append(line)
+                
+        # Sort alphebetically or numerically
+        if flags in ["-a", None]:
+            sorted_list.sort()
+            
+        # Reverse list
+        if flags == "-r":
+            sorted_list.sort(reverse=True) 
+            
+        # Sort numerically
+        if flags == "-n":
+            sorted_list.sort(key=int)              
+        
+        # Converting to string and returning
+        result = "\n".join(sorted_list)
+        output["output"] = result
+        return output
+    
+    else:
+        output["error"] = f"{Fore.RED}Error: {data} could not be properly handled.{Style.RESET_ALL} \nRun 'sort --help' for more info."
+    # Process if data is string   
 
 def help(parts):
     '''
@@ -866,6 +974,9 @@ def help(parts):
             
         if cmd == "grep":
             output["output"] += grep.__doc__
+            
+        if cmd == "sort":
+            output["output"] += sort.__doc__
         '''
         if cmd == "cp":
             output["output"] += cp.__doc__
@@ -1044,7 +1155,8 @@ def cp(parts):
     return output
 
 
-# Helper functions
+##### Helper functions for above commands #####
+
 
 def color_filename(item, full_path):
     '''
@@ -1431,7 +1543,7 @@ if __name__ == "__main__":
     # List of commands user may request to execute
     available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
                           "head", "tail", "grep", "wc", "chmod", "history",
-                          "exit", "more", "less"]
+                          "exit", "more", "less", "sort"]
 
     
     # Empty cmd variable
@@ -1611,6 +1723,8 @@ if __name__ == "__main__":
                         result = cat(file)
                     elif command.get("cmd") == "grep":
                         result = grep(command)
+                    elif command.get("cmd") == "sort":
+                        result = sort(command)
                     #elif command.get("cmd") == "color":
                     #    result = color(command)
                     #elif command.get("cmd") == "stop_color":
