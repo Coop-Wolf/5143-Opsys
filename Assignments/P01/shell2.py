@@ -15,6 +15,7 @@ import getpass
 from getch import Getch
 from colorama import init, Fore, Style
 import time
+import subprocess
 from time import sleep
 import re
 import shutil
@@ -1349,6 +1350,40 @@ def date(parts):
     # Return final output
     return output
 
+def run_app(parts):
+    '''
+    Run an application installed on the system.
+    '''
+    
+    # Getting parsed parts
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)    
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
+    # Filter out bad commands
+    if input or flags:
+        output["error"] = f"{Fore.RED}Error. Command should not have any input or flags .{Style.RESET_ALL}\nRun 'run_app --help' for more info."
+        return output
+    
+    if not params or len(params) != 1:
+        output["error"] = f"{Fore.RED}Error. Command requires exactly one parameter: the application name.{Style.RESET_ALL}\nRun 'run_app --help' for more info."
+        return output
+    
+    app_name = params[0]
+    
+    try:
+        subprocess.Popen([app_name])
+        output["output"] = f"Application '{app_name}' started successfully."
+    except FileNotFoundError:
+        output["error"] = f"{Fore.RED}Error: Application '{app_name}' not found.{Style.RESET_ALL}\nRun 'run_app --help' for more info."
+    except Exception as e:
+        output["error"] = f"{Fore.RED}An unexpected error occurred: {e}{Style.RESET_ALL}"
+    
+    return output
+
 ##### Helper functions for above commands #####
 
 def color_filename(item, full_path):
@@ -1723,7 +1758,7 @@ if __name__ == "__main__":
     # List of commands user may request to execute
     available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
                           "head", "tail", "grep", "wc", "chmod", "history",
-                          "exit", "more", "less", "sort", "help", "ip", "date"]
+                          "exit", "more", "less", "sort", "help", "ip", "date", "run_app",]
 
     
     # Empty cmd variable
@@ -1911,6 +1946,8 @@ if __name__ == "__main__":
                         result = ip(command)
                     elif command.get("cmd") == "date":
                         result = date(command)
+                    elif command.get("cmd") == "run_app":
+                        result = run_app(command)
                     #elif command.get("cmd") == "color":
                     #    result = color(command)
                     #elif command.get("cmd") == "stop_color":

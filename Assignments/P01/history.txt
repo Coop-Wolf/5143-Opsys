@@ -341,3 +341,5 @@ date | wc
 date
 date
 date
+run_app firefox
+run_app notepad
