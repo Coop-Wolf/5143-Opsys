@@ -51,7 +51,6 @@ def WelcomeMessage():
     print("---------------------------------------------------------------------")
     print()
 
-
 def pwd_():
     """
     Print the current working directory.
@@ -70,7 +69,6 @@ def pwd_():
     # Storing it into output dictionary and returning
     output["output"] = cwd 
     return output
-
 
 def cd(parts):
     """
@@ -133,8 +131,7 @@ def cd(parts):
         output["error"] = f"Error. {str_params} is not a directory."
         
     # Returning output dictionary
-    return output
-            
+    return output    
     
 def ls(parts):
     """
@@ -416,7 +413,6 @@ def ls(parts):
     output["error"] = "Error"
     return output
 
-
 def wc(parts):
     '''
     input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
@@ -604,7 +600,6 @@ def wc(parts):
         output["error"] = f"{Fore.RED}Error: {item}: No such file or directory.{Style.RESET_ALL}\nRun 'wc --help' for more info."
         return output
 
-
 def cat(file):
     '''
     Usage: cat [FILE]...
@@ -632,7 +627,6 @@ def cat(file):
             except Exception as e:
                 output["error"] = f"cat: {f}: {str(e)}\n"
     return output              
-
 
 def mkdir(parts):
     """
@@ -692,7 +686,6 @@ def mkdir(parts):
         
         
     return output
-
 
 def grep(parts):
     '''
@@ -828,8 +821,7 @@ def grep(parts):
     result = "".join(match)
     output["output"] = result
     return output
-        
-        
+           
 def sort(parts):
     '''
     
@@ -960,7 +952,6 @@ def sort(parts):
         output["error"] = f"{Fore.RED}Error: {data} could not be properly handled.{Style.RESET_ALL} \nRun 'sort --help' for more info."
         return output   
 
-
 def help(parts):
     '''
     input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
@@ -1000,6 +991,9 @@ def help(parts):
             
         if cmd == "sort":
             output["output"] += sort.__doc__
+            
+        if cmd == "chmod":
+            output["output"] += chmod.__doc__
         '''
         if cmd == "cp":
             output["output"] += cp.__doc__
@@ -1019,12 +1013,6 @@ def help(parts):
         if cmd == "tail":
             output["output"] += tail.__doc__
 
-        if cmd == "chmod":
-            output["output"] += chmod.__doc__
-
-        if cmd == "exit":
-            output["output"] += exit_shell.__doc__
-
         if cmd == "more":
             output["output"] += more.__doc__
 
@@ -1038,7 +1026,6 @@ def help(parts):
     else:
         output["error"] = f"Error, help for command {cmd} could not be found."
         return output
-
 
 def history(parts):
     """
@@ -1107,7 +1094,6 @@ def history(parts):
     else:
         output["error"] = "Error, history command must not have any params, input, or flags."
 
-
 def cmd_from_history(index):
     '''
     Functions handles the !x command by getting the index value from the command
@@ -1139,7 +1125,6 @@ def cmd_from_history(index):
     else:
         output["error"] = f"Error. There are only {len(h_cmds)} commands in history."
         return output
-
 
 def cp(parts):
     '''
@@ -1177,9 +1162,94 @@ def cp(parts):
 
     return output
 
+def chmod(parts):
+    '''
+    Change the mode of each FILE to MODE.
+    
+            The MODE is a three-digit octal number representing the permissions
+            for the user, group, and others, respectively. Each digit is a sum of:
+            4 (read), 2 (write), and 1 (execute).
+            
+            For example, to set read, write, and execute permissions for the user,
+            and read and execute permissions for the group and others, use 755:
+            chmod 755 filename
+    
+            The following table shows the permission values:
+            0    ---    
+            1    --x
+            2    -w-
+            3    -wx
+            4    r--
+            5    r-x
+            6    rw-
+            7    rwx
+
+    '''
+
+    # Getting parsed parts
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+
+    # Filter out bad commands
+    if input:
+        output["error"] = f"{Fore.RED}Error. Command should not have an input.{Style.RESET_ALL}\nRun 'chmod --help' for more info."
+        return output
+    
+    if flags:
+        output["error"] = f"{Fore.RED}Error. Command doesn't take flags.{Style.RESET_ALL}\nRun 'chmod --help' for more info."
+        return output
+    
+    if len(params) != 2:
+        output["error"] = f"{Fore.RED}Error. Command requires exactly two parameters: MODE and FILE.{Style.RESET_ALL}\nRun 'chmod --help' for more info."
+        return output
+    
+    permission = params[0]
+    file = params[1]
+    
+    # Validating permission string
+    if len(permission) != 3 or not permission.isdigit():
+        output["error"] = f"{Fore.RED}Error: Invalid permission '{permission}'. Mode should be a three-digit octal number (e.g., 755).{Style.RESET_ALL}\nRun 'chmod --help' for more info."
+        return output
+    
+    for digit in permission:
+        if digit < '0' or digit > '7':
+            output["error"] = f"{Fore.RED}Error: Invalid permission '{permission}'. Each digit should be between 0 and 7.{Style.RESET_ALL}\nRun 'chmod --help' for more info."
+            return output
+    
+    
+    # Seeing if file is an absolute path
+    if os.path.isabs(file):
+        file_path = file
+        
+    # If relative path, join with cwd
+    else:
+        file_path = os.path.join(os.getcwd(), file) 
+        
+    # File not found
+    if not os.path.exists(file_path):
+        output["error"] = f"{Fore.RED}Error: {file} could not be found.{Style.RESET_ALL}\nRun 'chmod --help' for more info."
+        return output
+    
+    # Change file permissions
+    try:
+        # Convert parameters to int
+        mode = int(params[0], 8)
+        os.chmod(file_path, mode)
+
+    # Catching errors
+    except PermissionError:
+        output["error"] = f"Error: Permission denied when changing mode of {file}."
+    except Exception as e:
+        output["error"] = f"An unexpected error occurred: {e}"
+
+    # Return success case
+    return output
 
 ##### Helper functions for above commands #####
-
 
 def color_filename(item, full_path):
     '''
@@ -1201,7 +1271,6 @@ def color_filename(item, full_path):
     # Leaving all other itms default color
     return item
     
-
 def format_long_listing(full_path, human = False):
     '''
     Returns detailed metadata for a file in "long listing" format.
@@ -1231,7 +1300,6 @@ def format_long_listing(full_path, human = False):
     # Returning all item information
     return [permissions, links, owner, group, size, mod_time, name]
     #return f"{permissions} {links} {owner} {group} {size} {mod_time} {name}"
-
 
 def get_directory_items(directory = None, include_hidden = False):
     '''
@@ -1265,7 +1333,6 @@ def get_directory_items(directory = None, include_hidden = False):
                 non_hidden_items.append(item)
                 
         return non_hidden_items
-    
     
 def get_history_rev():
     """
@@ -1307,8 +1374,7 @@ def get_history_rev():
     else:
         # History file doesn't exist
         return None
-       
-       
+         
 def write_to_history(cmd):
     '''
     # write out the command to the history file
@@ -1326,7 +1392,6 @@ def write_to_history(cmd):
     with open(history_file, "a") as file:
         file.write(cmd + "\n")
        
-    
 def clear():
     """
     Clear the terminal screen.
@@ -1337,7 +1402,6 @@ def clear():
         None
     """
     os.system("clear")
-    
     
 def exit_shell():
     """
@@ -1352,8 +1416,7 @@ def exit_shell():
     """
 
     raise SystemExit(f"{Fore.GREEN}Exiting Shell. Goodbye!")
-        
-        
+          
 def human_readable(size):
     """
     Convert a file size in bytes to a human-readable format.
@@ -1388,7 +1451,6 @@ def human_readable(size):
     else:
         return f"{size:.1f}{units[i-1]}"
         
-
 def visible_length(s):
     '''Helper function for print_cmd. This is needed to bring the terminal cursor to the correct
     position. Previously. it was offset by the length of ({Fore.CYAN}{Style.RESET_ALL}). So this
@@ -1410,7 +1472,6 @@ def visible_length(s):
     # len(...) -> Counts only the visible characters, ignoring color codes
     ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
     return len(ansi_escape.sub('', s))
-
 
 def parse_cmd(cmd_input):
     
@@ -1448,7 +1509,6 @@ def parse_cmd(cmd_input):
         
     return command_list
                 
-
 def color(parts):
     '''
     input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
@@ -1471,7 +1531,6 @@ def color(parts):
     else:
         output["error"] = "Error. Color could not be changes. 'color' command takes not arguments."
         return output
-    
     
 def stop_color(parts):
     '''
@@ -1496,7 +1555,6 @@ def stop_color(parts):
         output["error"] = "Error. Color could not be changes. 'color' command takes not arguments."
         return output
 
-
 def visible_length(s):
     '''Helper function for print_cmd. This is needed to bring the terminal cursor to the correct
     position. Previously. it was offset by the length of ({Fore.CYAN}{Style.RESET_ALL}). So this
@@ -1518,7 +1576,6 @@ def visible_length(s):
     # len(...) -> Counts only the visible characters, ignoring color codes
     ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
     return len(ansi_escape.sub('', s))
-
 
 def print_cmd(cmd, cursor_pos=0):
     """This function "cleans" off the command line, then prints
@@ -1748,6 +1805,8 @@ if __name__ == "__main__":
                         result = grep(command)
                     elif command.get("cmd") == "sort":
                         result = sort(command)
+                    elif command.get("cmd") == "chmod":
+                        result = chmod(command)
                     #elif command.get("cmd") == "color":
                     #    result = color(command)
                     #elif command.get("cmd") == "stop_color":

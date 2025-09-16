@@ -301,3 +301,27 @@ ls | sort -n f
 ls | sort
 ls | sort
 ls
+ls -l
+chmod 661 test.txt
+ls -l
+chmod
+chmod
+chmod 111
+chmod test.txt
+chmod 1 test.txt
+chmod 664 test.txt
+ls -l
+chmod 666 test.txt
+ls -l
+ls -l | chmod 664 test.txt
+chmod 664 | ls -l
+chmod 664 test.txt| ls -l
+chmod 665 | ls -l | sort
+chmod 665 test.txt | ls -l | sort
+chmod 666 test.txt
+ls
+ls -lah
+chmod < input.txt 755 testfile.txt
+chmod 755 testfile.txt < somefile
+chmod 333 test
+chmod test test.txt

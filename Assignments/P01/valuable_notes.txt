@@ -7,8 +7,6 @@ chmod can do system call.
 
 Work on next:
     chmod
-    <
-    >
 
 
 Pushes to Production shell:
