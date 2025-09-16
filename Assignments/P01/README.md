@@ -53,6 +53,11 @@ less
 ">"
 hfind
 
+## Extras
+Color ls contents if they are directory or executable
+
+ls -merica colors list contents red white and blue
+
 
 ## References:
 - [geeksforgeeks](https://www.geeksforgeeks.org/python/executing-shell-commands-with-python/)

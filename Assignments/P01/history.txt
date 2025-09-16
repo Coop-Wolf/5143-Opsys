@@ -325,3 +325,9 @@ chmod < input.txt 755 testfile.txt
 chmod 755 testfile.txt < somefile
 chmod 333 test
 chmod test test.txt
+history
+history
+ls -d
+ls -d
+ls -merica
+ls -merica

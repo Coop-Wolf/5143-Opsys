@@ -6,17 +6,18 @@ chmod can do system call.
 ------------------------------------------------------------------------------
 
 Work on next:
-    chmod
+    test Commands
+    add bonus stuff
+        bonus ideas:
+            command - Merica
+                colors text red white and blue
 
 
 Pushes to Production shell:
-    push sort implementation
-    add help for it
-    add in main
+    
 
 
 Need to fix:
-    wc needs to read std in when no input or file is provided. (not a high priority)
 
 
 Need to Add:
@@ -31,6 +32,8 @@ Errors (bugs):
 
 Added Features:
     colored info when doing ls depending on what type it is
+    ls -merica
+        colors list in red white blue
 
 
 Commands that work correctly for Shell2.py
@@ -46,6 +49,7 @@ Commands that work correctly for Shell2.py
     sort
     cat
     wc
+    chmod
 
 
 Reasons why some functions dont give same result as bash terminal:
