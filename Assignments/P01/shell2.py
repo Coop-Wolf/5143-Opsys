@@ -845,13 +845,15 @@ def sort(parts):
     
     # List to store sorted data
     sorted_list = []
-    
+
     # Filter out bad commands
     if (input and params) or (not input and not params):
         output["error"] = f"{Fore.RED}Error: 'sort' needs either input or params.{Style.RESET_ALL} \nRun 'sort --help' for more info."
+        return output
         
     if flags not in ["-r", "-n", None]:
-        output["error"] = f"{Fore.RED}Error: Invalid flag: '{flags}'.{Style.RESET_ALL} \nRun 'sort --help' for more info."  
+        output["error"] = f"{Fore.RED}Error: Invalid flag: '{flags}'.{Style.RESET_ALL} \nRun 'sort --help' for more info."
+        return output
         
     # Storing the input or param into data
     data = input or params
@@ -904,6 +906,7 @@ def sort(parts):
         # Error if path not found
         else:
             output["error"] = f"{Fore.RED}Error: {data} is not a file.{Style.RESET_ALL} \nRun 'sort --help' for more info."
+            return output
                 
         # Converting to string and returning
         result = "".join(sorted_list)
@@ -929,7 +932,7 @@ def sort(parts):
                     
         # If data is one character
         else:
-            output["error"] = f"{Fore.RED}Error: 'sort' needs more than one character to sort.{Style.RESET_ALL} \nRun 'sort --help' for more info."
+            output["error"] = f"{Fore.RED}Error: 'sort' was given nothing to sort.{Style.RESET_ALL} \nRun 'sort --help' for more info."
             return output
                 
         # Sort alphebetically or numerically
@@ -951,7 +954,7 @@ def sort(parts):
     
     else:
         output["error"] = f"{Fore.RED}Error: {data} could not be properly handled.{Style.RESET_ALL} \nRun 'sort --help' for more info."
-    # Process if data is string   
+        return output   
 
 
 def help(parts):

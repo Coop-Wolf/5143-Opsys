@@ -293,3 +293,8 @@ wc bacon
 wc f
 sort bacon
 sort bacon
+ls | sort f
+sort
+sort
+sort -n
+ls | sort -n f
