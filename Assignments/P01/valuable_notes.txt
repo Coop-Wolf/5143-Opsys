@@ -6,21 +6,18 @@ chmod can do system call.
 ------------------------------------------------------------------------------
 
 Work on next:
-    sort
     chmod
     <
     >
 
 
 Pushes to Production shell:
-
-
+    push sort implementation
+    add help for it
+    add in main
 
 
 Need to fix:
-
-    sort is not correct. doesn't do things correctly when there is a new line
-    character at the end of the file.
 
     wc isnt functioning correctly. need to do same implementation for the with open look.
     the problem is that its not behaving correctly when there is a new line at the last line
@@ -53,6 +50,8 @@ Commands that work correctly for Shell2.py
     history
     !x
     exit
+    sort
+    cat
 
 
 Cool stuff:

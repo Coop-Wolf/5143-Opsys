@@ -264,3 +264,4 @@ sort -r test.txt
 sort -test.txt
 sort test.txt
 wc test.txt
+wc bacon
