@@ -298,3 +298,6 @@ sort
 sort
 sort -n
 ls | sort -n f
+ls | sort
+ls | sort
+ls

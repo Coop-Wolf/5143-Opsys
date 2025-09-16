@@ -18,11 +18,6 @@ Pushes to Production shell:
 
 
 Need to fix:
-
-    wc isnt functioning correctly. need to do same implementation for the with open look.
-    the problem is that its not behaving correctly when there is a new line at the last line
-    of the file.
-
     wc needs to read std in when no input or file is provided. (not a high priority)
 
 
