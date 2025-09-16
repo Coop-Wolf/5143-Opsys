@@ -9,8 +9,10 @@ Work on next:
     test Commands
     add bonus stuff
         bonus ideas:
-            command - Merica
+            1. command - Merica
                 colors text red white and blue
+            2. Ipconfig
+            3. Uptime
 
 
 Pushes to Production shell:
