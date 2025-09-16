@@ -19,32 +19,27 @@ Run the `shell.py` file and use the following commands...
 | Command               | Description                                         | Author   |
 |-----------------------|-----------------------------------------------------|----------|
 | `ls`                  | List files and directories                          | Cooper   |
-| `ls -a`               | List all files, including hidden ones.              | Cooper   |
-| `ls -l`               | Long listing format.                                | Cooper   |
-| `ls -h`               | Human-readable file sizes.                          | Cooper   |
 | `pwd`                 | Print working directory                             | Cooper   |
 | `mkdir`               | Create a directory.                                 | Cooper   |
 | `cd directory`        | Change to a named directory.                        | Cooper   |
-| `cd`                  | Change to the home directory if no argument given.  | Cooper   |
 | `cp file1 file2`      | Copy file1 to file2.                                | Tim      |
 | `mv file1 file2`      | Move or rename file1 to file2.                      | Tim      |
 | `rm -r`               | Recursively delete a directory.                     | Tim      |
 | `cat file`            | Display contents of a file.                         | Harika   |
-| `head -n`             | Display the first n lines of a file.                |          |
-| `tail -n`             | Display the last n lines of a file.                 |          |
+| `head -n`             | Display the first n lines of a file.                | Harika   |
+| `tail -n`             | Display the last n lines of a file.                 | Harika   |
 | `grep 'pattern' file` | Search for a pattern in a file.                     | Cooper   |
-| `wc -l`               | Count lines in a file.                              | Cooper   |
-| `wc -w`               | Count words in a file.                              | Cooper   |
+| `wc`                  | Count lines, words in a file.                       | Cooper   |
 | `history`             | Show previously used commands.                      | Cooper   |
 | `!x`                  | Re-run command number *x* from history.             | Cooper   |
 | `exit`                | Exits the shell.                                    | Cooper   |
 | `up & down arrows`    | Navigate previous command                           | Cooper   |
 | `left & right arrows` | Move cursor                                         | Cooper   |
 | `chmod xxx`           | Change file permissions.                            |          |
-| `more`                |                                                     |          |
-| `less`                |                                                     |          |
-| `[program] > file`    |                                                     |          |
-| `[program] < file`    |                                                     |          |
+| `more`                |                                                     | Tim      |
+| `less`                |                                                     | Tim      |
+| `[program] > file`    |                                                     | Tim      |
+| `[program] < file`    |                                                     | Harika   |
 | `hfind`               |                                                     |          |
 | `sort `               |                                                     | Cooper   |
 

@@ -887,7 +887,7 @@ def sort(parts):
                         sorted_list.append(line)
                     else:
                         line = line + "\n"
-                        sorted_list.append(line)
+                        sorted_list.append()
                     
             # Sort alphebetically
             if flags in ["-a", None]:
@@ -911,11 +911,26 @@ def sort(parts):
         return output
     
     # if source exists and is a string
-    elif isinstance(data, str):
+    elif isinstance(data, str):       
         
         # Split the lines of the string and append to list
-        for line in data.splitlines():
-            sorted_list.append(line)
+        if "\n" in data and len(data) > 1:
+            for line in data.splitlines():
+                
+                # Avoid empty lines
+                if line.strip():
+                    sorted_list.append(line)
+                
+        # If data is one line, split by word
+        elif "\n" not in data and len(data) > 1:
+            for line in data.splitlines():
+                for word in line.split():
+                    sorted_list.append(word)
+                    
+        # If data is one character
+        else:
+            output["error"] = f"{Fore.RED}Error: 'sort' needs more than one character to sort.{Style.RESET_ALL} \nRun 'sort --help' for more info."
+            return output
                 
         # Sort alphebetically or numerically
         if flags in ["-a", None]:
@@ -937,6 +952,7 @@ def sort(parts):
     else:
         output["error"] = f"{Fore.RED}Error: {data} could not be properly handled.{Style.RESET_ALL} \nRun 'sort --help' for more info."
     # Process if data is string   
+
 
 def help(parts):
     '''
@@ -1543,7 +1559,7 @@ if __name__ == "__main__":
     # List of commands user may request to execute
     available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
                           "head", "tail", "grep", "wc", "chmod", "history",
-                          "exit", "more", "less", "sort"]
+                          "exit", "more", "less", "sort", "help"]
 
     
     # Empty cmd variable
@@ -1644,7 +1660,7 @@ if __name__ == "__main__":
             
             if cmd == "exit":
                 exit_shell()
-                
+
             # If there is a command to execute
             if(cmd):
                 

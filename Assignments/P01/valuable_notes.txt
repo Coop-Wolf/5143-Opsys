@@ -52,12 +52,12 @@ Commands that work correctly for Shell2.py
     exit
     sort
     cat
+    wc
 
 
-Cool stuff:
-    terminal wc doesn't run correctly. 
-    when running in the regular shell: wc test.txt: it says there are 6 lines but there are really 7
-    my wc command gets the correct result for the line numeber.
+Reasons why some functions dont give same result as bash terminal:
+    wc: bash terminal does not include numbers. Mine does, because google docs
+        word counter does as well.
 
 
 ------------------------------------------------------------------------------------------------------

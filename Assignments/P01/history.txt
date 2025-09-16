@@ -265,3 +265,31 @@ sort -test.txt
 sort test.txt
 wc test.txt
 wc bacon
+ls
+ls | wc
+ls | sort
+ls
+ls
+ls | sort
+ls | sort
+ls | sort
+ls | sort
+ls | sort
+ls | sort
+sort bacon
+sort bacon
+sort bacon
+sort bacon
+sort bacon
+wc bacon
+wc number_test_oneline
+sort number_test_oneline
+wc number_test_oneline
+wc f
+wc f
+wc f
+wc f
+wc bacon
+wc f
+sort bacon
+sort bacon
