@@ -49,14 +49,8 @@ Run the `shell.py` file and use the following commands...
 | `sort `               |                                                     | Cooper   |
 
 ## Non-Working Components:
-cp
-mv
-rm
-cat
 head
 tail
-grep
-wc
 chmod
 more
 less
