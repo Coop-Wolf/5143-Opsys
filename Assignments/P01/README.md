@@ -35,23 +35,20 @@ Run the `shell.py` file and use the following commands...
 | `exit`                | Exits the shell.                                    | Cooper   |
 | `up & down arrows`    | Navigate previous command                           | Cooper   |
 | `left & right arrows` | Move cursor                                         | Cooper   |
-| `chmod xxx`           | Change file permissions.                            |          |
+| `chmod xxx`           | Change file permissions.                            | Cooper   |
 | `more`                |                                                     | Tim      |
 | `less`                |                                                     | Tim      |
 | `[program] > file`    |                                                     | Tim      |
 | `[program] < file`    |                                                     | Harika   |
-| `hfind`               |                                                     |          |
 | `sort `               |                                                     | Cooper   |
 
 ## Non-Working Components:
-head
-tail
-chmod
-more
-less
-"<"
-">"
-hfind
+- head
+- tail
+- more
+- less
+- "<"
+- ">"
 
 ## Extras
 - Color ls contents if they are directory or executable
@@ -59,7 +56,7 @@ hfind
 - date command that displays date and time
 - clear command that clears the screen
 - ip command that displays ip address
-
+- run command runs an application
 
 
 ## References:
