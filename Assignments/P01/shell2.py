@@ -1403,7 +1403,7 @@ def run_app(parts):
     # Check if program exists
     if shutil.which(program):
         try:
-            subprocess.Popen(parts)  # Launches GUI app in background
+            subprocess.Popen([program])  # Launches GUI app in background
             output["error"] = f"Launching {program}..."
         except Exception as e:
             output["error"] = f"Error launching {program}: {e}"
