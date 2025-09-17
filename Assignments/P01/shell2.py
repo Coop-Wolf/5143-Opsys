@@ -1044,8 +1044,8 @@ def help(parts):
         elif cmd == "exit":
             output["output"] += exit_shell.__doc__
             
-        elif cmd == "firefox":
-            output["output"] += firefox.__doc__
+        elif cmd == "run":
+            output["output"] += run.__doc__
         '''
         if cmd == "cp":
             output["output"] += cp.__doc__
@@ -1383,16 +1383,25 @@ def clear_screen(parts):
     # Return final output
     return output
 
-def firefox(parts):
+def run(parts):
     '''
-    Launch the Firefox web browser.
-    Usage: firefox
-    Note: This command does not take any input, flags, or parameters.
-    Make sure Firefox is installed on your system.
+    Launch the Firefox web browser or Nautilus fire manager.
+    
+    Possible commands: run firefox, run nautilus
+    
+    Note: 
+    
+    This command does not take any input or flags.
+    Make sure Firefox and Nautilus is installed on your system.
+    
+    Run only works in a GUI environment.
+    Vs Code terminal is not a GUI environment.
     If running in a non-GUI environment, this command will return an error.
-    To install Firefox:
+    
+    To install Firefox and Nautilus:
     1. sudo apt update
-    2. sudo apt install firefox -y    
+    2. sudo apt install firefox -y 
+    3. sudo apt install nautilus -y
     '''
     
     # Getting parsed parts
@@ -1403,23 +1412,32 @@ def firefox(parts):
     # Dictionary to return
     output = {"output" : None, "error" : None}
     
-    program = "firefox"
-    
-    # Throw error if user added input, flags, or params
-    if input and flags and params:
+    # Throw error if user added input, flags
+    if input and flags:
         output["error"] = f"{Fore.RED}Error. Command should not have any input or flags .{Style.RESET_ALL}\nRun 'run_app --help' for more info."
         return output
-
+    
+    # Throw error if user didn't provide correct parameter
+    if params not in ["firefox", "nautilus"] or len(params) != 1:
+        output["error"] = f"{Fore.RED}Error. Command only takes 'firefox' or 'nautilus' as a parameter.{Style.RESET_ALL}\nRun 'run_app --help' for more info."
+        return output
+    
+    # Storing program to run
+    program = params.strip().lower()
+    
     # Check if DISPLAY exists for GUI
+    # firefix needs a display to run
     if "DISPLAY" not in os.environ:
         output["error"] = "Cannot run GUI apps: no display found."
         return output
 
     # Check if program exists
+    # shutil.which searchs for executables in system path
     if shutil.which(program):
         try:
-            # Launch the program
+            # Running firefox on its own process so firefox can run independently
             # Suppress output by redirecting to DEVNULL
+            # Python script can continue runnning without waiting for firefox to close
             subprocess.Popen([program], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             
             # Return nothing on success
@@ -1434,7 +1452,7 @@ def firefox(parts):
     else:
         output["error"] = f"Program '{program}' not found in PATH."
         output["error"] = f"Is {program} installed?{Style.RESET_ALL}\nIf it isn't, exit the shell and install."
-        output["error"] += f"\nTo install firefox:\n1. sudo apt update\n2. sudo apt install firefox -y"
+        output["error"] += f"\nTo install {program}:\n  1. sudo apt update\n  2. sudo apt install {program} -y"
         return output
 
 ##### Helper functions for above commands #####
@@ -1812,7 +1830,7 @@ if __name__ == "__main__":
     available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
                           "head", "tail", "grep", "wc", "chmod", "history",
                           "exit", "more", "less", "sort", "help", "ip", "date",
-                          "clear", "firefox"]
+                          "clear", "run"]
 
     
     # Empty cmd variable
@@ -2002,8 +2020,8 @@ if __name__ == "__main__":
                         result = date(command)
                     elif command.get("cmd") == "clear":
                         result = clear_screen(command)
-                    elif command.get("cmd") == "firefox":
-                        result = firefox(command)
+                    elif command.get("cmd") == "run":
+                        result = run(command)
                     #elif command.get("cmd") == "color":
                     #    result = color(command)
                     #elif command.get("cmd") == "stop_color":
