@@ -7,14 +7,7 @@ chmod can do system call.
 
 Work on next:
 
-    print list of commands in some function
-
-    try to get firefox to work in wsl. 
-    need to fix the diverging paths stuff.
-
     1. Test Commands
-    2. Add bonus stuff
-        2.1 Bonus ideas:
 
 
 
@@ -45,14 +38,6 @@ Errors (bugs):
     Not sure if cat should read input. should just be a file. or input from previous command.
 
 
-Added Features:
-    colored info when doing ls depending on what type it is
-    ls -merica
-        colors list in red white blue
-    ip command
-    date
-
-
 Commands that work correctly for Shell2.py
     ls -alh
     cd 
@@ -70,6 +55,7 @@ Commands that work correctly for Shell2.py
     date
     ip
     clear
+    run
 
 
 Reasons why some functions dont give same result as bash terminal:
