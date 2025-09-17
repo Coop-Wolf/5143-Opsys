@@ -7,6 +7,8 @@ chmod can do system call.
 
 Work on next:
 
+    print list of commands in some function
+
     try to get firefox to work in wsl. 
     need to fix the diverging paths stuff.
 
@@ -25,6 +27,11 @@ Pushes to Production shell:
             2.1.1. export TZ=America/Chicago
         2.2. Verify fix:
             2.2.1. date
+
+    3. run, commands function
+       run, commands help
+       run, commands in main
+       run, commands in command list
 
 
 Need to fix:

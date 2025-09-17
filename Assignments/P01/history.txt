@@ -350,3 +350,19 @@ ls -llll
 date
 date
 clear
+commands
+commands
+commands --help
+d --help
+command --help
+command --help
+commands --help
+run firefox
+run nautilus
+run nautilus
+run firefox
+run firefox
+run nautilus
+run nautilus
+run firefox
+run --help

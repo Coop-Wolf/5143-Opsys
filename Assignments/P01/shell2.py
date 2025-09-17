@@ -1046,6 +1046,9 @@ def help(parts):
             
         elif cmd == "run":
             output["output"] += run.__doc__
+            
+        elif cmd == "commands":
+            output["output"] += list_of_commands.__doc__
         '''
         if cmd == "cp":
             output["output"] += cp.__doc__
@@ -1414,12 +1417,23 @@ def run(parts):
     
     # Throw error if user added input, flags
     if input and flags:
-        output["error"] = f"{Fore.RED}Error. Command should not have any input or flags .{Style.RESET_ALL}\nRun 'run_app --help' for more info."
+        output["error"] = f"{Fore.RED}Error: Command should not have any input or flags .{Style.RESET_ALL}\nRun 'run --help' for more info."
         return output
     
+    if len(params) != 1:
+        output["error"] = f"{Fore.RED}Error: Command only takes one parameter.{Style.RESET_ALL}\nRun 'run --help' for more info."
+        return output
+    
+    # Convert params to string
+    if params:
+        params = "".join(params)
+        params = params.strip("'")    
+        
+    print(params)
+    
     # Throw error if user didn't provide correct parameter
-    if params not in ["firefox", "nautilus"] or len(params) != 1:
-        output["error"] = f"{Fore.RED}Error. Command only takes 'firefox' or 'nautilus' as a parameter.{Style.RESET_ALL}\nRun 'run_app --help' for more info."
+    if params not in ["firefox", "nautilus"]:
+        output["error"] = f"{Fore.RED}Error: Command only takes 'firefox' or 'nautilus' as a parameter.{Style.RESET_ALL}\nRun 'run --help' for more info."
         return output
     
     # Storing program to run
@@ -1428,7 +1442,7 @@ def run(parts):
     # Check if DISPLAY exists for GUI
     # firefix needs a display to run
     if "DISPLAY" not in os.environ:
-        output["error"] = "Cannot run GUI apps: no display found."
+        output["error"] = f"{Fore.RED}Error: Cannot run GUI apps: no display found. \nRun 'run --help' for more info."
         return output
 
     # Check if program exists
@@ -1454,6 +1468,55 @@ def run(parts):
         output["error"] = f"Is {program} installed?{Style.RESET_ALL}\nIf it isn't, exit the shell and install."
         output["error"] += f"\nTo install {program}:\n  1. sudo apt update\n  2. sudo apt install {program} -y"
         return output
+
+def list_of_commands(parts):
+    '''
+    Returns a list of all available commands in the shell.
+    '''
+    
+    # Getting parsed parts
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)    
+    
+    # Dictionary to return
+    output = {"output" : None, "error" : None}
+    
+    # Filter out bad commands
+    if input or flags or params:
+        output["error"] = f"{Fore.RED}Error. Command should not have any input, flags, or params.{Style.RESET_ALL}\nRun 'commands --help' for more info."
+        return output
+    
+    output["output"] = ""  # Start with empty string
+
+    output["output"] += f"{Fore.GREEN}cd{Style.RESET_ALL}: change directory\n"
+    output["output"] += f"{Fore.GREEN}ls{Style.RESET_ALL}: list files\n"
+    output["output"] += f"{Fore.GREEN}pwd{Style.RESET_ALL}: print working directory\n"
+    output["output"] += f"{Fore.GREEN}mkdir{Style.RESET_ALL}: make directory\n"
+    output["output"] += f"{Fore.GREEN}wc{Style.RESET_ALL}: word/line/character count\n"
+    output["output"] += f"{Fore.GREEN}cat{Style.RESET_ALL}: display file contents\n"
+    output["output"] += f"{Fore.GREEN}grep{Style.RESET_ALL}: search text in files\n"
+    output["output"] += f"{Fore.GREEN}sort{Style.RESET_ALL}: sort lines in files\n"
+    output["output"] += f"{Fore.GREEN}mv{Style.RESET_ALL}: move/rename files\n"
+    output["output"] += f"{Fore.GREEN}rm{Style.RESET_ALL}: remove files\n"
+    output["output"] += f"{Fore.GREEN}help{Style.RESET_ALL}: show help info\n"
+    output["output"] += f"{Fore.GREEN}history{Style.RESET_ALL}: show command history\n"
+    output["output"] += f"{Fore.GREEN}chmod{Style.RESET_ALL}: change file permissions\n"
+    output["output"] += f"{Fore.GREEN}cp{Style.RESET_ALL}: copy files\n"
+    output["output"] += f"{Fore.GREEN}date{Style.RESET_ALL}: show current date/time\n"
+    output["output"] += f"{Fore.GREEN}clear{Style.RESET_ALL}: clear terminal\n"
+    output["output"] += f"{Fore.GREEN}exit{Style.RESET_ALL}: exit shell\n"
+    output["output"] += f"{Fore.GREEN}run{Style.RESET_ALL}: run a program\n"
+    output["output"] += f"{Fore.GREEN}ip{Style.RESET_ALL}: show IP address\n"
+    output["output"] += f"{Fore.GREEN}commands{Style.RESET_ALL}: list available commands\n"
+    output["output"] += f"{Fore.GREEN}!x{Style.RESET_ALL}: run command from history\n"
+    output["output"] += f"{Fore.GREEN}head{Style.RESET_ALL}: show first lines of file\n"
+    output["output"] += f"{Fore.GREEN}tail{Style.RESET_ALL}: show last lines of file\n"
+    output["output"] += f"{Fore.GREEN}more{Style.RESET_ALL}: paginate file output\n"
+    output["output"] += f"{Fore.GREEN}less{Style.RESET_ALL}: scroll through file output\n"
+
+    
+    return output
 
 ##### Helper functions for above commands #####
 
@@ -1830,7 +1893,7 @@ if __name__ == "__main__":
     available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
                           "head", "tail", "grep", "wc", "chmod", "history",
                           "exit", "more", "less", "sort", "help", "ip", "date",
-                          "clear", "run"]
+                          "clear", "run", "commands"]
 
     
     # Empty cmd variable
@@ -2022,6 +2085,8 @@ if __name__ == "__main__":
                         result = clear_screen(command)
                     elif command.get("cmd") == "run":
                         result = run(command)
+                    elif command.get("cmd") == "commands":
+                        result = list_of_commands(command)
                     #elif command.get("cmd") == "color":
                     #    result = color(command)
                     #elif command.get("cmd") == "stop_color":
