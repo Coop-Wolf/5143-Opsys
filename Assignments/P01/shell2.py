@@ -1404,11 +1404,11 @@ def run_app(parts):
     if shutil.which(program):
         try:
             subprocess.Popen(parts)  # Launches GUI app in background
-            print(f"Launching {program}...")
+            output["error"] = f"Launching {program}..."
         except Exception as e:
-            print(f"Error launching {program}: {e}")
+            output["error"] = f"Error launching {program}: {e}"
     else:
-        print(f"Program '{program}' not found in PATH")
+        output["error"] = f"Program '{program}' not found in PATH"
         
     output["output"] = f"Launching {program}..."
     return output
