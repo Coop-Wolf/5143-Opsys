@@ -1427,9 +1427,7 @@ def run(parts):
     # Convert params to string
     if params:
         params = "".join(params)
-        params = params.strip("'")    
-        
-    print(params)
+        params = params.strip("'")
     
     # Throw error if user didn't provide correct parameter
     if params not in ["firefox", "nautilus"]:
