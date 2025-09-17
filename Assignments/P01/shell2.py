@@ -1422,19 +1422,20 @@ def firefox(parts):
             # Suppress output by redirecting to DEVNULL
             subprocess.Popen([program], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
             
-            output["error"] = f"Launching {program}..."
+            # Return nothing on success
+            return output
             
         # Catch any exceptions during launch
         except Exception as e:
             output["error"] = f"Error launching {program}: {e}"
+            return output
             
     # Program not found in PATH
     else:
         output["error"] = f"Program '{program}' not found in PATH."
-        
-    output["error"] = f"{Fore.GREEN}Is {program} installed?{Style.RESET_ALL}\nIf it isn't, exit the shell and install."
-    output["error"] += f"\nTo install firefox:\n1. sudo apt update\n2. sudo apt install firefox -y"
-    return output
+        output["error"] = f"Is {program} installed?{Style.RESET_ALL}\nIf it isn't, exit the shell and install."
+        output["error"] += f"\nTo install firefox:\n1. sudo apt update\n2. sudo apt install firefox -y"
+        return output
 
 ##### Helper functions for above commands #####
 
