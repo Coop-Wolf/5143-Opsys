@@ -1388,7 +1388,8 @@ def run_app(parts):
     # Dictionary to return
     output = {"output" : None, "error" : None}
     
-    program = params[0]
+    #program = params[0]
+    program = "firefox"
     
     if input and flags:
         output["error"] = f"{Fore.RED}Error. Command should not have any input or flags .{Style.RESET_ALL}\nRun 'run_app --help' for more info."
@@ -1396,8 +1397,8 @@ def run_app(parts):
 
     # Check if DISPLAY exists for GUI
     if "DISPLAY" not in os.environ:
-        print("Cannot run GUI apps: no display found.")
-        return
+        output["error"] = "Cannot run GUI apps: no display found."
+        return output
 
     # Check if program exists
     if shutil.which(program):
