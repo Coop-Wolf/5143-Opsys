@@ -1310,7 +1310,7 @@ def ip(parts):
     
     # Filter out bad commands
     if input or flags or params:
-        output["error"] = f"{Fore.RED}Error. Command should not have any input, flags, or params .{Style.RESET_ALL}\nRun 'ip --help' for more info."
+        output["error"] = f"{Fore.RED}Error. Command should not have any input, flags, or params.{Style.RESET_ALL}\nRun 'ip --help' for more info."
         return output
     
     # Getting hostname and IP address
@@ -1319,7 +1319,7 @@ def ip(parts):
         ip_addr  = socket.gethostbyname(hostname)
         output["output"] = f"IP Address: {ip_addr}"
     except Exception as e:
-        output["error"] = f"{Fore.RED}An error occurred while retrieving the IP address: {e}{Style.RESET_ALL}"
+        output["error"] = f"{Fore.RED}An error occurred while retrieving the IP address: {e}.{Style.RESET_ALL}"
     
     # Return final output
     return output
@@ -1339,7 +1339,7 @@ def date(parts):
     
     # Filter out bad commands
     if input or flags or params:
-        output["error"] = f"{Fore.RED}Error. Command should not have any input, flags, or params .{Style.RESET_ALL}\nRun 'date --help' for more info."
+        output["error"] = f"{Fore.RED}Error. Command should not have any input, flags, or params.{Style.RESET_ALL}\nRun 'date --help' for more info."
         return output
     
     # Getting current date and time
@@ -1348,7 +1348,7 @@ def date(parts):
         current_time = time.strftime("%m-%d-%y %H:%M:%S", time.localtime())
         output["output"] = f"{current_time}"
     except Exception as e:
-        output["error"] = f"{Fore.RED}An error occurred while retrieving the date and time: {e}{Style.RESET_ALL}"
+        output["error"] = f"{Fore.RED}An error occurred while retrieving the date and time: {e}.{Style.RESET_ALL}"
     
     # Return final output
     return output
@@ -1368,7 +1368,7 @@ def clear_screen(parts):
     
     # Filter out bad commands
     if input or flags or params:
-        output["error"] = f"{Fore.RED}Error. Command should not have any input, flags, or params .{Style.RESET_ALL}\nRun 'clear --help' for more info."
+        output["error"] = f"{Fore.RED}Error. Command should not have any input, flags, or params.{Style.RESET_ALL}\nRun 'clear --help' for more info."
         return output
     
     # Clear the screen
