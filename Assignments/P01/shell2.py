@@ -1040,6 +1040,12 @@ def help(parts):
         
         elif cmd == "clear":
             output["output"] += clear.__doc__
+            
+        elif cmd == "exit":
+            output["output"] += exit_shell.__doc__
+            
+        elif cmd == "firefox":
+            output["output"] += firefox.__doc__
         '''
         if cmd == "cp":
             output["output"] += cp.__doc__
@@ -1377,8 +1383,17 @@ def clear_screen(parts):
     # Return final output
     return output
 
-def run_app(parts):
-    
+def firefox(parts):
+    '''
+    Launch the Firefox web browser.
+    Usage: firefox
+    Note: This command does not take any input, flags, or parameters.
+    Make sure Firefox is installed on your system.
+    If running in a non-GUI environment, this command will return an error.
+    To install Firefox:
+    1. sudo apt update
+    2. sudo apt install firefox -y    
+    '''
     
     # Getting parsed parts
     input = parts.get("input", None)
@@ -1388,10 +1403,10 @@ def run_app(parts):
     # Dictionary to return
     output = {"output" : None, "error" : None}
     
-    #program = params[0]
     program = "firefox"
     
-    if input and flags:
+    # Throw error if user added input, flags, or params
+    if input and flags and params:
         output["error"] = f"{Fore.RED}Error. Command should not have any input or flags .{Style.RESET_ALL}\nRun 'run_app --help' for more info."
         return output
 
@@ -1403,14 +1418,22 @@ def run_app(parts):
     # Check if program exists
     if shutil.which(program):
         try:
-            subprocess.Popen([program])  # Launches GUI app in background
+            # Launch the program
+            # Suppress output by redirecting to DEVNULL
+            subprocess.Popen([program], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+            
             output["error"] = f"Launching {program}..."
+            
+        # Catch any exceptions during launch
         except Exception as e:
             output["error"] = f"Error launching {program}: {e}"
+            
+    # Program not found in PATH
     else:
-        output["error"] = f"Program '{program}' not found in PATH"
+        output["error"] = f"Program '{program}' not found in PATH."
         
-    output["output"] = f"Launching {program}..."
+    output["error"] = f"{Fore.GREEN}Is {program} installed?{Style.RESET_ALL}\nIf it isn't, exit the shell and install."
+    output["error"] += f"\nTo install firefox:\n1. sudo apt update\n2. sudo apt install firefox -y"
     return output
 
 ##### Helper functions for above commands #####
@@ -1787,7 +1810,8 @@ if __name__ == "__main__":
     # List of commands user may request to execute
     available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
                           "head", "tail", "grep", "wc", "chmod", "history",
-                          "exit", "more", "less", "sort", "help", "ip", "date", "clear", "run_app"]
+                          "exit", "more", "less", "sort", "help", "ip", "date",
+                          "clear", "firefox"]
 
     
     # Empty cmd variable
@@ -1977,8 +2001,8 @@ if __name__ == "__main__":
                         result = date(command)
                     elif command.get("cmd") == "clear":
                         result = clear_screen(command)
-                    elif command.get("cmd") == "run_app":
-                        result = run_app(command)
+                    elif command.get("cmd") == "firefox":
+                        result = firefox(command)
                     #elif command.get("cmd") == "color":
                     #    result = color(command)
                     #elif command.get("cmd") == "stop_color":
