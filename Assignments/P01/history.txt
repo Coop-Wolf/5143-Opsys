@@ -347,3 +347,5 @@ clear
 ls
 cd test.txt
 ls -llll
+date
+date

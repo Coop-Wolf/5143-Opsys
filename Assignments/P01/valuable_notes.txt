@@ -17,19 +17,21 @@ Work on next:
 
 
 Pushes to Production shell:
-    ip, date, clear implementation
-    ip, date, clear help
-    ip, date, clear in main
-    ip, date, clear in command list
+
+    1. Fix welcome function
+
+    2. To set date to CDT
+        2.1. run command in temrinal:
+            2.1.1. export TZ=America/Chicago
+        2.2. Verify fix:
+            2.2.1. date
 
 
 Need to fix:
 
 
 Need to Add:
-    if statement in cp(parts) to make sure there are 2 and only 2 params
-        if len(params) < 1 or len(params) > 2:
-            output["error"] = f"Error: cp takes only two params. 
+ 
 
 Errors (bugs):
     cat valiable_notes.txt is printing 908 for word count when it should be 166
