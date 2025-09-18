@@ -930,7 +930,12 @@ def sort(parts):
                 
             # Sort numerically
             elif flags == "-n":
-                sorted_list.sort(key=int)
+                
+                try:
+                    sorted_list.sort(key=int)
+                except ValueError:
+                    output["error"] = f"{Fore.RED}Error: 'sort -n' can only be used on files with numbers.{Style.RESET_ALL} \nRun 'sort --help' for more info."
+                    return output
                 
         # Error if path not found
         else:

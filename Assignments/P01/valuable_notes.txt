@@ -28,11 +28,11 @@ Pushes to Production shell:
 
 
 Need to fix:
-    coope@CooperPC:/home/coope/OS/5143-Opsys/Assignments/P01$ sort test.txt
+coope@CooperPC:/home/coope/OS/5143-Opsys/Assignments/P01$ sort -n test.txt
 
-        File "/home/coope/OS/5143-Opsys/Assignments/P01/shell2.py", line 921, in sort
-        sorted_list.append()
-    TypeError: list.append() takes exactly one argument (0 given)
+    File "/home/coope/OS/5143-Opsys/Assignments/P01/shell2.py", line 933, in sort
+        sorted_list.sort(key=int)
+    ValueError: invalid literal for int() with base 10: 'this is a test to see how well my wc command works.\n'
 
 Need to Add:
  
