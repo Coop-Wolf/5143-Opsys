@@ -7,7 +7,8 @@ chmod can do system call.
 
 Work on next:
 
-    1. Test Commands
+    1. Test commands
+    2. Make sure sort -n test.txt works.
 
 
 
@@ -25,14 +26,11 @@ Pushes to Production shell:
        run, commands help
        run, commands in main
        run, commands in command list
+       updates to sort function.
 
 
 Need to fix:
-coope@CooperPC:/home/coope/OS/5143-Opsys/Assignments/P01$ sort -n test.txt
 
-    File "/home/coope/OS/5143-Opsys/Assignments/P01/shell2.py", line 933, in sort
-        sorted_list.sort(key=int)
-    ValueError: invalid literal for int() with base 10: 'this is a test to see how well my wc command works.\n'
 
 Need to Add:
  
