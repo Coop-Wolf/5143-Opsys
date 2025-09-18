@@ -918,7 +918,7 @@ def sort(parts):
                         sorted_list.append(line)
                     else:
                         line = line + "\n"
-                        sorted_list.append()
+                        sorted_list.append(line)
                     
             # Sort alphebetically
             if flags in ["-a", None]:

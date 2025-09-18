@@ -28,7 +28,11 @@ Pushes to Production shell:
 
 
 Need to fix:
+    coope@CooperPC:/home/coope/OS/5143-Opsys/Assignments/P01$ sort test.txt
 
+        File "/home/coope/OS/5143-Opsys/Assignments/P01/shell2.py", line 921, in sort
+        sorted_list.append()
+    TypeError: list.append() takes exactly one argument (0 given)
 
 Need to Add:
  
