@@ -366,3 +366,9 @@ run nautilus
 run nautilus
 run firefox
 run --help
+sort test.txt -n
+sort -n test.txt
+sort -r test.txt
+sort -a test.txt
+help --sort
+sort --help

@@ -861,7 +861,16 @@ def grep(parts):
            
 def sort(parts):
     '''
+    Sorts file or input.
     
+    Options:
+        - a : Sort alphabetically (default)
+        - r : Sort in reverse order
+        - n : Sort numerically (only works if file/input contains only numbers)
+        
+    Usage: sort [OPTION]... [FILE]
+    Example:
+        sort -r fruit.txt
     '''        
             
     # Getting parsed parts
@@ -880,7 +889,7 @@ def sort(parts):
         output["error"] = f"{Fore.RED}Error: 'sort' needs either input or params.{Style.RESET_ALL} \nRun 'sort --help' for more info."
         return output
         
-    if flags not in ["-r", "-n", None]:
+    if flags not in ["-r", "-n", "a", None]:
         output["error"] = f"{Fore.RED}Error: Invalid flag: '{flags}'.{Style.RESET_ALL} \nRun 'sort --help' for more info."
         return output
         
