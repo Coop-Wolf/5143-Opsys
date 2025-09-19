@@ -16,12 +16,8 @@ from getch import Getch
 from colorama import init, Fore, Style
 import time
 import subprocess
-from time import sleep
 import re
 import shutil
-
-# Global variable to track current shell color
-#CURRENT_COLOR = Style.RESET_ALL
 
 getch = Getch()  # create instance of our getch class
 
