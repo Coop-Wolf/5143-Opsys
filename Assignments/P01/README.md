@@ -40,7 +40,7 @@ Run the `shell.py` file and use the following commands...
 | `less`                |                                                     | Tim      |
 | `[program] > file`    |                                                     | Tim      |
 | `[program] < file`    |                                                     | Harika   |
-| `sort `               |                                                     | Cooper   |
+| `sort `               | Sorts contents of a file.                           | Cooper   |
 
 ## Non-Working Components:
 - head
