@@ -23,7 +23,7 @@ Pushes to Production shell:
         2.2. Verify fix:
             2.2.1. date
 
-    3. run, commands function
+    3. run, commands, wc function
        run, commands help
        run, commands in main
        run, commands in command list
@@ -38,8 +38,7 @@ Need to Add:
  
 
 Errors (bugs):
-    cat valiable_notes.txt is printing 908 for word count when it should be 166
-    Not sure if cat should read input. should just be a file. or input from previous command.
+
 
 
 Commands that work correctly for Shell2.py
