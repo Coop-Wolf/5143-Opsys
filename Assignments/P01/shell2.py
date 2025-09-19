@@ -1454,7 +1454,7 @@ def run(parts):
     # Check if DISPLAY exists for GUI
     # firefix needs a display to run
     if "DISPLAY" not in os.environ:
-        output["error"] = f"{Fore.RED}Error: Cannot run GUI apps: no display found. \nRun 'run --help' for more info."
+        output["error"] = f"{Fore.RED}Error: Cannot run GUI apps: no display found.{Style.RESET_ALL} \nRun 'run --help' for more info."
         return output
 
     # Check if program exists
