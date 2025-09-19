@@ -587,7 +587,7 @@ def wc(parts):
                 if len(lines) > 1:
                     for line in lines:
                         for words in line.split():
-                            word_count += len(words)
+                            word_count += 1
                             
                 # Only one line      
                 else:
@@ -618,7 +618,8 @@ def wc(parts):
             if len(lines) > 1:
                 for line in lines:
                     for words in line.split():
-                        word_count += len(words)
+                        print(words)
+                        word_count += 1
                         
             else:
                 word_count = len(lines)

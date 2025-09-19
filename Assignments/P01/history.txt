@@ -404,3 +404,12 @@ cat test.txt | wc
 wc test.txt
 cat test.txt
 cat test.txt | wc
+wc test.txt
+cat test.txt
+cat test.txt | wc
+cat test.txt | wc -w
+cat test.txt | wc -l
+cat test.txt | wc -l
+cat test.txt | wc
+cat test.txt | wc
+wc test.txt
