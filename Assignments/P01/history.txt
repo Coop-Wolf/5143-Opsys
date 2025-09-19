@@ -382,3 +382,25 @@ cd | clear | ls -lah | grep code | sort | wc
 ls -lah
 ls -lah | grep code
 ls -lah | grep code | wc
+cat test.txt
+sc test.txt
+wc test.txt
+cat test.txt | wc
+cat ls-lah
+cat numtext
+wc numtext
+cat numtext | wc
+cat bacon
+wc bacon
+cat bacon | wc
+cat bacon
+wc bacon
+cat bacon | wc
+mkdir testfile
+ls
+wc test.txt
+cat test.txt
+cat test.txt | wc
+wc test.txt
+cat test.txt
+cat test.txt | wc

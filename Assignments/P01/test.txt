@@ -1,7 +1,2 @@
-this is a test to see how well my wc command works.
-i am going to do some number of lines and words and characters 
-i have noticed that running wc in the regular terminal doesnt
-work correctly. it gave an extra line number while my program
-produced the correct line count. Im going to use chatGPT to see
-how many characters are in this text file because I dont want to 
-count. That is all for now.
+this is a simple test.
+this is the next line.

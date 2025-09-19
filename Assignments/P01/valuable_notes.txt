@@ -28,6 +28,7 @@ Pushes to Production shell:
        run, commands in main
        run, commands in command list
        updates to sort function.
+       add history_index = -1 at end of if user types enter.
 
 
 Need to fix:

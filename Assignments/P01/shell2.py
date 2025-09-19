@@ -553,8 +553,7 @@ def wc(parts):
     elif isinstance(item, str) and input and not params:
         
         
-        # Split string in lines first 
-        lines = item.splitlines()
+        print(item)
         
         # Removes characters used to color text
         ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
@@ -562,6 +561,9 @@ def wc(parts):
         
         # Split string in lines first
         lines = item.splitlines()
+        
+        print("---LINES---")
+        print(lines)
     
         # If user ran a pipe and wc section only contains wc
         # Example: ls | wc -w or wc -l fruit.txt
@@ -2095,10 +2097,7 @@ if __name__ == "__main__":
                         result = run(command)
                     elif command.get("cmd") == "commands":
                         result = list_of_commands(command)
-                    #elif command.get("cmd") == "color":
-                    #    result = color(command)
-                    #elif command.get("cmd") == "stop_color":
-                    #    result = stop_color(command)
+
 
 
                             
@@ -2112,11 +2111,13 @@ if __name__ == "__main__":
             # Writing command to history
             write_to_history(cmd)
 
-            # Setting cmd back to blank and cursor back to 0
+            # Setting cmd blank, cursor to 0, and history index to -1
             cmd = ""
             cursor_pos = 0
+            history_index = -1
             
-            print_cmd(cmd)  # now print empty cmd prompt on next line
+            # Reprint command prompt
+            print_cmd(cmd)
             
         else:
             # Concatenate the typed character at the cursor position
