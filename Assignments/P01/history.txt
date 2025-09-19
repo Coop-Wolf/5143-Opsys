@@ -372,3 +372,13 @@ sort -r test.txt
 sort -a test.txt
 help --sort
 sort --help
+sort --help
+sort test.txt 
+sort test.txt -a
+sort test.txt | wc -l
+commands
+cd | clear | run firefox | ls -lah | grep code | sort | wc
+cd | clear | ls -lah | grep code | sort | wc
+ls -lah
+ls -lah | grep code
+ls -lah | grep code | wc

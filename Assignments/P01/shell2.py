@@ -889,7 +889,7 @@ def sort(parts):
         output["error"] = f"{Fore.RED}Error: 'sort' needs either input or params.{Style.RESET_ALL} \nRun 'sort --help' for more info."
         return output
         
-    if flags not in ["-r", "-n", "a", None]:
+    if flags not in ["-r", "-n", "-a", None]:
         output["error"] = f"{Fore.RED}Error: Invalid flag: '{flags}'.{Style.RESET_ALL} \nRun 'sort --help' for more info."
         return output
         
