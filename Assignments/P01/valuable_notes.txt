@@ -7,6 +7,7 @@ chmod can do system call.
 
 Work on next:
 
+    1. Need to get all commands from tim shell to mine, mv rm etc
     1. Test commands
     2. Make sure sort -n test.txt works.
 
