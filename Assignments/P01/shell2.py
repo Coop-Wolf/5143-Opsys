@@ -664,6 +664,102 @@ def cat(file):
                 output["error"] = f"cat: {f}: {str(e)}\n"
     return output              
 
+def rm(parts):
+    '''
+    Usage: rm [OPTION]... [FILE]...
+    Remove (unlink) the FILE(s).
+
+      -r, -R, --recursive   remove directories and their contents recursively
+              --help    display this help and exit
+
+    By default, rm does not remove directories. Use the --recursive (-r or -R)
+    option to remove each listed directory, too, along with all of its contents.
+
+    To remove a file whose name starts with a '-', for example '-foo',
+    use one of these commands:
+        rm -- -foo
+        rm ./-foo
+    '''
+
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    output = {"output" : None, "error" : None}
+
+    if input:
+        output["error"] = "Error. Command should not have an input."
+        return output
+    
+    if len(params) != 1:
+        output["error"] = "Error. Command requires one parameter."
+        return output
+    
+    if flags == "-r":
+        shutil.rmtree(params[0])
+    elif flags == "--":
+        try:
+            os.remove(params[0])
+        except FileNotFoundError:
+            output["error"] = f"Error: File {params[0]} not found."
+        except Exception as e:
+            output["error"] = f"An error occurred: {e}"
+    else:
+        if os.path.isdir(params[0]):
+            try:
+                os.rmdir(params[0])
+            except FileNotFoundError:
+                output["error"] = f"Error: File {params[0]} not found."
+            except OSError as e:
+                output["error"] = f"Error deleting directory {params[0]}: {e}"
+            except Exception as e:
+                output["error"] = f"An error occurred: {e}"
+        else:
+            try:
+                os.remove(params[0])
+            except FileNotFoundError:
+                output["error"] = f"Error: File {params[0]} not found."
+            except Exception as e:
+                output["error"] = f"An error occurred: {e}"
+    
+    return output
+
+def mv(parts):
+    '''
+    Rename SOURCE to DEST
+
+          --help        display this help and exit
+    '''
+
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
+    output = {"output" : None, "error" : None}
+
+    if input:
+        output["error"] = "Error. Command should not have an input."
+        return output
+    
+    if flags:
+        output["error"] = "Error. Command doesn't take flags."
+        return output
+    
+    if len(params) != 2:
+        output["error"] = "Error. Command requires a source and destination."
+        return output
+    
+    try:
+        shutil.move(params[0], params[1])
+    except FileNotFoundError:
+        output["error"] = f"Error: File {params[0]} not found."
+    except PermissionError:
+        output["error"] = f"Error: Permission denied when moveing {params[0]} to {params[1]}."
+    except Exception as e:
+        output["error"] = f"An unexpected error occurred: {e}"
+
+    return output  
+
 def mkdir(parts):
     """
     Handle the 'mkdir' command with arguments.
@@ -1002,6 +1098,40 @@ def sort(parts):
         output["error"] = f"{Fore.RED}Error: {data} could not be properly handled.{Style.RESET_ALL} \nRun 'sort --help' for more info."
         return output   
 
+def head():
+    '''
+    Usage: head [OPTION]... [FILE]...
+    Print the first 10 lines of each FILE to standard output.
+    With more than one FILE, precede each with a header giving the file name.
+
+    With no FILE, or when FILE is -, read standard input.
+
+    Mandatory arguments to long options are mandatory for short options too.
+        -n, --lines=[-]NUM      print the first NUM lines instead of the first 10;
+                                with the leading '-', print all but the last
+                                NUM lines of each file
+
+    NUM may have a multiplier suffix:
+    b 512, kB 1000, K 1024, MB 1000*1000, M 1024*1024,
+    GB 1000*1000*1000, G 1024*1024*1024, and so on for T, P, E, Z, Y, R, Q.
+    Binary prefixes can be used, too: KiB=K, MiB=M, and so on.
+    '''
+
+def tail():
+    '''
+    Usage: tail [OPTION]... [FILE]...
+    Print the last 10 lines of each FILE to standard output.
+    With more than one FILE, precede each with a header giving the file name.
+    
+    Mandatory arguments to long options are mandatory for short options too.
+        -n, --lines=[+]NUM      output the last NUM lines, instead of the last 10;
+                                or use -n +NUM to skip NUM-1 lines at the start
+    NUM may have a multiplier suffix:
+    b 512, kB 1000, K 1024, MB 1000*1000, M 1024*1024,
+    GB 1000*1000*1000, G 1024*1024*1024, and so on for T, P, E, Z, Y, R, Q.
+    Binary prefixes can be used, too: KiB=K, MiB=M, and so on.
+    '''
+
 def help(parts):
     '''
     input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
@@ -1062,29 +1192,33 @@ def help(parts):
             
         elif cmd == "commands":
             output["output"] += list_of_commands.__doc__
-        '''
-        if cmd == "cp":
+
+        elif cmd == "cp":
             output["output"] += cp.__doc__
 
-        if cmd == "mv":
+        elif cmd == "mv":
             output["output"] += mv.__doc__
 
-        if cmd == "rm":
+        elif cmd == "rm":
             output["output"] += rm.__doc__
 
-        if cmd == "cat":
+        elif cmd == "cat":
             output["output"] += cat.__doc__
+            
+        elif cmd == "!x":
+            output["output"] += cmd_from_history.__doc__
 
-        if cmd == "head":
+        elif cmd == "head":
             output["output"] += head.__doc__
 
-        if cmd == "tail":
+        elif cmd == "tail":
             output["output"] += tail.__doc__
 
-        if cmd == "more":
+        '''
+        elif cmd == "more":
             output["output"] += more.__doc__
 
-        if cmd == "less":
+        elif cmd == "less":
             output["output"] += less.__doc__
 
         '''
@@ -1788,52 +1922,6 @@ def parse_cmd(cmd_input):
         command_list.append(d)
         
     return command_list
-                
-def color(parts):
-    '''
-    input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
-    output dict: {"output" : string, "error" : string}
-    '''
-    #global CURRENT_COLOR
-    
-    input = parts.get("input", None)
-    flags = parts.get("flags", None)
-    params = parts.get("params", None)
-    
-    output = {"output" : None, "error" : None}
-    
-    # Making sure nothing was passed besides the command 'color'
-    if not input and not flags and not params:
-        #CURRENT_COLOR = Fore.GREEN
-        output["output"] = f"Color has been changed to green.\nTo return to default color type command 'stop_color'."
-        return output
-    # User passed something besides 'color' command
-    else:
-        output["error"] = "Error. Color could not be changes. 'color' command takes not arguments."
-        return output
-    
-def stop_color(parts):
-    '''
-    input: dict({"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None})
-    output dict: {"output" : string, "error" : string}
-    '''
-    #global CURRENT_COLOR
-    
-    input = parts.get("input", None)
-    flags = parts.get("flags", None)
-    params = parts.get("params", None)
-    
-    output = {"output" : None, "error" : None}
-    
-    # Making sure nothing was passed besides the command 'color'
-    if not input and not flags and not params:
-        #CURRENT_COLOR = Style.RESET_ALL
-        output["output"] = f"Color has been changed to default."
-    
-    # User passed something besides 'color' command
-    else:
-        output["error"] = "Error. Color could not be changes. 'color' command takes not arguments."
-        return output
 
 def visible_length(s):
     '''Helper function for print_cmd. This is needed to bring the terminal cursor to the correct
@@ -1904,7 +1992,7 @@ if __name__ == "__main__":
     available_commands = ["ls", "pwd", "mkdir", "cd", "cp", "mv", "rm", "cat",
                           "head", "tail", "grep", "wc", "chmod", "history",
                           "exit", "more", "less", "sort", "help", "ip", "date",
-                          "clear", "run", "commands"]
+                          "clear", "run", "commands", "!x"]
 
     
     # Empty cmd variable
@@ -2014,33 +2102,33 @@ if __name__ == "__main__":
                 result = {"output" : None, "error" : None}
                 
                 # Handle if user wants to run !x command
-                if len(command_list) == 1 and command_list[0].get("cmd").startswith("!"):
+                if len(command_list) == 1 and command_list[0].get("cmd").startswith("!") and command_list[0].get("cmd")[1].isnumeric():
                     
                     # Get the cmd and send to function.
                     # It includes ! but we will remove in function
-                        result = cmd_from_history(command_list[0].get("cmd"))
+                    result = cmd_from_history(command_list[0].get("cmd"))
                         
-                        #Setting cmd to 'x' command from !x
-                        if result["error"]:
+                    #Setting cmd to 'x' command from !x
+                    if result["error"]:
                             
-                            # Set command list to zero
-                            command_list = []
+                        # Set command list to zero
+                        command_list = []
                             
-                        # Setting command_list to result command from !x command
-                        else:
-                            command_list = parse_cmd(result["output"])
-                            cmd = result["output"]
-                            result["output"] = None
+                    # Setting command_list to result command from !x command
+                    else:
+                        command_list = parse_cmd(result["output"])
+                        cmd = result["output"]
+                        result["output"] = None
                             
-                            # Printing to the user what is about to be executed
-                            print()
-                            print("Command(s) being executed.")
+                        # Printing to the user what is about to be executed
+                        print()
+                        print("Command(s) being executed.")
+                        print("--------------------")
+                        for command in command_list:
+                            print("Command:", command.get("cmd"))
+                            print("Flags:", command.get("flags"))
+                            print("Params:", command.get("params"))
                             print("--------------------")
-                            for command in command_list:
-                                print("Command:", command.get("cmd"))
-                                print("Flags:", command.get("flags"))
-                                print("Params:", command.get("params"))
-                                print("--------------------")
                             print()
 
                 # Executing each command in the command list
@@ -2098,6 +2186,10 @@ if __name__ == "__main__":
                         result = run(command)
                     elif command.get("cmd") == "commands":
                         result = list_of_commands(command)
+                    elif command.get("cmd") == "mv":
+                        result = mv(command)
+                    elif command.get("cmd") == "rm":
+                        result = rm(command)
 
 
 

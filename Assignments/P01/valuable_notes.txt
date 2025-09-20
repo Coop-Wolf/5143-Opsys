@@ -7,28 +7,11 @@ chmod can do system call.
 
 Work on next:
 
-    1. Need to get all commands from tim shell to mine, mv rm etc
     1. Test commands
-    2. Make sure sort -n test.txt works.
 
 
 
 Pushes to Production shell:
-
-    1. Fix welcome function
-
-    2. To set date to CDT
-        2.1. run command in temrinal:
-            2.1.1. export TZ=America/Chicago
-        2.2. Verify fix:
-            2.2.1. date
-
-    3. run, commands, wc function
-       run, commands help
-       run, commands in main
-       run, commands in command list
-       updates to sort function.
-       add history_index = -1 at end of if user types enter.
 
 
 Need to fix:

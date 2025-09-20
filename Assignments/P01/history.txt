@@ -413,3 +413,13 @@ cat test.txt | wc -l
 cat test.txt | wc
 cat test.txt | wc
 wc test.txt
+commands
+!x --help
+mv P02 P002
+ls
+mv test.txt t.txt
+ls
+rm --help
+rv t.txt
+rm t.txt
+ls
