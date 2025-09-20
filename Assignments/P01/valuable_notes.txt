@@ -1,18 +1,11 @@
-Using man linux and copy and paste for there.
-"&" at the end of a command is a backgroup process [not for sure yet if we'll be implementing this.]
-sort command [sort <file>]
-cat [file 1] [file 2] concatinates. can take zero or more files
-chmod can do system call.
-------------------------------------------------------------------------------
 
 Work on next:
 
     1. Test commands
 
 
-
 Pushes to Production shell:
-
+    need to remove print statements in wc command.
 
 Need to fix:
 

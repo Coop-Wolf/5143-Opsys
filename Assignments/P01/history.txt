@@ -423,3 +423,19 @@ rm --help
 rv t.txt
 rm t.txt
 ls
+tarest
+!x --help
+history
+ls
+history
+commands
+history
+ls
+history
+cat test.txt | wc
+wc test.txt
+cat test.txt | wc
+cat test.txt | wc
+wc test.txt
+cat test.txt | wc
+wc test.txt

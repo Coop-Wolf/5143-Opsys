@@ -552,18 +552,12 @@ def wc(parts):
     # Determine if item is a string
     elif isinstance(item, str) and input and not params:
         
-        
-        print(item)
-        
         # Removes characters used to color text
         ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
         item = ansi_escape.sub('', item)
         
         # Split string in lines first
         lines = item.splitlines()
-        
-        print("---LINES---")
-        print(lines)
     
         # If user ran a pipe and wc section only contains wc
         # Example: ls | wc -w or wc -l fruit.txt
@@ -618,7 +612,6 @@ def wc(parts):
             if len(lines) > 1:
                 for line in lines:
                     for words in line.split():
-                        print(words)
                         word_count += 1
                         
             else:
@@ -1805,7 +1798,81 @@ def write_to_history(cmd):
     # Append command to the file
     with open(history_file, "a") as file:
         file.write(cmd + "\n")
-       
+
+def if_not_x_command(command_list, cmd):
+    # Handle if user wants to run !x command
+    if (len(command_list) == 1 
+        and command_list[0].get("cmd").startswith("!") 
+        and command_list[0].get("cmd")[1].isnumeric()):
+        
+        # Get the cmd and send to function.
+        result = cmd_from_history(command_list[0].get("cmd"))
+
+        if result["error"]:
+            # Set command list to zero
+            command_list = []
+        else:
+            # Setting command_list to result command from !x command
+            command_list = parse_cmd(result["output"])
+            cmd = result["output"]
+            result["output"] = None
+
+            # Printing to the user what is about to be executed
+            print()
+            for command in command_list:
+                print(f"{command.get("cmd")}")
+                print()
+
+    return command_list, cmd
+
+def backspace(cmd, cursor_pos, history_index):
+    # If backspace pressed, remove the character to the left of the cursor
+    if cursor_pos > 0:
+        cmd = cmd[:cursor_pos-1] + cmd[cursor_pos:]
+        cursor_pos -= 1
+    print_cmd(cmd, cursor_pos)
+    return cmd, cursor_pos, history_index
+
+def up_arrow(cmd, cursor_pos, history_index):
+    # Get updated history if available
+    h_cmd = get_history_rev() or []
+
+    if h_cmd and history_index < len(h_cmd) - 1:
+        history_index += 1
+        cmd = h_cmd[history_index]
+    else:
+        cmd = h_cmd[-1] if h_cmd else cmd
+
+    cursor_pos = len(cmd)
+    print_cmd(cmd, cursor_pos)
+    return cmd, cursor_pos, history_index
+
+def down_arrow(cmd, cursor_pos, history_index):
+    h_cmd = get_history_rev() or []
+
+    if h_cmd and history_index > 0:
+        history_index -= 1
+        cmd = h_cmd[history_index]
+    else:
+        history_index = -1
+        cmd = ""
+
+    cursor_pos = len(cmd)
+    print_cmd(cmd, cursor_pos)
+    return cmd, cursor_pos, history_index
+
+def right_arrow(cmd, cursor_pos, history_index):
+    if cursor_pos < len(cmd):
+        cursor_pos += 1
+    print_cmd(cmd, cursor_pos)
+    return cmd, cursor_pos, history_index
+
+def left_arrow(cmd, cursor_pos, history_index):
+    if cursor_pos > 0:
+        cursor_pos -= 1
+    print_cmd(cmd, cursor_pos)
+    return cmd, cursor_pos, history_index
+
 def clear():
     """
     Clear the terminal screen.
@@ -1978,9 +2045,8 @@ def print_cmd(cmd, cursor_pos=0):
     sys.stdout.flush()
 
 
-# Beginning of main
+# Beginning of main 
 if __name__ == "__main__":
-    
     
     # Allows for colored text in terminal and resets color after each print
     init(autoreset=True)
@@ -1993,7 +2059,6 @@ if __name__ == "__main__":
                           "head", "tail", "grep", "wc", "chmod", "history",
                           "exit", "more", "less", "sort", "help", "ip", "date",
                           "clear", "run", "commands", "!x"]
-
     
     # Empty cmd variable
     cmd = ""
@@ -2004,13 +2069,14 @@ if __name__ == "__main__":
     # For handling up/down arrow keys
     history_index = -1
     
-    # Print to terminal
+    # Print command to terminal
     print_cmd(cmd)
 
     # Loop forever
     while True:
 
-        char = getch()  # read a character (but don't print)
+        # Read a character but don't print
+        char = getch()
 
         # Exit shell on ctrl-c command
         if char == "\x03":
@@ -2018,77 +2084,38 @@ if __name__ == "__main__":
             exit_shell()
 
         # If back space pressed, remove the character to the left of the cursor
-        if char == "\x7f":
-            if cursor_pos > 0:
-                cmd = cmd[:cursor_pos-1] + cmd[cursor_pos:]
-                cursor_pos -= 1
-            print_cmd(cmd, cursor_pos)
+        elif char == "\x7f":
+            cmd, cursor_pos, history_index = backspace(cmd, cursor_pos, history_index)
 
-        elif char in "\x1b":  # arrow key pressed
-            null = getch()  # waste a character
-            direction = getch()  # grab the direction
+        # Handling arrow keys
+        elif char in "\x1b":
+            
+            # Discard the next character (should be "[")
+            null = getch()
+            
+            # Get the direction of the arrow key
+            direction = getch()
             
             # Get updated history if avaible
             h_cmd = get_history_rev() or []
 
-            if direction in "A":  # up arrow pressed
+            # Handling arrow key presses
+            if direction == "A":
+                cmd, cursor_pos, history_index = up_arrow(cmd, cursor_pos, history_index)
                 
-                # Get list of history commands
-                if h_cmd and history_index < len(h_cmd) - 1:
-                    
-                    # Get the previous command from history depending on
-                    # history_index and increment index
-                    history_index += 1
-                    cmd = h_cmd[history_index]
-                    
-                    
-                # If at the end of history, stay there
-                else:
-                    # already at the oldest command
-                    # so set cmd to end of h_cmd list
-                    cmd = h_cmd[-1]
-                    
-                # Moving cursor to length of new cmd and print cmd
-                cursor_pos = len(cmd)
-                print_cmd(cmd, cursor_pos)
-
-            if direction in "B":  # down arrow pressed
+            elif direction == "B":
+                cmd, cursor_pos, history_index = down_arrow(cmd, cursor_pos, history_index)
                 
-                # get the NEXT command from history (if there is one)
-                if h_cmd and history_index > 0:
-                    
-                    # Get the previous command from history depending on
-                    # history_index and decrement index
-                    history_index -= 1
-                    cmd = h_cmd[history_index]
+            elif direction == "C":
+                cmd, cursor_pos, history_index = right_arrow(cmd, cursor_pos, history_index)
+                
+            elif direction == "D":
+                cmd, cursor_pos, history_index = left_arrow(cmd, cursor_pos, history_index)
 
-                    
-                # At the newest, go to blank like
-                else:
-                    
-                    # Getting a blank line
-                    history_index = -1
-                    cmd = ""
-                    
-                # Moving cursor to length of new cmd and print cmd
-                cursor_pos = len(cmd)
-                print_cmd(cmd, cursor_pos)
-
-            if direction in "C":  # right arrow pressed
-                # move the cursor to the right on your command prompt line
-                if cursor_pos < len(cmd):
-                    cursor_pos += 1
-                print_cmd(cmd, cursor_pos)
-
-            if direction in "D":  # left arrow pressed
-                # moves the cursor to the left on your command prompt line
-                if cursor_pos > 0:
-                    cursor_pos -= 1
-                print_cmd(cmd, cursor_pos)
-
-        elif char in "\r":  # return pressed
+        # Return/Enter key pressed
+        elif char in "\r":
             
-            # Printing blank line to info isn't overwritten
+            # Printing blank line so info isn't overwritten
             print()
             
             if cmd == "exit":
@@ -2102,34 +2129,7 @@ if __name__ == "__main__":
                 result = {"output" : None, "error" : None}
                 
                 # Handle if user wants to run !x command
-                if len(command_list) == 1 and command_list[0].get("cmd").startswith("!") and command_list[0].get("cmd")[1].isnumeric():
-                    
-                    # Get the cmd and send to function.
-                    # It includes ! but we will remove in function
-                    result = cmd_from_history(command_list[0].get("cmd"))
-                        
-                    #Setting cmd to 'x' command from !x
-                    if result["error"]:
-                            
-                        # Set command list to zero
-                        command_list = []
-                            
-                    # Setting command_list to result command from !x command
-                    else:
-                        command_list = parse_cmd(result["output"])
-                        cmd = result["output"]
-                        result["output"] = None
-                            
-                        # Printing to the user what is about to be executed
-                        print()
-                        print("Command(s) being executed.")
-                        print("--------------------")
-                        for command in command_list:
-                            print("Command:", command.get("cmd"))
-                            print("Flags:", command.get("flags"))
-                            print("Params:", command.get("params"))
-                            print("--------------------")
-                            print()
+                command_list, cmd = if_not_x_command(command_list, cmd)
 
                 # Executing each command in the command list
                 while len(command_list) != 0:
@@ -2190,9 +2190,6 @@ if __name__ == "__main__":
                         result = mv(command)
                     elif command.get("cmd") == "rm":
                         result = rm(command)
-
-
-
                             
                 # Printing result to screen
                 if result["error"]:
