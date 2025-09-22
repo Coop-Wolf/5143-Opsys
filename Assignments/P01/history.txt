@@ -439,3 +439,35 @@ cat test.txt | wc
 wc test.txt
 cat test.txt | wc
 wc test.txt
+ls /does/not/exist
+cd /not/a/path
+cd not_directory
+mkdir
+cat nofile.txt
+sort nofile.txt
+sort a t a a a 
+sort 1 1 1 1 2 2 2 2 -n
+sort 2 3 2 2 3 24 234 2 3 -n
+wc
+chmod 999 file
+ip banana
+!99999
+sort 2 3 2 2 3 24 234 2 3 -n
+sort 2 3 2 2 3 24 234 2 3 -n
+foobarbaz
+cd cd
+cdcd
+cd cd  -m
+ cd cd d cda df dd-f d d fdlfdjf  cd f df 
+    cd
+ls
+pwd
+cd nvm
+ls
+cd
+cd workspaces
+pwd
+ls
+mkdir nvm
+ls
+exit now

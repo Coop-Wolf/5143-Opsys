@@ -1045,7 +1045,7 @@ def sort(parts):
         return output
     
     # if source exists and is a string
-    elif isinstance(data, str):
+    elif isinstance(data, str) and not params:
         
         # Removes characters used to color text in order to properly sort
         ansi_escape = re.compile(r'\x1b\[[0-9;]*m')
