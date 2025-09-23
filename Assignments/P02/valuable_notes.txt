@@ -1,0 +1,3 @@
+Read in all processes into list or dictionary then pop when process time = current time. 
+
+Need to get the full layout of the algorithm first before doing anything else.
