@@ -471,3 +471,8 @@ ls
 mkdir nvm
 ls
 exit now
+cd .. testthis
+cd .. P01
+cd P01
+cd ..
+cd P01 ..
