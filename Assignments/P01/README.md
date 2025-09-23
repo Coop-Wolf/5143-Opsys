@@ -9,11 +9,22 @@ Group Members:
 ## Overview:
 This project implements a basic shell in Python that supports a variety of commands.
 
+## Files
+| Files                 | Description                                         | Author   |
+|-----------------------|-----------------------------------------------------|----------|
+| Dev_shell.py          | Python script used for development.                 | Cooper   |
+| Practice_shell.py     | Secondary script used for development purposes.     | Cooper   |
+| shell2.py             | Working shell script.                               | Cooper   |
+| getch.py              | python file that.                                   | Cooper   |
+| history.txt           | txt file that contains past shell commands.         | Cooper   |
+| test.txt              | txt file used to test various commands.             | Cooper   |
+| numtext               | txt file of numeric values used to test commands.   | Cooper   |
+| bacon                 | txt file used for testing commands.                 | Cooper   |
+| valuable_notes        | Contains notes and reminders for the project.       | Cooper   |
+
 ## Instructions:
-Clone the repository.
-install requests is haven't already
-    - pip install requests
-Run the `shell.py` file and use the following commands...
+Clone the repository or connect through VS Code Spaces
+Run the `shell2.py` file and use the following commands...
 
 ## Commands:
 | Command               | Description                                         | Author   |
