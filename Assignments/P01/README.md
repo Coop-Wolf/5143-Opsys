@@ -9,7 +9,7 @@ Group Members:
 ## Overview:
 This project implements a basic shell in Python that supports a variety of commands.
 
-## Files
+## Files:
 | Files                 | Description                                         | Author   |
 |-----------------------|-----------------------------------------------------|----------|
 | Dev_shell.py          | Python script used for development.                 | Cooper   |
