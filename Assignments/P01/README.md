@@ -13,13 +13,13 @@ This project implements a basic shell in Python that supports a variety of comma
 | Files                 | Description                                         | Author   |
 |-----------------------|-----------------------------------------------------|----------|
 | Dev_shell.py          | Python script used for development.                 | Cooper   |
-| Practice_shell.py     | Secondary script used for development purposes.     | Cooper   |
+| practice_shell.py     | Secondary script used for development purposes.     | Cooper   |
 | shell2.py             | Working shell script.                               | Cooper   |
-| getch.py              | python file that.                                   | Cooper   |
-| history.txt           | txt file that contains past shell commands.         | Cooper   |
-| test.txt              | txt file used to test various commands.             | Cooper   |
-| numtext               | txt file of numeric values used to test commands.   | Cooper   |
-| bacon                 | txt file used for testing commands.                 | Cooper   |
+| getch.py              | Class that reads in each character.                 | Cooper   |
+| history.txt           | Text file that contains past shell commands.        | Cooper   |
+| test.txt              | Text file used to test various commands.            | Cooper   |
+| numtext               | Text file of numeric values used to test commands.  | Cooper   |
+| bacon                 | Text file used for testing commands.                | Cooper   |
 | valuable_notes.txt    | Contains notes and reminders for the project.       | Cooper   |
 
 ## Instructions:
