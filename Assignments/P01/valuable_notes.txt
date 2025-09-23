@@ -5,8 +5,10 @@ Work on next:
 
 
 Pushes to Production shell:
-
-
+    mv function needs to check that there are only 2 parameters.
+    Cat needs to take the whole parsed command (parts) not just file
+    Then in the function it will check that input, params, and flags are null.
+    More and Less needs to check if there is both input and params or neither and give error.
 Need to fix:
 
 
