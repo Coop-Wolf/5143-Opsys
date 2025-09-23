@@ -20,7 +20,7 @@ This project implements a basic shell in Python that supports a variety of comma
 | test.txt              | txt file used to test various commands.             | Cooper   |
 | numtext               | txt file of numeric values used to test commands.   | Cooper   |
 | bacon                 | txt file used for testing commands.                 | Cooper   |
-| valuable_notes        | Contains notes and reminders for the project.       | Cooper   |
+| valuable_notes.txt    | Contains notes and reminders for the project.       | Cooper   |
 
 ## Instructions:
 Clone the repository or connect through VS Code Spaces
