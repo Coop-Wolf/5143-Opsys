@@ -1,10 +1,11 @@
 
 Work on next:
-
-    1. Test commands
+    1 Copy new commands from Tim's shell.
+    2. Test all commands.
 
 
 Pushes to Production shell:
+
 
 Need to fix:
 
@@ -36,9 +37,13 @@ Commands that work correctly for Shell2.py
     run
 
 
-Reasons why some functions dont give same result as bash terminal:
-    wc: bash terminal does not include numbers. Mine does, because google docs
+Reasons why some functions don't give the same result as the bash terminal:
+    wc: bash terminal does not include numbers. Mine does, because Google Docs'
         word counter does as well.
+
+
+Hardest part:
+    The grep function was difficult when trying to count the number of lines and words when the input is a string. 
 
 
 ------------------------------------------------------------------------------------------------------
