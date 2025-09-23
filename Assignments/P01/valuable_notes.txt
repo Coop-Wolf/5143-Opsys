@@ -5,7 +5,6 @@ Work on next:
 
 
 Pushes to Production shell:
-    need to remove print statements in wc command.
 
 Need to fix:
 
