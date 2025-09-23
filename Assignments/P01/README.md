@@ -7,7 +7,7 @@ Group Members:
 - Cooper Wolf
 
 ## Overview:
-This project implements a basic shell in Python that supports a variety of commands.
+This project implements a basic shell in Python that supports a variety of commands mentioned below.
 
 ## Files:
 | Files                 | Description                                         | Author   |
