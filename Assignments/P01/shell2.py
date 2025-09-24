@@ -629,7 +629,7 @@ def wc(parts):
         output["error"] = f"{Fore.RED}Error: {item}: No such file or directory.{Style.RESET_ALL}\nRun 'wc --help' for more info."
         return output
 
-def cat(file):
+def cat(parts):
     '''
     Usage: cat [FILE]...
 
@@ -637,9 +637,25 @@ def cat(file):
         cat f - g   Output f's contents, then standard input, then g's contents.
         cat         Copy standard input to standard output.
     '''
+    
+    # Getting parsed parts
+    input = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", None)
+    
     output = {"output": None, "error": None}
+    
+    if input or flags:
+        output["error"] = f"{Fore.RED}Error: 'cat' should not have input or flags.{Style.RESET_ALL}\nRun 'cat --help' for more info."
+        return output
+    
+    # if no params, set file to None and read from stdin, else read file
+    if not params:
+        file = None
+    else:
+        file = params
 
-     #if no file provided, read from stdin once
+    #if no file provided, read from stdin once
     if not file:
         output["output"] = sys.stdin.read()
         return output
@@ -1376,6 +1392,10 @@ def more(parts):
         output["error"] = f"Error: Command does not take flags."
         return output
     
+    if (not input and not params) or (input and params):
+        output["error"] = f"{Fore.RED}Error: 'more' needs either input or params.{Style.RESET_ALL} \nRun 'more --help' for more info."
+        return output
+    
     if input:
         if os.path.isfile(input):
             files.append(input)
@@ -1514,6 +1534,10 @@ def less(parts):
 
     if flags:
         output["error"] = f"Error: Command does not take flags."
+        return output
+    
+    if (not input and not params) or (input and params):
+        output["error"] = f"{Fore.RED}Error: 'more' needs either input or params.{Style.RESET_ALL} \nRun 'more --help' for more info."
         return output
     
     if input:
@@ -2451,8 +2475,7 @@ if __name__ == "__main__":
                     elif command.get("cmd") == "cp":
                         result = cp(command)
                     elif command.get("cmd") == "cat":
-                        file = command.get("params")
-                        result = cat(file)
+                        result = cat(command)
                     elif command.get("cmd") == "grep":
                         result = grep(command)
                     elif command.get("cmd") == "sort":
