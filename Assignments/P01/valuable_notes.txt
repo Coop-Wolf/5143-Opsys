@@ -52,4 +52,13 @@ Hardest part:
     The grep function was difficult when trying to count the number of lines and words when the input is a string. 
     Ls command took a while because there was a lot that went into that command, like multiple flags, human-readable size, and coloring files.
 
+
+
+Presentation Outline:
+    Who did what
+    Difficulties
+    What was cool 
+    Go through commands checklist
+    Additional commands
+
 ------------------------------------------------------------------------------------------------------
