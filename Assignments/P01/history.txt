@@ -476,3 +476,40 @@ cd .. P01
 cd P01
 cd ..
 cd P01 ..
+commands
+commands f
+commands
+listfiles
+files
+cp
+mv
+rm
+chmod
+grep
+sort
+rm -r
+cat nofile.txt
+grep "hi" missing.txt
+wc mssing.txt
+rm -r
+rm -r fake file
+rm -r fakefile.txt
+chmod 000 somefile && otherfile.txt
+chmod 000 filetets
+ls -?
+cp file1
+!abc
+!abc
+!1w
+chmod abc testfile
+cp file1
+cpp 
+cdd
+cd d
+ls -
+cd -
+cat
+cd  
+exitt
+hstory
+!

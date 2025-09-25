@@ -5,12 +5,8 @@ Work on next:
 
 
 Pushes to Production shell:
-    mv function needs to check that there are only 2 parameters. 
-
-    Cat needs to take the whole parsed command (parts) not just file
-    Then in the function it will check that input, params, and flags are null.
-
-    More and Less needs to check if there is both input and params or neither and give error.
+    less needs to check that either input or params if present and not both.
+    cp needs to check that there are exactly 2 params
 
 Need to fix:
 
@@ -19,7 +15,12 @@ Need to Add:
  
 
 Errors (bugs):
+    rm -r fakefile.txt
+        getting error that file or direcory is not found and kills the program. need to handle that nicely.
+        Need to add check to make sure file is read in the -r branch.
+        ive made all the changes on my shell. so just need to replicate to tim's shell
 
+    cp file1 is saying An unexpected error occurred. i think this is because there are no return statemnts withing so gettign overrettirn
 
 
 Commands that work correctly for Shell2.py

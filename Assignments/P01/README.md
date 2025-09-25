@@ -68,6 +68,7 @@ Run the `shell2.py` file and use the following commands...
 - clear command that clears the screen
 - ip command that displays ip address
 - run command runs an application
+- 'commands' command that prints list of working commands
 
 
 ## References:

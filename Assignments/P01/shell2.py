@@ -704,32 +704,52 @@ def rm(parts):
         output["error"] = "Error. Command requires one parameter."
         return output
     
+    # User wants to delete directory recursively
     if flags == "-r":
-        shutil.rmtree(params[0])
+        if os.path.isdir(params[0]):
+            shutil.rmtree(params[0])
+        else:
+            output["error"] = f"Error: {params[0]} is not a directory."
+            return output
+        
+    # User wants to delete with flag --
     elif flags == "--":
         try:
             os.remove(params[0])
         except FileNotFoundError:
             output["error"] = f"Error: File {params[0]} not found."
+            return output
         except Exception as e:
             output["error"] = f"An error occurred: {e}"
+            return output
+            
+    # User wants to delete without flags
     else:
+        
+        # Check if param is a directory
         if os.path.isdir(params[0]):
             try:
                 os.rmdir(params[0])
             except FileNotFoundError:
-                output["error"] = f"Error: File {params[0]} not found."
+                output["error"] = f"Error: Directory {params[0]} not found."
+                return output
             except OSError as e:
                 output["error"] = f"Error deleting directory {params[0]}: {e}"
+                return output
             except Exception as e:
                 output["error"] = f"An error occurred: {e}"
+                return output
+                
+        # Param is a file, delete it
         else:
             try:
                 os.remove(params[0])
             except FileNotFoundError:
                 output["error"] = f"Error: File {params[0]} not found."
+                return output
             except Exception as e:
                 output["error"] = f"An error occurred: {e}"
+                return output
     
     return output
 
@@ -1354,19 +1374,28 @@ def cp(parts):
     if flags:
         output["error"] = "Error. Command doesn't take flags."
         return output
+    
+    if len(params) != 2:
+        output["error"] = "Error. Command requires a source and destination."
+        return output
 
     try:
         shutil.copy(params[0], params[1])
     except FileNotFoundError:
         output["error"] = f"Error: File {params[0]} not found."
+        return output
     except PermissionError:
         output["error"] = f"Error: Permission denied when copying {params[0]} to {params[1]}."
+        return output
     except shutil.SameFileError:
         output["error"] = f"Error: Source and destination {params[0]} are the same file."
+        return output
     except IsADirectoryError:
         output["error"] = f"Error: One of the paths provided is a directory, not a file."
+        return output
     except Exception as e:
         output["error"] = f"An unexpected error occurred: {e}"
+        return output
 
     return output
 
@@ -2118,7 +2147,7 @@ def if_not_x_command(command_list, cmd):
     # Handle if user wants to run !x command
     if (len(command_list) == 1 
         and command_list[0].get("cmd").startswith("!") 
-        and command_list[0].get("cmd")[1].isnumeric()):
+        and command_list[0].get("cmd")[1:].isnumeric()):
         
         # Get the cmd and send to function.
         result = cmd_from_history(command_list[0].get("cmd"))
