@@ -1,18 +1,23 @@
 
 Work on next:
-    1 Copy new commands from Tim's shell.
-    2. Test all commands.
+    1 Go through check list to make sure all work.
+    2. Push updates to Tim shell.
 
 
 Pushes to Production shell:
     less needs to check that either input or params if present and not both.
     cp needs to check that there are exactly 2 params
+    grep with flagsd
 
 Need to fix:
 
 
 Need to Add:
- 
+    grep needs the flags:
+    -l - list file name that contains results
+    -i - case sensitive
+    -c - how many matching lines are in each file.
+    fix output for !x
 
 Errors (bugs):
     rm -r fakefile.txt
@@ -21,6 +26,9 @@ Errors (bugs):
         ive made all the changes on my shell. so just need to replicate to tim's shell
 
     cp file1 is saying An unexpected error occurred. i think this is because there are no return statemnts withing so gettign overrettirn
+
+    Error when running rm -rf bananas
+        "Error deleting directory bananas: [Errno 39] Directory not empty: 'bananas'
 
 
 Commands that work correctly for Shell2.py

@@ -513,3 +513,41 @@ cd
 exitt
 hstory
 !
+ls -lah
+mkdir bananas
+cd bananas
+cd ..
+cd ~
+pwd
+ls
+mv numtext bananas
+ls
+cd bananas
+ls
+cd ..
+cp bananas/numtext bananas/testtt.txt
+ls
+cd bananas
+ls
+cat numtext
+ls
+cat testtt.txt
+rm -rf bananas
+cd ..
+rm -rf bananas
+ls
+cd bananas
+ls
+cat numtext
+less numtext
+grep -l bacon bacon.txt
+cd ..
+wc -w bacon
+history
+cd ..
+chmod 777 bacon
+cd P01
+chmod 777 bacon
+ls
+ls -l
+sort bacon
