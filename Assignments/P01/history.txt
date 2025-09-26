@@ -551,3 +551,100 @@ chmod 777 bacon
 ls
 ls -l
 sort bacon
+grep
+grep -l test.txt
+grep -l test.txt I
+grep -l I test.txt
+ls
+cat test.txt
+cat test.txt
+grep -l I test.txt
+grep -l this test.txt
+grep -l this test.txt
+grep -l this test.txt
+grep -l this test.txt
+ls | sort
+ls
+ls -lsh
+ls -lah
+ls -lah | sort
+cat bacon | grep -l 
+cat bacon | grep -l bacon
+cat bacon | grep -lc bacon
+cat bacon | grep -lc bacon
+cat bacon | grep -cl bacon
+cat test.txt
+cat test.txt
+cat test.txt | grep simple
+cat bacon | grep bacon
+cat bacon | grep Bacon
+cat bacon | grep Bacon
+cat bacon | grep Bacon |sort
+clear
+ls
+cat test.txt
+cat test.txt | grep simple
+cat test.txt | grep -i Simple
+cat test.txt | grep -i Simple
+cat test.txt | grep -c simple
+cat test.txt | grep -c simplel
+cat bacon | grep -c Bacon
+cat bacon | grep -c bacon
+cat bacon | grep -lc bacon
+cat bacon | grep -lc bacon
+cat bacon | grep -lci bacon
+cat bacon | grep -ci bacon
+cat bacon | grep -ci Bacon
+cat bacon | grep -c Bacon
+cat test.txt | grep -c simple
+cat test.txt | grep -ci simple
+cat test.txt | grep -l simple
+cat test.txt | grep -li simple
+cat test.txt | grep -i simple
+cat test.txt | grep simple
+cat test.txt | grep SIMPLE
+cat test.txt | grep SIMPLE
+cat test.txt | grep -i SIMPLE
+cat test.txt | grep -i SIMPLE
+cat test.txt | grep -i SIMPLE
+cat test.txt | grep -i SIMPLE
+cat test.txt | grep -i SIMPLE
+grep simple tets.txt
+grep simple test.txt
+grep simple test.txt
+grep simple test.txt
+grep simple test.txt -l
+grep simple test.txt -l
+grep simple test.txt
+grep simple test.txt
+grep simple test.txt -l
+grep simple test.txt -l
+grep simple test.txt bacon -l
+grep -lic bacon bacon
+ls
+cat test.txt
+grep Bacon test.txt
+cat test.txt
+grep bacon test.txt
+grep bacon test.txt
+grep sauce test.txt
+ls
+grep eggs test.txt
+grep eggs test.txt
+grep eggs test.txt
+grep eggs test.txt
+grep eggs test.txt
+grep eggs test.txt
+grep eggs test.txt
+grep eggs test.txt
+grep eggs test.txt
+grep eggs test.txt
+grep eggs test.txt
+grep -i bacon test.txt
+grep Bacon test.txt
+grep eggs test.txt
+grep Bacon -i test.txt
+grep Bacon -i test.txt
+grep Bacon -i test.txt
+grep Bacon test.txt
+grep -i EGGS test.txt

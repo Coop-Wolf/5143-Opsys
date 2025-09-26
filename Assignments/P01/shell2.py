@@ -864,12 +864,19 @@ def grep(parts):
     # Dictionary to return
     output = {"output" : None, "error" : None}
     
-    # list to contain matches
-    match = []
+    # list that stores lines that contain matches of patter
+    line_match = []
+    
+    # storing files that match the pattern
+    file_match = []
+    
+    # list to store split params
+    files = []
+    pattern_parts = []
     
     # Catching bad commands
-    if flags:
-        output["error"] = f"{Fore.RED}Error: 'grep' doesn't take flags.{Style.RESET_ALL} \nRun 'grep --help' for more info."
+    if flags not in [None, "-l", "-i", "-c", "-li", "-il", "-lc", "-cl", "-ic", "-ci", "-lic", "-lci", "-ilc", "-icl", "-cli", "-cil"]:
+        output["error"] = f"{Fore.RED}Error: 'grep' only takes flags '-l', '-i', '-c'.{Style.RESET_ALL} \nRun 'grep --help' for more info."
         return output
 
     if not params:
@@ -891,11 +898,7 @@ def grep(parts):
     if len(params) > 50:
         output["error"] = f"{Fore.RED}Error: Params list too long.{Style.RESET_ALL} \nRun 'grep --help' for more info."
     
-    # list to store split params
-    files = []
-    pattern_parts = []
-    
-    # Loop through params to clean and append to correct list
+    # Loop through params to separate files and pattern
     for param in params:
         clean = param.strip("'\"")
         
@@ -915,26 +918,56 @@ def grep(parts):
         input = input.strip("'")
     
     # Store the input or files to process on
+    # one of them must be None due to previous checks
     source = input or files
     
     if not source:
         output["error"] = f"{Fore.RED}Error: Could not get the file or string to process.{Style.RESET_ALL} \nRun 'grep --help' for more info."
+    
+    # Variable to store count of matches
+    count_match = 0
+        
+    # if -i in flag, ignore case (true), else case sensitive (false)
+    flags = flags or ""
+    i_flag = re.IGNORECASE if "i" in flags else 0
+    
+    # Variable to store lines with matches
+    highlighted = ""
     
     # if source is a string
     if isinstance(source, str):
         
         # Split the lines of the source and process
         for line in source.splitlines():
-            if pattern in line:
+            
+            # if no flags, and pattern matches a line, highlight it and store the whole line
+            if flags == "-i" or not flags and re.search(re.escape(pattern), line, i_flag):
                 
-                # Highlight all matches of the pattern in yellow
-                highlighted = re.sub(re.escape(pattern), f"{Fore.YELLOW}{pattern}{Style.RESET_ALL}", line)
-                match.append(highlighted)
+                # Highlight all matches of the pattern in yellow and store the whole line
+                # Using lambda to perserve original case | Got from ChatGPT
+                highlighted = re.sub(re.escape(pattern), lambda m: f"{Fore.YELLOW}{m.group(0)}{Style.RESET_ALL}", line, flags=i_flag)
+                line_match.append(highlighted)
+            
+            elif "l" in flags and re.search(re.escape(pattern), line, flags = i_flag):
+                output["output"] = f"{Fore.MAGENTA}(standard input){Style.RESET_ALL}"
+                return output
+            
+            elif "c" in flags:
+                count_match += len(re.findall(re.escape(pattern), line, flags = i_flag))
         
-        # Converting to string and returning
-        result = "\n".join(match)
-        output["output"] = result
+        # If -c in flag, only return count of matches
+        if "c" in flags:
+            output["output"] = str(count_match)
+            
+        # If line_match was filled, return it
+        elif line_match:
+            output["output"] = "\n".join(line_match)
+        else:
+            output["error"] = f"{Fore.YELLOW}No matches found for '{pattern}'{Style.RESET_ALL}"
+            
+        # return output
         return output
+ 
         
     # Determine if item is a file
     for file in source:
@@ -953,34 +986,57 @@ def grep(parts):
                 cwd     = os.getcwd()
                 path    = os.path.join(cwd, new_dir)
                 
-            # Match patter with contents in file
+            # Match pattern with contents in file
             if path:
                 with open(path, 'r') as file_:
                     for line in file_:
-                        if pattern in line:
                             
-                            # Highlight the pattern in green (Got from GPT)
-                            highlighted = re.sub(re.escape(pattern),f"{Fore.YELLOW}{pattern}{Style.RESET_ALL}", line)
-                            
-                            # Output info differently depending on if processing one or many files
-                            if len(files) > 1:
-                                match.append(f"{file}: {highlighted}")
-                            else:
-                                match.append(f"{highlighted}")                                
-                            
-            # Error is could not get path
-            else:
-                output["error"] = f"{Fore.RED}Error: {file} could not be found.{Style.RESET_ALL} \nRun 'grep --help' for more info."
-                return output
+                        # if no flags, and pattern matches a line, highlight it and store the whole line
+                        if flags == "-i" or not flags and re.search(re.escape(pattern), line, i_flag):
+                
+                            # Highlight all matches of the pattern in yellow and store the whole line
+                            # Using lambda to perserve original case | Got from ChatGPT
+                            highlighted = re.sub(re.escape(pattern), lambda m: f"{Fore.YELLOW}{m.group(0)}{Style.RESET_ALL}", line, flags=i_flag)
+
+                        # if -l in flag, only return the name of the file if pattern matches
+                        elif "l" in flags and re.search(re.escape(pattern), line, flags = i_flag) and file not in file_match:
+                            file_match.append(file)
             
-        # Error if one of the files does not exist
-        else:
-            output["error"] = f"{Fore.RED}Error: {file} is not a file.{Style.RESET_ALL} \nRun 'grep --help' for more info."
-            return output
-        
-    # Converting to string and returning
-    result = "".join(match)
-    output["output"] = result
+                        # if -c in flag, count numbers of lines that contain the pattern
+                        elif "c" in flags:
+                            count_match += len(re.findall(re.escape(pattern), line, flags = i_flag))
+                            
+                        # If multiple files, include the file name in output
+                        if len(files) > 1 and "l" not in flags and "c" not in flags and highlighted not in line_match:
+                            line_match.append(f"{Fore.MAGENTA}{file}{Style.RESET_ALL}: {highlighted}")
+                            
+                        # If only one file, do not include that file name in output
+                        elif len(files) == 1 and "l" not in flags and "c" not in flags and highlighted not in line_match:
+                            line_match.append(f"{highlighted}")
+                        
+            # Error if one of the files does not exist
+            else:
+                output["error"] = f"{Fore.RED}Error: {file} is not a file.{Style.RESET_ALL} \nRun 'grep --help' for more info."
+                return output
+                        
+    # If -l flag, only return files that matched
+    if file_match:
+        result = "\n".join(f"{Fore.MAGENTA}{f}{Style.RESET_ALL}" for f in file_match)
+        output["output"] = result
+        return output
+    
+    # If -c in flag, only return count of matches
+    if "c" in flags:
+        output["output"] = str(count_match)
+            
+    # If line_match was filled, return it
+    elif line_match:
+        output["output"] = "".join(line_match)
+                        
+    else:
+        output["error"] = f"{Fore.YELLOW}No matches found for '{pattern}'{Style.RESET_ALL}"
+            
+    # return output
     return output
            
 def sort(parts):

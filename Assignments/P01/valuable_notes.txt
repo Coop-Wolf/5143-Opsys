@@ -1,5 +1,6 @@
 
 Work on next:
+    1. Fix grep, go through grep commands that should work and test them
     1 Go through check list to make sure all work.
     2. Push updates to Tim shell.
 
@@ -13,10 +14,6 @@ Need to fix:
 
 
 Need to Add:
-    grep needs the flags:
-    -l - list file name that contains results
-    -i - case sensitive
-    -c - how many matching lines are in each file.
     fix output for !x
 
 Errors (bugs):
@@ -59,6 +56,8 @@ Reasons why some functions don't give the same result as the bash terminal:
 Hardest part:
     The grep function was difficult when trying to count the number of lines and words when the input is a string. 
     Ls command took a while because there was a lot that went into that command, like multiple flags, human-readable size, and coloring files.
+
+    Using the colors confused a much of functions that had to do processing on the strings
 
 
 
