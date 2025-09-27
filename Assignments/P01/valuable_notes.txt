@@ -11,8 +11,6 @@ Pushes to Production shell:
 
     less needs to check that either input or params if present and not both.
 
-    cp needs to check that there are exactly 2 params
-
     grep with flagsd
 
     fix output for !x
