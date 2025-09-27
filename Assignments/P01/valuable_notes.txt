@@ -7,12 +7,6 @@ Work on next:
 Pushes to Production shell:
     fix parsed command
 
-    edit grep help to include that there are flags -lic
-
-    less needs to check that either input or params if present and not both.
-
-    grep with flagsd
-
     fix output for !x
 
 
@@ -26,10 +20,6 @@ Need to Add:
 Errors (bugs):
 
     cp file1 is saying An unexpected error occurred. i think this is because there are no return statemnts withing so gettign overrettirn
-
-    Error when running rm -rf bananas
-        "Error deleting directory bananas: [Errno 39] Directory not empty: 'bananas'
-
 
 Commands that work correctly for Shell2.py
     ls -alh
