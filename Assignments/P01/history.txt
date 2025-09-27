@@ -648,3 +648,96 @@ grep Bacon -i test.txt
 grep Bacon -i test.txt
 grep Bacon test.txt
 grep -i EGGS test.txt
+grep
+grep -i
+grep test.txt
+cat test.txt
+cat | test.txt Bacon
+cat test.txt | grep Bacon
+cat test.txt
+cat test.txt | grep -i bacon
+cat test.txt | grep -i Bacon
+cat test.txt | grep -i Bacon
+cat bacon
+cat test.txt | grep -i bacon
+cat test.txt | grep -ic bacon
+cat test.txt | grep -ic bacon
+ls | grep -i readme
+ls | grep -c py
+ls -lah | grep -c py
+ls | grep -l main
+cat test.txt | grep -lic Bacon
+cat test.txt | grep -c eggs
+cat test.txt
+ls | grep -z eggs
+ls | greb --help
+ls | grep --help
+grep --help
+ls | grep -l -c main
+ls | grep -l -i main
+ls | grep -l -i shell
+ls | grep -l -i SHELL
+ls -l -a
+ls -a
+ls -l
+ls -l
+ls -l -a
+ls -l -a
+ls -l -a
+ls | grep -l -i shell
+ls | grep -l -i shell
+ls -l -a
+grep -l -i test.txt
+grep -l -i test.txt
+ls -l -a
+ls | grep -l -i shell
+ls | grep -l -i shell
+ls | grep -l -i shell
+ls | grep -li shell
+ls
+grep -lic i practice_shell.ph shell2.py valuable_notes.txt
+grep -lic bacon bacon.txt
+grep -lic bacon bacon.txt practice_shell.py
+grep -lic i bacon.txt practice_shell.py
+grep -c i bacon.txt practice_shell.py
+grep -c print practice_shell.py
+grep -c print shell2.py
+grep -c ( shell2.py
+grep -c ) shell2.py
+cat bacon.txt | grep
+grep --help
+cat test.txt | grep -i bacon
+cat test.txt | grep -i bacon
+cat test.txt | grep -i eggs
+cat test.txt | grep -c bacon
+cat ets.txt | grep -c -i bacon
+cat ets.txt | grep -ci bacon
+cat test.txt | grep -ci bacon
+cat test.txt | grep -ci bacon
+cat test.txt | grep -c bacon
+cat test.txt | grep -c bacon
+cat test.txt | grep -ci bacon
+cat test.txt
+cat test.txt | grep -l BACON
+cat test.txt | grep -z "bacon"
+cat test.txt | grep -c -l "bacon"
+cat test.txt | grep
+cat test.txt | grep -ic
+grep -i bacon test.txt
+grep -i eggs test.txt
+grep -i eggs test.txt
+grep -i bacon test.txt
+grep -c eggs test.txt
+grep -ic bacon test.txt
+grep -ic bacon test.txt
+grep -ic bacon test.txt
+grep -ic eggs test.txt
+grep -ip eggs test.txt
+grep -il bacon test.txt
+grep -il bacon test.txt
+grep -l bacon test.txt
+grep -l print shell2.py practice_shell.py history.txt Dev_shell.py
+grep test.txt
+grep -x test.txt
+grap bacon
+grep bacon

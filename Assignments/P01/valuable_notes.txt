@@ -6,9 +6,12 @@ Work on next:
 
 
 Pushes to Production shell:
+    fix parsed command
+    edit grep help to include that there are flags -lic
     less needs to check that either input or params if present and not both.
     cp needs to check that there are exactly 2 params
     grep with flagsd
+
 
 Need to fix:
 
@@ -16,11 +19,8 @@ Need to fix:
 Need to Add:
     fix output for !x
 
+
 Errors (bugs):
-    rm -r fakefile.txt
-        getting error that file or direcory is not found and kills the program. need to handle that nicely.
-        Need to add check to make sure file is read in the -r branch.
-        ive made all the changes on my shell. so just need to replicate to tim's shell
 
     cp file1 is saying An unexpected error occurred. i think this is because there are no return statemnts withing so gettign overrettirn
 

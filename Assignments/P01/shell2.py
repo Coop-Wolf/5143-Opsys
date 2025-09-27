@@ -850,10 +850,15 @@ def mkdir(parts):
 
 def grep(parts):
     '''
-    Grep command searches for a given pattern within the given file.
+    Grep command searches for a given pattern within the given file(s).
+    
     If no file is given, it will match with what has been received as
-    input from previous command (only if piping). You can only have 
-    one patter. This command takes no flags 
+    input from previous command. There can only be one pattern.
+    
+    Available flags:
+    -i : ignore case
+    -l : only print names of files with matching lines
+    -c : only print a count of matching lines per file 
     '''
     
     # These are lists
@@ -873,6 +878,16 @@ def grep(parts):
     # list to store split params
     files = []
     pattern_parts = []
+    
+    # Variable to store count of matches
+    count_match = 0
+        
+    # if -i in flag, ignore case (true), else case sensitive (false)
+    flags = flags or ""
+    i_flag = re.IGNORECASE if "i" in flags else 0
+    
+    # Variable to store lines with matches
+    highlighted = ""
     
     # Catching bad commands
     if flags not in [None, "-l", "-i", "-c", "-li", "-il", "-lc", "-cl", "-ic", "-ci", "-lic", "-lci", "-ilc", "-icl", "-cli", "-cil"]:
@@ -924,36 +939,31 @@ def grep(parts):
     if not source:
         output["error"] = f"{Fore.RED}Error: Could not get the file or string to process.{Style.RESET_ALL} \nRun 'grep --help' for more info."
     
-    # Variable to store count of matches
-    count_match = 0
-        
-    # if -i in flag, ignore case (true), else case sensitive (false)
-    flags = flags or ""
-    i_flag = re.IGNORECASE if "i" in flags else 0
-    
-    # Variable to store lines with matches
-    highlighted = ""
-    
     # if source is a string
     if isinstance(source, str):
         
         # Split the lines of the source and process
         for line in source.splitlines():
             
+            # Searching for pattern in line
+            match = re.search(re.escape(pattern), line, i_flag)
+            
             # if no flags, and pattern matches a line, highlight it and store the whole line
-            if flags == "-i" or not flags and re.search(re.escape(pattern), line, i_flag):
+            if match and ("i" in flags or not flags):
                 
                 # Highlight all matches of the pattern in yellow and store the whole line
                 # Using lambda to perserve original case | Got from ChatGPT
                 highlighted = re.sub(re.escape(pattern), lambda m: f"{Fore.YELLOW}{m.group(0)}{Style.RESET_ALL}", line, flags=i_flag)
                 line_match.append(highlighted)
             
-            elif "l" in flags and re.search(re.escape(pattern), line, flags = i_flag):
+            # -l flag (list file names once if match found)
+            if match and "l" in flags:
                 output["output"] = f"{Fore.MAGENTA}(standard input){Style.RESET_ALL}"
                 return output
-            
-            elif "c" in flags:
-                count_match += len(re.findall(re.escape(pattern), line, flags = i_flag))
+
+            # -c flag (count matching lines)
+            if match and "c" in flags:
+                count_match += 1
         
         # If -c in flag, only return count of matches
         if "c" in flags:
@@ -990,21 +1000,25 @@ def grep(parts):
             if path:
                 with open(path, 'r') as file_:
                     for line in file_:
+                        
+                        # Searching for pattern in line
+                        match = re.search(re.escape(pattern), line, i_flag)
                             
                         # if no flags, and pattern matches a line, highlight it and store the whole line
-                        if flags == "-i" or not flags and re.search(re.escape(pattern), line, i_flag):
+                        if match and ("i" in flags or not flags):
                 
                             # Highlight all matches of the pattern in yellow and store the whole line
                             # Using lambda to perserve original case | Got from ChatGPT
                             highlighted = re.sub(re.escape(pattern), lambda m: f"{Fore.YELLOW}{m.group(0)}{Style.RESET_ALL}", line, flags=i_flag)
 
                         # if -l in flag, only return the name of the file if pattern matches
-                        elif "l" in flags and re.search(re.escape(pattern), line, flags = i_flag) and file not in file_match:
-                            file_match.append(file)
+                        if match and "l" in flags:
+                            if file not in file_match:
+                                file_match.append(file)
             
                         # if -c in flag, count numbers of lines that contain the pattern
-                        elif "c" in flags:
-                            count_match += len(re.findall(re.escape(pattern), line, flags = i_flag))
+                        if match and "c" in flags:
+                            count_match += 1
                             
                         # If multiple files, include the file name in output
                         if len(files) > 1 and "l" not in flags and "c" not in flags and highlighted not in line_match:
@@ -2395,7 +2409,10 @@ def parse_cmd(cmd_input):
         for item in subparts[1:]:
             
             if item.startswith("-"):
-                d["flags"] = item
+                if d["flags"]:
+                    d["error"] = f"{Fore.RED}Error: Flags must be combined.{Style.RESET_ALL}"
+                else:
+                    d["flags"] = item
             else:
                 d["params"].append(item)
                 
@@ -2517,8 +2534,14 @@ if __name__ == "__main__":
             if(cmd):
                 
                 # Part command and returning list of dictionaries
-                command_list = parse_cmd(cmd)
+                command_list = parse_cmd(cmd)      
                 result = {"output" : None, "error" : None}
+                
+                # If there was an error parsing the command, stop execution
+                for command in command_list:
+                    if command.get("error"):
+                        result["error"] = command.get("error")
+                        command_list = []
                 
                 # Handle if user wants to run !x command
                 command_list, cmd = if_not_x_command(command_list, cmd)
