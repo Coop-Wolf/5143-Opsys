@@ -746,3 +746,57 @@ grep -x test.txt
 grep -x test.txt
 history
 grep -x test.txt
+ls -lah
+mkdir bananas
+ls
+cd bananas
+cd ..
+pwd
+mv test.txt bananas
+ls
+cd bananas
+ls
+mv test.txt P01
+ls
+cd ..
+l
+ls
+cd ..
+ls
+cd P01
+ls
+cd bananas
+ls
+cd P01
+cat P01
+cp bananas/numtext bananas/P01
+cp bananans/numtext bananas/P01
+cp bananas/numtext bananas/P01
+cp --help
+cp numtext tes
+ls
+cat testtt.xt
+cat testtt.txt
+cat tes
+cat P01
+cp P01 tes
+cat tes
+cd ..
+cp bananas/P01 bananas/testtt.txt
+ls
+cd bananas
+ls
+cd ..
+cp bananas/P01 bananas/testtt.txt
+ls
+cd bananas
+ls
+cat testtt.txt
+rm -rf bananas
+cat test.txt
+less test.txt
+grep -lic bacon bacon.txt
+wc -w bacon.txt
+history
+wc -w bacon.txt
+sort bacon.txt
