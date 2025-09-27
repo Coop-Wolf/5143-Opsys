@@ -741,3 +741,8 @@ grep test.txt
 grep -x test.txt
 grap bacon
 grep bacon
+history
+grep -x test.txt
+grep -x test.txt
+history
+grep -x test.txt

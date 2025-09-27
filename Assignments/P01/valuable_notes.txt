@@ -1,16 +1,21 @@
 
 Work on next:
-    1. Fix grep, go through grep commands that should work and test them
     1 Go through check list to make sure all work.
     2. Push updates to Tim shell.
 
 
 Pushes to Production shell:
     fix parsed command
+
     edit grep help to include that there are flags -lic
+
     less needs to check that either input or params if present and not both.
+
     cp needs to check that there are exactly 2 params
+
     grep with flagsd
+
+    fix output for !x
 
 
 Need to fix:

@@ -2231,8 +2231,6 @@ def if_not_x_command(command_list, cmd):
             cmd = result["output"]
             result["output"] = None
 
-            # Printing to the user what is about to be executed
-            print()
             for command in command_list:
                 print(f"{command.get("cmd")}")
                 print()
