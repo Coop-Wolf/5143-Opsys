@@ -5,9 +5,6 @@ Work on next:
 
 
 Pushes to Production shell:
-    fix parsed command
-
-    fix output for !x
 
 
 Need to fix:
