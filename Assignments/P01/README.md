@@ -1,13 +1,13 @@
+## Overview:
+This project implements a basic shell in Python that supports a variety of commands mentioned below.
 
+## Timeline:
 01 Sept 2025 - 30 Sept 2025
-5143 Shell Project
-Group Members:
+
+## Group Members:
 - Tim Haxton
 - Harika Vemulapalli
 - Cooper Wolf
-
-## Overview:
-This project implements a basic shell in Python that supports a variety of commands mentioned below.
 
 ## Files:
 | Files                 | Description                                         |
@@ -56,7 +56,7 @@ Run the `shell2.py` file and use the following commands...
 - "<"
 - ">"
 
-## Extras
+## Extras:
 - Color ls contents if they are directory or executable
 - 'ls -merica' colors list contents red white and blue
 - date command that displays date and time
