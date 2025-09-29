@@ -841,3 +841,8 @@ tail -4 4 bacon.txt test.txt
 tail -n 4 bacon.txt test.txt
 tail -n 2 bacon.txt
 echo "hey" > hello.txt
+ls > ls_test_file.txt
+ls
+ls < ls_test_file.txt
+cat bacon.txt > new-bacon.txt
+ls
