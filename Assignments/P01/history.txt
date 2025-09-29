@@ -800,3 +800,44 @@ wc -w bacon.txt
 history
 wc -w bacon.txt
 sort bacon.txt
+cd | !1
+ls
+exit --help
+head --help
+tail --help
+head bacon.txt -n 10
+head bacon.txt -10
+head --help
+head bacon.txt -n
+head test.txt -n
+head test.txt
+head bacon.txt
+head bacon.txt -n
+tail bacon.txt
+tail test.txt
+ls
+cd bananas
+ls
+cd ..
+rm -rf bananas
+ls
+ls
+cd bananas
+ls
+cd ..
+cd bananas
+head P01
+head testtt.txt
+head tes
+head numtext
+head numtext -n
+head numtext --lines
+head numtext -5
+head -n 2 test.txt
+head -n 10 test.txt
+head -n 1 test.txt
+head -n 0 test.txt
+tail -4 4 bacon.txt test.txt
+tail -n 4 bacon.txt test.txt
+tail -n 2 bacon.txt
+echo "hey" > hello.txt

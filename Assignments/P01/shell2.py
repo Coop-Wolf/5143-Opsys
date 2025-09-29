@@ -2869,6 +2869,13 @@ def parse_cmd(cmd_input):
             else:
                 d["params"].append(item)
                 
+        # Check parameters for output redirection operator and handle
+        if ">" in d["params"]:
+            idx = d["params"].index(">")
+            d["out"] = d["params"][idx + 1]
+            del d["params"][idx + 1]
+            del d["params"][idx]
+                
         # Appending the correct dictionary to command list
         command_list.append(d)
         
@@ -3057,6 +3064,10 @@ if __name__ == "__main__":
                         result = mv(command)
                     elif command.get("cmd") == "rm":
                         result = rm(command)
+                    elif command.get("cmd") == "head":
+                        result = head(command)
+                    elif command.get("cmd") == "tail":
+                        result = tail(command)
                             
                 # Printing result to screen
                 if result["error"]:

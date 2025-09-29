@@ -10,17 +10,17 @@ Group Members:
 This project implements a basic shell in Python that supports a variety of commands mentioned below.
 
 ## Files:
-| Files                 | Description                                         | Author   |
-|-----------------------|-----------------------------------------------------|----------|
-| Dev_shell.py          | Python script used for development.                 | Cooper   |
-| practice_shell.py     | Secondary script used for development purposes.     | Cooper   |
-| shell2.py             | Working shell script.                               | Cooper   |
-| getch.py              | Class that reads in each character.                 | Cooper   |
-| history.txt           | Text file that contains past shell commands.        | Cooper   |
-| test.txt              | Text file used to test various commands.            | Cooper   |
-| numtext               | Text file of numeric values used to test commands.  | Cooper   |
-| bacon                 | Text file used for testing commands.                | Cooper   |
-| valuable_notes.txt    | Contains notes and reminders for the project.       | Cooper   |
+| Files                 | Description                                         |
+|-----------------------|-----------------------------------------------------|
+| Dev_shell.py          | Python script used for development.                 |
+| practice_shell.py     | Secondary script used for development purposes.     |
+| shell2.py             | Working shell script.                               |
+| getch.py              | Class that reads in each character.                 |
+| history.txt           | Text file that contains past shell commands.        |
+| test.txt              | Text file used to test various commands.            |
+| numtext               | Text file of numeric values used to test commands.  |
+| bacon                 | Text file used for testing commands.                |
+| valuable_notes.txt    | Contains notes and reminders for the project.       |
 
 ## Instructions:
 Clone the repository or connect through VS Code Spaces
@@ -54,10 +54,6 @@ Run the `shell2.py` file and use the following commands...
 | `sort `               | Sorts contents of a file.                           | Cooper   |
 
 ## Non-Working Components:
-- head
-- tail
-- more
-- less
 - "<"
 - ">"
 
