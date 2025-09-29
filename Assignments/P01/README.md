@@ -12,7 +12,6 @@ This project implements a basic shell in Python that supports a variety of comma
 ## Files:
 | Files                 | Description                                         |
 |-----------------------|-----------------------------------------------------|
-| Dev_shell.py          | Python script used for development.                 |
 | practice_shell.py     | Secondary script used for development purposes.     |
 | shell2.py             | Working shell script.                               |
 | getch.py              | Class that reads in each character.                 |
