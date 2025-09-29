@@ -14,9 +14,6 @@ Need to Add:
 
 Errors (bugs):
 
-    Error when attempting to do: rm -rf bananas
-
-    cp file1 is saying An unexpected error occurred. i think this is because there are no return statemnts withing so gettign overrettirn
 
 Commands that work correctly for Shell2.py
     ls -alh
