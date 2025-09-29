@@ -20,7 +20,8 @@ import re
 import shutil
 import termios
 
-getch = Getch()  # create instance of our getch class
+# Create an instance of our getch class
+getch = Getch()
 
 def WelcomeMessage():
     """
@@ -701,55 +702,75 @@ def rm(parts):
         output["error"] = "Error. Command should not have an input."
         return output
     
-    if len(params) != 1:
-        output["error"] = "Error. Command requires one parameter."
-        return output
-    
-    # User wants to delete directory recursively
     if flags == "-r":
-        if os.path.isdir(params[0]):
-            shutil.rmtree(params[0])
+        print(f"Press 'Y' if you are certain you want to delete {params[0]} and all of its contents.")
+        val = getch()
+        if val.lower() == 'y':
+            try:
+                shutil.rmtree(params[0])
+            except FileNotFoundError:
+                output["error"] = f"Error: File {params[0]} not found."
+            except Exception as e:
+                output["error"] = f"An error occurred: {e}"
         else:
-            output["error"] = f"Error: {params[0]} is not a directory."
             return output
-        
-    # User wants to delete with flag --
-    elif flags == "--":
+    elif flags == "-rf" or flags == "-fr":
         try:
-            os.remove(params[0])
+            shutil.rmtree(params[0])
         except FileNotFoundError:
             output["error"] = f"Error: File {params[0]} not found."
-            return output
         except Exception as e:
             output["error"] = f"An error occurred: {e}"
-            return output
-            
-    # User wants to delete without flags
-    else:
-        
-        # Check if param is a directory
+    elif flags == "-f":
         if os.path.isdir(params[0]):
             try:
                 os.rmdir(params[0])
             except FileNotFoundError:
-                output["error"] = f"Error: Directory {params[0]} not found."
-                return output
+                output["error"] = f"Error: File {params[0]} not found."
             except OSError as e:
                 output["error"] = f"Error deleting directory {params[0]}: {e}"
-                return output
             except Exception as e:
                 output["error"] = f"An error occurred: {e}"
-                return output
-                
-        # Param is a file, delete it
         else:
             try:
                 os.remove(params[0])
             except FileNotFoundError:
                 output["error"] = f"Error: File {params[0]} not found."
-                return output
             except Exception as e:
                 output["error"] = f"An error occurred: {e}"
+    elif flags == "--":
+        try:
+            os.remove(params[0])
+        except FileNotFoundError:
+            output["error"] = f"Error: File {params[0]} not found."
+        except Exception as e:
+            output["error"] = f"An error occurred: {e}"
+    else:
+        if os.path.isdir(params[0]):
+            print(f"You are attempting to remove directory {params[0]}. Press 'Y' to proceed.")
+            val = getch()
+            if val.lower() == 'y':
+                try:
+                    os.rmdir(params[0])
+                except FileNotFoundError:
+                    output["error"] = f"Error: File {params[0]} not found."
+                except OSError as e:
+                    output["error"] = f"Error deleting directory {params[0]}    : {e}"
+                except Exception as e:
+                    output["error"] = f"An error occurred: {e}"
+            else:
+                return output
+        else:
+            print(f"You are attempting to remove {params[0]}. Press 'Y' to proceed.")
+            val = getch()
+            if val.lower() == 'y':
+                try:
+                    os.remove(params[0])
+                except FileNotFoundError:
+                    output["error"] = f"Error: File {params[0]} not found."
+                except Exception as e:
+                    output["error"] = f"An error occurred: {e}"
+            else:
                 return output
     
     return output
@@ -1198,7 +1219,7 @@ def sort(parts):
         output["error"] = f"{Fore.RED}Error: {data} could not be properly handled.{Style.RESET_ALL} \nRun 'sort --help' for more info."
         return output   
 
-def head():
+def head(parts):
     '''
     Usage: head [OPTION]... [FILE]...
     Print the first 10 lines of each FILE to standard output.
@@ -1217,7 +1238,191 @@ def head():
     Binary prefixes can be used, too: KiB=K, MiB=M, and so on.
     '''
 
-def tail():
+    input_data = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", [ ] ) or [ ]
+
+    output = {"output": None, "error": None}
+
+    decimal_suffixes = {
+        "kb": 1000,
+        "mb": 1000 ** 2,
+        "gb": 1000 ** 3,
+        "tb": 1000 ** 4,
+        "pb": 1000 ** 5,
+        "eb": 1000 ** 6,
+        "zb": 1000 ** 7,
+        "yb": 1000 ** 8,
+        "rb": 1000 ** 9,
+        "qb": 1000 ** 10,
+    }
+
+    binary_suffixes = {
+        "k": 1024,
+        "m": 1024 ** 2,
+        "g": 1024 ** 3,
+        "t": 1024 ** 4,
+        "p": 1024 ** 5,
+        "e": 1024 ** 6,
+        "z": 1024 ** 7,
+        "y": 1024 ** 8,
+        "r": 1024 ** 9,
+        "q": 1024 ** 10,
+    }
+
+    binary_suffixes_with_ib = {f"{k}ib": v for k, v in binary_suffixes.items()}
+
+    def parse_line_count(value):
+        match = re.fullmatch(r'([+-]?)(\d+)([A-Za-z]*)', value)
+        if not match:
+            return None, None
+
+        sign, digits, suffix = match.groups()
+        suffix_key = suffix.lower()
+
+        if suffix_key == "b":
+            multiplier = 512
+        elif suffix_key in decimal_suffixes:
+            multiplier = decimal_suffixes[suffix_key]
+        elif suffix_key in binary_suffixes:
+            multiplier = binary_suffixes[suffix_key]
+        elif suffix_key in binary_suffixes_with_ib:
+            multiplier = binary_suffixes_with_ib[suffix_key]
+        elif suffix_key == "":
+            multiplier = 1
+        else:
+            return None, None
+
+        count = int(digits) * multiplier
+        drop_from_end = sign == "-"
+
+        return count, drop_from_end
+
+    line_count = 10
+    drop_last = False
+    count_token = None
+
+    if flags:
+        if flags in ("-n", "--lines"):
+            if not params:
+                output["error"] = (
+                    f"{Fore.RED}Error: 'head' requires a numeric value with the '{flags}' flag.{Style.RESET_ALL}\n"
+                    "Run 'head --help' for more info."
+                )
+                return output
+            count_token = params.pop(0)
+        elif flags.startswith("-n") and len(flags) > 2:
+            count_token = flags[2:]
+        elif flags.startswith("--lines="):
+            count_token = flags.split("=", 1)[1]
+        elif flags == "--lines":
+            if not params:
+                output["error"] = (
+                    f"{Fore.RED}Error: 'head' requires a numeric value with the '{flags}' flag.{Style.RESET_ALL}\n"
+                    "Run 'head --help' for more info."
+                )
+                return output
+            count_token = params.pop(0)
+        else:
+            output["error"] = (
+                f"{Fore.RED}Error: Invalid flag '{flags}' for 'head'.{Style.RESET_ALL}\n"
+                "Run 'head --help' for more info."
+            )
+            return output
+
+        if count_token is None or count_token == "":
+            output["error"] = (
+                f"{Fore.RED}Error: 'head' requires a numeric value with the '{flags}' flag.{Style.RESET_ALL}\n"
+                "Run 'head --help' for more info."
+            )
+            return output
+
+        parsed_count, drop_last = parse_line_count(count_token)
+        if parsed_count is None:
+            output["error"] = (
+                f"{Fore.RED}Error: Invalid line count '{count_token}' for 'head'.{Style.RESET_ALL}\n"
+                "Run 'head --help' for more info."
+            )
+            return output
+
+        line_count = parsed_count
+
+    sources = []
+    stdin_cache = None
+
+    def read_standard_input():
+        nonlocal stdin_cache
+        if stdin_cache is not None:
+            return stdin_cache
+        stdin_cache = sys.stdin.read()
+        return stdin_cache
+
+    files = params or []
+
+    if files:
+        for name in files:
+            if name == "-":
+                data = input_data if input_data is not None else read_standard_input()
+                sources.append(("(standard input)", str(data)))
+            else:
+                path = name if os.path.isabs(name) else os.path.join(os.getcwd(), name)
+                try:
+                    with open(path, "r") as file_handle:
+                        data = file_handle.read()
+                    sources.append((name, data))
+                except FileNotFoundError:
+                    output["error"] = f"head: cannot open '{name}' for reading: No such file or directory"
+                    return output
+                except PermissionError:
+                    output["error"] = f"head: cannot open '{name}' for reading: Permission denied"
+                    return output
+                except IsADirectoryError:
+                    output["error"] = f"head: error reading '{name}': Is a directory"
+                    return output
+                except Exception as exc:
+                    output["error"] = f"head: error reading '{name}': {exc}"
+                    return output
+    elif input_data is not None:
+        sources.append(("(standard input)", str(input_data)))
+    else:
+        sources.append(("(standard input)", read_standard_input()))
+
+    def apply_head(text):
+        if text is None:
+            return ""
+
+        lines = text.splitlines(keepends=True)
+
+        if drop_last:
+            if line_count == 0:
+                selected = lines
+            elif line_count >= len(lines):
+                selected = []
+            else:
+                selected = lines[: len(lines) - line_count]
+        else:
+            if line_count >= len(lines):
+                selected = lines
+            else:
+                selected = lines[:line_count]
+
+        return "".join(selected)
+
+    sections = []
+
+    for label, text in sources:
+        processed = apply_head(text)
+        if len(sources) > 1:
+            sections.append(f"==> {label} <==\n{processed}")
+        else:
+            sections.append(processed)
+
+    result = "\n\n".join(section for section in sections if section is not None)
+    output["output"] = result
+
+    return output    
+
+def tail(parts):
     '''
     Usage: tail [OPTION]... [FILE]...
     Print the last 10 lines of each FILE to standard output.
@@ -1231,6 +1436,181 @@ def tail():
     GB 1000*1000*1000, G 1024*1024*1024, and so on for T, P, E, Z, Y, R, Q.
     Binary prefixes can be used, too: KiB=K, MiB=M, and so on.
     '''
+    
+    input_data = parts.get("input", None)
+    flags = parts.get("flags", None)
+    params = parts.get("params", []) or []
+
+    output = {"output": None, "error": None}
+
+    decimal_suffixes = {
+        "kb": 1000,
+        "mb": 1000 ** 2,
+        "gb": 1000 ** 3,
+        "tb": 1000 ** 4,
+        "pb": 1000 ** 5,
+        "eb": 1000 ** 6,
+        "zb": 1000 ** 7,
+        "yb": 1000 ** 8,
+        "rb": 1000 ** 9,
+        "qb": 1000 ** 10,
+    }
+
+    binary_suffixes = {
+        "k": 1024,
+        "m": 1024 ** 2,
+        "g": 1024 ** 3,
+        "t": 1024 ** 4,
+        "p": 1024 ** 5,
+        "e": 1024 ** 6,
+        "z": 1024 ** 7,
+        "y": 1024 ** 8,
+        "r": 1024 ** 9,
+        "q": 1024 ** 10,
+    }
+
+    binary_suffixes_with_ib = {f"{k}ib": v for k, v in binary_suffixes.items()}
+
+    def parse_line_count(value):
+        match = re.fullmatch(r'([+-]?)(\d+)([A-Za-z]*)', value)
+        if not match:
+            return None, None
+
+        sign, digits, suffix = match.groups()
+        suffix_key = suffix.lower()
+
+        if suffix_key == "b":
+            multiplier = 512
+        elif suffix_key in decimal_suffixes:
+            multiplier = decimal_suffixes[suffix_key]
+        elif suffix_key in binary_suffixes:
+            multiplier = binary_suffixes[suffix_key]
+        elif suffix_key in binary_suffixes_with_ib:
+            multiplier = binary_suffixes_with_ib[suffix_key]
+        elif suffix_key == "":
+            multiplier = 1
+        else:
+            return None, None
+
+        count = int(digits) * multiplier
+        from_start = sign == "+"
+
+        return count, from_start
+
+    line_count = 10
+    from_start = False
+    count_token = None
+
+    if flags:
+        if flags in ("-n", "--lines"):
+            if not params:
+                output["error"] = (
+                    f"{Fore.RED}Error: 'tail' requires a numeric value with the '{flags}' flag.{Style.RESET_ALL}\n"
+                    "Run 'tail --help' for more info."
+                )
+                return output
+            count_token = params.pop(0)
+        elif flags.startswith("-n") and len(flags) > 2:
+            count_token = flags[2:]
+        elif flags.startswith("--lines="):
+            count_token = flags.split("=", 1)[1]
+        elif flags == "--lines":
+            if not params:
+                output["error"] = (
+                    f"{Fore.RED}Error: 'tail' requires a numeric value with the '{flags}' flag.{Style.RESET_ALL}\n"
+                    "Run 'tail --help' for more info."
+                )
+                return output
+            count_token = params.pop(0)
+        else:
+            output["error"] = (
+                f"{Fore.RED}Error: Invalid flag '{flags}' for 'tail'.{Style.RESET_ALL}\n"
+                "Run 'tail --help' for more info."
+            )
+            return output
+
+        if count_token is None or count_token == "":
+            output["error"] = (
+                f"{Fore.RED}Error: 'tail' requires a numeric value with the '{flags}' flag.{Style.RESET_ALL}\n"
+                "Run 'tail --help' for more info."
+            )
+            return output
+
+        parsed_count, from_start = parse_line_count(count_token)
+        if parsed_count is None:
+            output["error"] = (
+                f"{Fore.RED}Error: Invalid line count '{count_token}' for 'tail'.{Style.RESET_ALL}\n"
+                "Run 'tail --help' for more info."
+            )
+            return output
+
+        line_count = parsed_count
+
+    sources = []
+
+    def read_standard_input():
+        return sys.stdin.read()
+
+    files = params or []
+
+    if files:
+        for name in files:
+            if name == "-":
+                data = input_data if input_data is not None else read_standard_input()
+                sources.append(("(standard input)", str(data)))
+            else:
+                path = name if os.path.isabs(name) else os.path.join(os.getcwd(), name)
+                try:
+                    with open(path, "r") as file_handle:
+                        data = file_handle.read()
+                    sources.append((name, data))
+                except FileNotFoundError:
+                    output["error"] = f"tail: cannot open '{name}' for reading: No such file or directory"
+                    return output
+                except PermissionError:
+                    output["error"] = f"tail: cannot open '{name}' for reading: Permission denied"
+                    return output
+                except IsADirectoryError:
+                    output["error"] = f"tail: error reading '{name}': Is a directory"
+                    return output
+                except Exception as exc:
+                    output["error"] = f"tail: error reading '{name}': {exc}"
+                    return output
+    elif input_data is not None:
+        sources.append(("(standard input)", str(input_data)))
+    else:
+        sources.append(("(standard input)", read_standard_input()))
+
+    def apply_tail(text):
+        if text is None:
+            return ""
+
+        lines = text.splitlines(keepends=True)
+
+        if from_start:
+            start_index = max(line_count - 1, 0)
+            selected = lines[start_index:]
+        else:
+            if line_count == 0:
+                selected = []
+            else:
+                selected = lines[-line_count:]
+
+        return "".join(selected)
+
+    sections = []
+
+    for label, text in sources:
+        processed = apply_tail(text)
+        if len(sources) > 1:
+            sections.append(f"==> {label} <==\n{processed}")
+        else:
+            sections.append(processed)
+
+    result = "\n\n".join(section for section in sections if section is not None)
+    output["output"] = result
+
+    return output
 
 def help(parts):
     '''
