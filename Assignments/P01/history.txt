@@ -846,3 +846,6 @@ ls
 ls < ls_test_file.txt
 cat bacon.txt > new-bacon.txt
 ls
+cat test.txt > test_test.txt
+ls > ls_output.txt
+cd > test_false

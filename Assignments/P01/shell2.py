@@ -20,6 +20,10 @@ import re
 import shutil
 import termios
 
+# capture terminal settings before calling getch
+fd = sys.stdin.fileno()
+old_settings = termios.tcgetattr(fd)
+
 # Create an instance of our getch class
 getch = Getch()
 
@@ -2668,6 +2672,16 @@ def write_to_history(cmd):
     with open(history_file, "a") as file:
         file.write(cmd + "\n")
 
+def write_to_file(data, filename):
+    output = {"output": None, "error": None}
+    try:
+        with open(filename, "w") as f:
+            f.write(data)
+    except Exception as e:
+        output["error"] = f"An unexpected error occurred: {e}"
+        return output
+    return output
+
 def if_not_x_command(command_list, cmd):
     # Handle if user wants to run !x command
     if (len(command_list) == 1 
@@ -2854,7 +2868,7 @@ def parse_cmd(cmd_input):
         
         # Need to have a check while procession that if error has error in it, stop processing.
         
-        d = {"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None}
+        d = {"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None, "out" : None}
         subparts = cmd.strip().split()
         d["cmd"] = subparts[0]
         
@@ -3072,6 +3086,8 @@ if __name__ == "__main__":
                 # Printing result to screen
                 if result["error"]:
                     print(result["error"])
+                elif command.get("out"):
+                    result = write_to_file(result["output"], command.get("out"))
                 elif result["output"]:
                     print(result["output"])
 
