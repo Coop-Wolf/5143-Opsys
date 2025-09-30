@@ -916,7 +916,7 @@ def grep(parts):
     highlighted = ""
     
     # Catching bad commands
-    if flags not in [None, "-l", "-i", "-c", "-li", "-il", "-lc", "-cl", "-ic", "-ci", "-lic", "-lci", "-ilc", "-icl", "-cli", "-cil"]:
+    if flags not in ["", "-l", "-i", "-c", "-li", "-il", "-lc", "-cl", "-ic", "-ci", "-lic", "-lci", "-ilc", "-icl", "-cli", "-cil"]:
         output["error"] = f"{Fore.RED}Error: 'grep' only takes flags '-l', '-i', '-c'.{Style.RESET_ALL} \nRun 'grep --help' for more info."
         return output
 
@@ -2700,9 +2700,7 @@ def if_not_x_command(command_list, cmd):
             cmd = result["output"]
             result["output"] = None
 
-            for command in command_list:
-                print(f"{command.get("cmd")}")
-                print()
+            print(cmd)
 
     return command_list, cmd
 
@@ -2868,7 +2866,7 @@ def parse_cmd(cmd_input):
         
         # Need to have a check while procession that if error has error in it, stop processing.
         
-        d = {"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None, "out" : None}
+        d = {"input" : None, "cmd" : None, "params" : [], "flags" : None, "error" : None, "out" : None, "in_file" : None}
         subparts = cmd.strip().split()
         d["cmd"] = subparts[0]
         
@@ -2887,6 +2885,13 @@ def parse_cmd(cmd_input):
         if ">" in d["params"]:
             idx = d["params"].index(">")
             d["out"] = d["params"][idx + 1]
+            del d["params"][idx + 1]
+            del d["params"][idx]
+            
+        # Check parameters for input redirection operator and handle
+        if "<" in d["params"]:
+            idx = d["params"].index("<")
+            d["in_file"] = d["params"][idx + 1]
             del d["params"][idx + 1]
             del d["params"][idx]
                 
@@ -3033,7 +3038,19 @@ if __name__ == "__main__":
                     # If there is output in the previous command and command has not input
                     # make the output to the previous command the input to the next
                     if result["output"] and not command["input"]:
-                        command["input"] = result["output"] 
+                        command["input"] = result["output"]
+                        
+                    # Handle input redirection from file
+                    if command.get("in_file"):
+                        try:
+                            with open(command.get("in_file"), 'r') as f:
+                                command["input"] = f.read()
+                        except FileNotFoundError:
+                            result["error"] = f"Error: File {command.get("in_file")} not found."
+                            break
+                        except Exception as e:
+                            result["error"] = f"An unexpected error occurred while reading input file: {e}"
+                            break
                     
                     # Kill execution if error
                     if result["error"]:

@@ -862,3 +862,36 @@ cp test.txt
 cp test.txt test2.txt
 ls
 cat test2.txt
+cat ls_output.txt
+cat ls_output.txt < ls_ls_output.txt
+cat ls_output.txt > ls_ls_output.txt
+wc -l < ls_output.txt
+wc -w < ls_output.txt
+ls | wc
+wc test.txt
+cat test.txt > testcopy.txt
+wc testcopy.txt
+wc < testcopy.txt
+sort < testcopy.txt
+cat ls_output.txt test.txt > newfile.txt
+cat test.txt ls_output.txt > newfile2.txt
+grep bacon bacon.txt|wc -l
+grep bacon bacon.txt
+grep bacon bacon.txt
+grep bacon bacon.txt | wc -l
+grep -c bacon bacon.txt
+clear
+history
+!870 | cd ..
+ls | wc
+ls | wc
+ls | wc
+ls
+ll
+clear
+run --help
+run fire
+run fox
+run firefox
+fire nautilus
+run nautilus

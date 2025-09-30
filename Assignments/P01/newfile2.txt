@@ -1,0 +1,1 @@
+[32mbacon.txt[0m [34m__pycache__[0m [34mbananas[0m Dev_shell.py README.md getch.py history.txt practice_shell.py shell2.py test.txt test_test.txt valuable_notes.txt
