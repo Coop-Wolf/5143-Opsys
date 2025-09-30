@@ -895,3 +895,25 @@ run fox
 run firefox
 fire nautilus
 run nautilus
+cat test.txt
+cat test.txt history.txt
+cat test.txt
+cat test.txt
+cat test.txt history.txt
+cat test.txt history.txt
+clear
+cat test.txt newfile.txt
+cat test.txt newfile.txt >  combined.txt
+cat test.txt newfile.txt
+cat test.txt
+cat newfile.txt
+cat newfile.txt test.txt
+cat ls_output
+cat ls_output.txt
+cat ls_output test.txt
+cat ls_output.txt test.txt
+cat ls_output.txt test.txt
+cat ls_output.txt
+cat newfile.txt test.txt
+cat test.txt
+cat test.txt test.txt test.txt test.txt

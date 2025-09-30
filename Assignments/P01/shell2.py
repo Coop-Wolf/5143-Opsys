@@ -657,27 +657,31 @@ def cat(parts):
     
     # if no params, set file to None and read from stdin, else read file
     if not params:
-        file = None
+        files = None
     else:
-        file = params
+        files = params
 
     #if no file provided, read from stdin once
-    if not file:
+    if not files:
         output["output"] = sys.stdin.read()
         return output
-    for f in file:
-        if f == '-':
-            #read from standard input here
+    
+    file_data = []
+    
+    for f in files:
+        if f == "-":
             output["output"] = sys.stdin.read()
         else:
             try:
-                with open(f,'r') as file_handle:
-                    output["output"] = file_handle.read()
+                with open(f, "r") as file_handle:
+                    file_data.append(file_handle.read())
             except FileNotFoundError:
                 output["error"] = f"cat: {f}: No such file or directory\n"
             except Exception as e:
                 output["error"] = f"cat: {f}: {str(e)}\n"
-    return output              
+    output["output"] = "".join(file_data)
+    return output
+ 
 
 def rm(parts):
     '''
