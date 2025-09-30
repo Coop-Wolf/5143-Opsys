@@ -666,23 +666,37 @@ def cat(parts):
         output["output"] = sys.stdin.read()
         return output
     
+    # list to store data from files
     file_data = []
     
+    # Going thorugh files to get input 
     for f in files:
+        
+        # If user wants to type input instead of file
         if f == "-":
             output["output"] = sys.stdin.read()
+            
+        # User wants display file(s)
         else:
             try:
+                # Open the file and append its contents to list
                 with open(f, "r") as file_handle:
                     file_data.append(file_handle.read())
+                    
+            # Except found, return error
             except FileNotFoundError:
                 output["error"] = f"cat: {f}: No such file or directory\n"
+                return output
+            
+            # Exception found, return error
             except Exception as e:
                 output["error"] = f"cat: {f}: {str(e)}\n"
+                return output
+                
+    # Convert output to string and return 
     output["output"] = "".join(file_data)
     return output
  
-
 def rm(parts):
     '''
     Usage: rm [OPTION]... [FILE]...
