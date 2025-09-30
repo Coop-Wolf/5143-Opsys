@@ -46,15 +46,14 @@ Run the `shell2.py` file and use the following commands...
 | `up & down arrows`    | Navigate previous command                           | Cooper   |
 | `left & right arrows` | Move cursor                                         | Cooper   |
 | `chmod xxx`           | Change file permissions.                            | Cooper   |
-| `more`                |                                                     | Tim      |
-| `less`                |                                                     | Tim      |
-| `[program] > file`    |                                                     | Tim      |
-| `[program] < file`    |                                                     | Harika   |
+| `more`                | View contents of a file                             | Tim      |
+| `less`                | View contents of a file                             | Tim      |
+| `[program] > file`    | Redirects output of a command into a file           | Tim      |
+| `[program] < file`    | Redirects a file as input into a command            | Harika   |
 | `sort `               | Sorts contents of a file.                           | Cooper   |
 
 ## Non-Working Components:
-- "<"
-- ">"
+- All commands have been completely implemented to the reach of our scope
 
 ## Extras:
 - Color ls contents if they are directory or executable
@@ -67,6 +66,8 @@ Run the `shell2.py` file and use the following commands...
 
 
 ## References:
-- [geeksforgeeks](https://www.geeksforgeeks.org/python/executing-shell-commands-with-python/)
+- [Geeksforgeeks](https://www.geeksforgeeks.org/python/executing-shell-commands-with-python/)
 - [ChatGPT](https://chatgpt.com/)
 - [Python Docs](https://docs.python.org/3/library/os.html)
+- [Terminal Width](https://www.google.com/search?q=get+terminal+width+python&rlz=1C1VDKB_enUS1178US1178&oq=get+terminal+w&gs_lcrp=EgZjaHJvbWUqBwgAEAAYgAQyBwgAEAAYgAQyBggBEEUYOTINCAIQABjwBRieBhjIBjIHCAMQABiABDIHCAQQABiABDIICAUQABgWGB4yCAgGEAAYFhgeMggIBxAAGBYYHjIICAgQABgWGB4yCAgJEAAYFhgeqAIHsAIB8QVQ2yUT5i1rPPEFUNslE-Ytazw&sourceid=chrome&ie=UTF-8&safe=active&ssui=on)
+- [Terminal Username](https://www.google.com/search?q=get+terminal+username+python&sca_esv=e7bf22627bcd1c5c&rlz=1C1VDKB_enUS1178US1178&ei=REvAaIzVNv21qtsPwYnX4Q0&ved=0ahUKEwiMh5DkgsyPAxX9mmoFHcHENdwQ4dUDCBI&uact=5&oq=get+terminal+username+python&gs_lp=Egxnd3Mtd2l6LXNlcnAiHGdldCB0ZXJtaW5hbCB1c2VybmFtZSBweXRob24yBRAhGKABMgUQIRigATIFECEYoAEyBRAhGKABMgUQIRigATIFECEYnwUyBRAhGJ8FMgUQIRifBTIFECEYnwUyBRAhGJ8FSMwLUCNY9AlwAXgBkAEAmAFroAH6BKoBAzYuMbgBA8gBAPgBAZgCCKACkQXCAgoQABiwAxjWBBhHwgIGEAAYFhgewgIIEAAYgAQYogTCAgUQIRirApgDAIgGAZAGCJIHAzcuMaAH0SyyBwM2LjG4B40FwgcFMC43LjHIBw8&sclient=gws-wiz-serp&safe=active&ssui=on)
