@@ -1,5 +1,57 @@
-## Overview:
-This project implements a basic shell in Python that supports a variety of commands mentioned below.
+## Overview
+
+In this project, we will implement a basic "shell". A shell is a command-line interface we often interact with, and provides an powerful interface with your system. Below is an overview of the actions our shell will perform:
+
+1. Print a prompt(`$: `) to the user.
+2. Read a command line from stdin.
+3. Tokenize (lexically analyze) the command a create an array of command parts (tokens).
+4. Parse the token array to identify the command and its arguments.
+
+## Requirements
+
+- **Language**: Python
+
+- **Command Features**:
+    - Each command returns a string.
+    - Commands can accept input from other commands.
+
+Our shell will support the following command types:
+
+### 1. **Exit Command**
+
+- **Command**: `exit`
+- **Description**: Terminates the shell.
+- **Concepts**: Exiting the shell with system calls like exit().
+
+### 2. **Command without Arguments**
+
+- **Example**: `ls`
+- **Description**: Executes a command without arguments and waits for it to complete.
+- **Concepts**: Synchronous execution, process forking.
+
+### 3. **Command with Arguments**
+
+- **Example**: `ls -l`
+- **Description**: Parses command-line arguments and executes the command.
+- **Concepts**: Command-line paramaters.
+
+### 4. **Output Redirection**
+
+- **Example**: `ls > output.txt`
+- **Description**: Redirects the command output to a specified file.
+- **Concepts**: File operations, output redirection.
+
+### 5. **Input Redirection**
+
+- **Example**: `sort < inputfile.txt`
+- **Description**: Takes input from a file instead of the user’s input.
+- **Concepts**: File operations, input redirection.
+
+### 6. **Piping Commands**
+
+- **Example**: `ls -l | more`
+- **Description**: Passes the output of one command as input to another command.
+- **Concepts**: Pipes, synchronous operations.
 
 ## Timeline:
 01 Sept 2025 - 30 Sept 2025
@@ -22,8 +74,10 @@ This project implements a basic shell in Python that supports a variety of comma
 | valuable_notes.txt    | Contains notes and reminders for the project.       |
 
 ## Instructions:
-Clone the repository or connect through VS Code Spaces
-Run the `shell2.py` file and use the following commands...
+- Clone the repository or connect through GitHub CodeSpaces in VS Code
+- Locate the directory where the program exists
+- Run `shell2.py` in the terminal using command: `python3 shell2.py` or `python shell2.py`
+- A welcome message will be displayed as well as a prompt where you may begin execute the commands below
 
 ## Commands:
 | Command               | Description                                         | Author   |
