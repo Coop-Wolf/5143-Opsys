@@ -118,17 +118,21 @@ def cd(parts):
         os.chdir(homedir)
         return output
         
-        # User wants to go to parent directory
+    # User wants to go to parent directory
     if str_params == "..":
         os.chdir("..")
             
     # User wants to go to differnt directory
     elif os.path.isdir(str_params):
-        os.chdir(str_params)
+        try:
+            os.chdir(str_params)
+        except PermissionError:
+            output["error"] = f"{Fore.RED}Permission denied: cannot access {str_params}{Style.RESET_ALL}"
+        except Exception as e:
+            output["error"] = f"Error changing directory: {e}"
             
-    # If path doesn't exist and params isn't empty
-    elif not os.path.isdir(str_params) and str_params != "":
-        output["error"] = f"Error. {str_params} is not a directory."
+    elif not os.path.isdir(str_params):
+        output["error"] = f"Directory not found: {str_params}"
         
     # Returning output dictionary
     return output    
@@ -187,10 +191,15 @@ def ls(parts):
             output["error"] = f"{Fore.RED}Error. {str_params} is not a directory.{Style.RESET_ALL}\nTry 'ls --help for more info."
             return output
         
-        
     # return error if there are more than 1 parameters
     elif len(params) > 1:
         output["error"] = f"{Fore.RED}ls has too many parameters{Style.RESET_ALL}. \nTry 'ls --help for more info."
+        return output
+    
+    # Check permissions before get contents
+    has_permission = get_directory_items(ls_directory)
+    if not has_permission:
+        output["error"] = f"{Fore.RED}Permission denied: cannot access {ls_directory}{Style.RESET_ALL}"
         return output
         
     # User wants to print list from current directory
@@ -199,6 +208,7 @@ def ls(parts):
         items = []
             
         for item in get_directory_items(ls_directory):
+            
             # Get full path to apply correct coloring
             full_path = os.path.join(ls_directory or os.getcwd(), item)
             items.append(color_filename(item, full_path))
@@ -521,39 +531,56 @@ def wc(parts):
         # Example: ls | wc -w or wc -l fruit.txt
         if flags and path:
             
-            # Get countswhat
-            with open(path, 'r') as file:
-                for line in file:
-                    if "l" in flags:
-                        line_count += 1
-                    if "w" in flags:
-                        words = line.split()
-                        word_count += len(words)
+            # Get counts depending on flags
+            try:
+                with open(path, 'r') as file:
+                    for line in file:
+                        if "l" in flags:
+                            line_count += 1
+                        if "w" in flags:
+                            words = line.split()
+                            word_count += len(words)
+                
+                # Getting correct data to output | Code from ChatGPT           
+                output_values = []
+                output_values.append(str(line_count) if "l" in flags else None)
+                output_values.append(str(word_count) if "w" in flags else None)
+                                
+                # Store results to output and return | Code from ChatGPT
+                output["output"] = " ".join(filter(None, output_values))
+                return output
             
-            # Getting correct data to output | Code from ChatGPT           
-            output_values = []
-            output_values.append(str(line_count) if "l" in flags else None)
-            output_values.append(str(word_count) if "w" in flags else None)
-                            
-            # Store results to output and return | Code from ChatGPT
-            output["output"] = " ".join(filter(None, output_values))
-            return output
+            except PermissionError:
+                output["error"] = f"{Fore.RED}Permission denied: cannot access {item}{Style.RESET_ALL}"
+                return output
+            except FileNotFoundError:
+                output["error"] = f"{Fore.RED}Error: {item}: No such file or directory.{Style.RESET_ALL}"
+                return output
             
         # If user ran wc with flags
         # Example wc fruit.txt or ls | wc
         if not flags and path:
             
             # Get counts
-            with open(path, 'r') as file:
-                for line in file:
-                    line_count += 1
-                    words = line.split()
-                    word_count += len(words)
-                    char_count += len(line)
-                            
-            # Store results to output and return
-            output["output"] = f"{line_count} {word_count} {char_count} {input or params}"
-            return output            
+            try:
+                with open(path, 'r') as file:
+                    for line in file:
+                        line_count += 1
+                        words = line.split()
+                        word_count += len(words)
+                        char_count += len(line)
+                                
+                # Store results to output and return
+                output["output"] = f"{line_count} {word_count} {char_count} {input or params}"
+                return output 
+            
+            except PermissionError:
+                output["error"] = f"{Fore.RED}Permission denied: cannot access {item}{Style.RESET_ALL}"
+                return output
+            except FileNotFoundError:
+                output["error"] = f"{Fore.RED}Error: {item}: No such file or directory.{Style.RESET_ALL}"
+                return output
+                           
             
     # Determine if item is a string
     elif isinstance(item, str) and input and not params:
@@ -632,7 +659,7 @@ def wc(parts):
     
     # item was not a string or file
     else:
-        output["error"] = f"{Fore.RED}Error: {item}: No such file or directory.{Style.RESET_ALL}\nRun 'wc --help' for more info."
+        output["error"] = f"{Fore.RED}Error: {item}: No such file.{Style.RESET_ALL}\nRun 'wc --help' for more info."
         return output
 
 def cat(parts):
@@ -969,7 +996,11 @@ def grep(parts):
         else:
             pattern_parts.append(param)
             
-    pattern = " ".join(pattern_parts)  
+    pattern = " ".join(pattern_parts)
+    
+    if not input and not files:
+        output["error"] = f"{Fore.RED}Error: No files or input was given.{Style.RESET_ALL} \nRun 'grep --help' for more info."
+        return output
         
     # Convert input to string
     if input:
@@ -982,6 +1013,7 @@ def grep(parts):
     
     if not source:
         output["error"] = f"{Fore.RED}Error: Could not get the file or string to process.{Style.RESET_ALL} \nRun 'grep --help' for more info."
+        return output
     
     # if source is a string
     if isinstance(source, str):
@@ -1042,40 +1074,46 @@ def grep(parts):
                 
             # Match pattern with contents in file
             if path:
-                with open(path, 'r') as file_:
-                    for line in file_:
-                        
-                        # Searching for pattern in line
-                        match = re.search(re.escape(pattern), line, i_flag)
-                            
-                        # if no flags, and pattern matches a line, highlight it and store the whole line
-                        if match and ("i" in flags or not flags):
                 
-                            # Highlight all matches of the pattern in yellow and store the whole line
-                            # Using lambda to perserve original case | Got from ChatGPT
-                            highlighted = re.sub(re.escape(pattern), lambda m: f"{Fore.YELLOW}{m.group(0)}{Style.RESET_ALL}", line, flags=i_flag)
+                try:
+                    with open(path, 'r') as file_:
+                        for line in file_:
+                            
+                            # Searching for pattern in line
+                            match = re.search(re.escape(pattern), line, i_flag)
+                                
+                            # if no flags, and pattern matches a line, highlight it and store the whole line
+                            if match and ("i" in flags or not flags):
+                    
+                                # Highlight all matches of the pattern in yellow and store the whole line
+                                # Using lambda to perserve original case | Got from ChatGPT
+                                highlighted = re.sub(re.escape(pattern), lambda m: f"{Fore.YELLOW}{m.group(0)}{Style.RESET_ALL}", line, flags=i_flag)
 
-                        # if -l in flag, only return the name of the file if pattern matches
-                        if match and "l" in flags:
-                            if file not in file_match:
-                                file_match.append(file)
-            
-                        # if -c in flag, count numbers of lines that contain the pattern
-                        if match and "c" in flags:
-                            count_match += 1
+                            # if -l in flag, only return the name of the file if pattern matches
+                            if match and "l" in flags:
+                                if file not in file_match:
+                                    file_match.append(file)
+                
+                            # if -c in flag, count numbers of lines that contain the pattern
+                            if match and "c" in flags:
+                                count_match += 1
+                                
+                            # If multiple files, include the file name in output
+                            if len(files) > 1 and "l" not in flags and "c" not in flags and highlighted not in line_match:
+                                line_match.append(f"{Fore.MAGENTA}{file}{Style.RESET_ALL}: {highlighted}")
+                                
+                            # If only one file, do not include that file name in output
+                            elif len(files) == 1 and "l" not in flags and "c" not in flags and highlighted not in line_match:
+                                line_match.append(f"{highlighted}")
+                                
+                except PermissionError:
+                    output["error"] = f"{Fore.RED}Permission denied: cannot access {file}{Style.RESET_ALL}"
+                    return output
                             
-                        # If multiple files, include the file name in output
-                        if len(files) > 1 and "l" not in flags and "c" not in flags and highlighted not in line_match:
-                            line_match.append(f"{Fore.MAGENTA}{file}{Style.RESET_ALL}: {highlighted}")
-                            
-                        # If only one file, do not include that file name in output
-                        elif len(files) == 1 and "l" not in flags and "c" not in flags and highlighted not in line_match:
-                            line_match.append(f"{highlighted}")
-                        
-            # Error if one of the files does not exist
-            else:
-                output["error"] = f"{Fore.RED}Error: {file} is not a file.{Style.RESET_ALL} \nRun 'grep --help' for more info."
-                return output
+        # Error if one of the files does not exist
+        else:
+            output["error"] = f"{Fore.RED}Error: {file} is not a file.{Style.RESET_ALL} \nRun 'grep --help' for more info."
+            return output
                         
     # If -l flag, only return files that matched
     if file_match:
@@ -1159,30 +1197,37 @@ def sort(parts):
         if path:
             
             # From Chat
-            with open(path, 'r') as file_:
-                for line in file_:
-                    if line.endswith("\n"):
-                        sorted_list.append(line)
-                    else:
-                        line = line + "\n"
-                        sorted_list.append(line)
+            try:
+                with open(path, 'r') as file_:
+                    for line in file_:
+                        # From Chat
+                        if line.endswith("\n"):
+                            sorted_list.append(line)
+                        else:
+                            line = line + "\n"
+                            sorted_list.append(line)
+                        
+                # Sort alphebetically
+                if flags in ["-a", None]:
+                    sorted_list.sort()
+                
+                # Reverse list
+                elif flags == "-r":
+                    sorted_list.sort(reverse=True)
                     
-            # Sort alphebetically
-            if flags in ["-a", None]:
-                sorted_list.sort()
-            
-            # Reverse list
-            elif flags == "-r":
-                sorted_list.sort(reverse=True)
+                # Sort numerically
+                elif flags == "-n":
+                    
+                    try:
+                        sorted_list.sort(key=int)
+                    except ValueError:
+                        output["error"] = f"{Fore.RED}Error: 'sort -n' can only be used on files with numbers.{Style.RESET_ALL} \nRun 'sort --help' for more info."
+                        return output
+                    
+            except PermissionError:
+                output["error"] = f"{Fore.RED}Permission denied: cannot access {data}{Style.RESET_ALL}"
+                return output
                 
-            # Sort numerically
-            elif flags == "-n":
-                
-                try:
-                    sorted_list.sort(key=int)
-                except ValueError:
-                    output["error"] = f"{Fore.RED}Error: 'sort -n' can only be used on files with numbers.{Style.RESET_ALL} \nRun 'sort --help' for more info."
-                    return output
                 
         # Error if path not found
         else:
@@ -1854,10 +1899,10 @@ def cp(parts):
 
     try:
         shutil.copy(params[0], params[1])
-    except FileNotFoundError:
-        output["error"] = f"Error: File {params[0]} not found."
+    except FileNotFoundError as e:
+        output["error"] = f"{e}"
         return output
-    except PermissionError:
+    except PermissionError as e:
         output["error"] = f"Error: Permission denied when copying {params[0]} to {params[1]}."
         return output
     except shutil.SameFileError:
@@ -2610,12 +2655,19 @@ def get_directory_items(directory = None, include_hidden = False):
         list: Filenames in the directory.
     '''
     
+    
     # Storing items from directory into items list
     if directory:
-        items = os.listdir(directory)
+        try:
+            items = os.listdir(directory)
+        except PermissionError:
+            return None
     
     if not directory:
-        items = os.listdir()
+        try:
+            items = os.listdir()
+        except PermissionError:
+            return None
         
         
     non_hidden_items = []
@@ -3117,6 +3169,10 @@ if __name__ == "__main__":
                         result = head(command)
                     elif command.get("cmd") == "tail":
                         result = tail(command)
+                    elif command.get("cmd") == "more":
+                        result = more(command)
+                    elif command.get("cmd") == "less":
+                        result = less(command)
                             
                 # Printing result to screen
                 if result["error"]:

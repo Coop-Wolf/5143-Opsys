@@ -917,3 +917,152 @@ cat ls_output.txt
 cat newfile.txt test.txt
 cat test.txt
 cat test.txt test.txt test.txt test.txt
+ls -lah | sort
+ls
+cd ..
+ls bananas
+ls /bananas
+ls
+ls P01/bananas
+cp bananas/numtext P01/testcopy4.txt
+cp bananas/numtext P01/testcopy4.txt
+run firefox
+tail -n 10 history.txt
+tail -n10 history.txt
+commands
+ip
+date
+ip a
+ip -a
+ls
+ls -lah
+chmod bacon.txt 000
+chmod 000 bacon.txt
+ls -lah
+cat bacon.txt
+chmod 755 bacon.txt
+ls -lah
+chmod 000 bananas
+ls
+ls -l
+ls -lah
+cd bananas
+cd tes
+cd tes
+cd bananas
+ls
+cd ..
+ls
+cd P01
+cd P01
+cd ..
+ls
+ls P01
+ls P01
+ls P01
+ls P01/bananas
+cd ..
+cd ..
+ls P01/bananas
+cd P01/bananas
+sort bananas
+cd bananas
+cd P01
+ls
+sort bananas
+grep bacon bananas
+ls
+cd bananas
+ls bananas
+ls bananas -l
+cd ..
+ls
+ls -l
+ls P01/testdir
+ls
+cd P01
+ls
+ls -l
+chmod 000 newfile.txt
+ls -l
+ls
+grep newfile.txt
+more newfile.txt
+less newfile.txt
+more newfile2.txt
+more newfile2.txt
+ls
+clear
+ls
+cat newfile.txt
+ls newfile.txt
+cd newfile.txt
+sort newfie.txt
+ls
+mv newfile.txt bananas/
+sort < newfile.txt
+newfile.txt > doc.txt
+cp newfile.txt doc.txt
+ls
+wc -l | newfile.txt
+wc -l <  newfile.txt
+wc -l > newfile.txt
+cat newfile.txt > doc.txt
+ls newfile.txt > doc.txt
+ls | grep .py | wc -l
+ls -lah | grep .txt | wc -l
+wc bananas
+ls
+wc randomfilethatdoesntexist.txt
+wc -l randomfilethatdoesntexist.txt
+wc -l randomfilethatdoesntexist.txt
+wc randomfilethatdoesntexist.txt
+wc -t newfile.txt
+wc -c newfile.txt
+wc -w newfile.txt
+wc -wl newfile.txt
+wc -wl newfile.txt
+wc newfile.txt
+sort bananas
+sort newfile.txt
+wc newfile.txt
+sort -r newfile.txt
+wc -l newfile.txt
+wc -l newfile.txt
+sort -r newfile.txt
+ls bananas | sort
+grep newfile.txt
+grep t newfile.etxt
+grep t newfile.txt
+grep t randomfile.txt
+grep t randomfile.txt
+grep t randomfile.txt
+grep newfile.txt
+grep false newfile.txt
+grep e test.txt newfile.txt
+grep .txt history.txt
+grep somefile.txt history.txt
+grep somefile.txt history.txt
+grep somefile.txt history.txt
+grep newfile.txt
+grep - newfile.txt
+grep '-' newfile.txt
+grep 'l' history.txt
+grep 'l' history.txt
+grep bacon bacon.txt
+grep 'bacon' bacon.txt
+grep test test.txt
+grep d test.txt
+grep randomfile.txt d
+grep sldfksdjlfsjkdf
+grep dsfs sdfsd sdfs sdfsd sdfsf 
+grep dsfs sdfsd sdfs sdfsd sdfsf
+grep dsfs sdfsd sdfs sdfsd sdfsf
+grep dsfs sdfsd sdfs sdfsd sdfsf
+chmod 755 bananas
+ls -lah
+chmod 755 newfile.txt
+ls -lsh
+ls -lah
+ls -merica
+clear
