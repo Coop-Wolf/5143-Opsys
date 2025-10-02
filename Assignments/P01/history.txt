@@ -1066,3 +1066,119 @@ ls -lsh
 ls -lah
 ls -merica
 clear
+ls -l
+chmod 000 test.txt
+cat test.txt
+sort test.txt
+grep 5 test.txt
+wc test.txt
+ls test.txt
+more test.txt
+head -n 1 test.xt
+head -n 1 test.txt
+head -n 2 testcopy.txt
+head -n testcopy.txt 2
+grep error -lic test.txt
+grep error -lic valuable_notes.txt, ham.txt
+grep error -lic valuable_notes.txt ham.txt
+grep error -lic valuable_notes.txt
+grep erddror -lic valuable_notes.txt
+grep error -lic valuable_notes.txt
+grep er ror -lic valuable_notes.txt
+grep er er er -lic testcopy.txt
+grep eggs -lic bacon.txt eggs.txt
+grep eggs -lic bacon.txt eggs.txt
+grep eggs -lic bacon.txt
+grep eggs -lic bacon.txt | sort
+grep eggs -lic bacon.txt eggs.txt | sort
+grep eggs -lic bacon.txt | sort -n
+grep eggs -lic bacon.txt
+grep eggs -lic bacon.txt > outputfile.txt
+grep eggs -lic bacon.txt > outputfile.txt
+grep eggs -lic bacon.txt
+grep eggs -lic bacon.txt
+grep eggs -lic bacon.txt | sort -n
+grep eggs -lic bacon.txt eggs.txt | sort
+grep eggs -lic bacon.txt eggs.txt
+grep eggs -lic bacon.txt > outputfile.txt
+grep asda bacon.txt
+grep asdfa -lic bacon.txt
+grep bacon bacon.txt
+grep bacon -lic bacon.txt
+grep bacon -lic bacon.txt
+grep bacon bacon.txt
+grep b bacon.txt
+grep b bacon.txt
+grep b bacon.txt
+grep bacon bacon.txt
+ls
+cat bacon.txt
+grep bacon -lic bacon.txt
+grep -l bacon.txt
+grep -l bacon.txt bacon
+grep -i bacon bacon.txt
+grep -c bacon bacon.txt
+grep --help
+clear
+grep -lic bacon bacon.txt
+grep -l bacon bacon.txt
+grep -i bacon bacon.txt
+grep -c bacon bacon.txt
+grep -c bacon bacon.txt
+grep -i bacon bacon.txt
+grep -ic bacon bacon.txt
+grep -ic bacon bacon.txt
+grep asdfasdf bacon.txt
+grep asdfa bacon.txt
+grep asdfa bacon.txt
+grep asdfa -l bacon.txt
+grep -lic bacon bacon.txt ham.txt
+grep -lic bacon bacon.txt testcopy.txt
+grep -lic bacddon bacon.txt testcopy.txt
+grep -lic doner bacon.txt testcopy.txt
+grep -lic eggs\ bacon.txt testcopy.txt
+grep -lic eggs bacon.txt testcopy.txt
+grep -lic 'eggs' bacon.txt testcopy.txt
+grep -lic "eggs" bacon.txt testcopy.txt
+grep -lic 'T-bone' bacon.txt testcopy.txt
+grep -lic 'T-bone' bacon.txt testcopy.txt
+grep -lic "eggs" bacon.txt testcopy.txt
+grep -lic eggs\ bacon.txt testcopy.txt
+grep -lic eggs bacon.txt testcopy.txt
+grep eggs bacon.txt testcopy.txt
+grep eggs bacon.txt testcopy.txt
+grep -lic "eggs" bacon.txt testcopy.txt
+grep -lic "eggs" bacon.txt testcopy.txt
+grep -lic 'eggs' bacon.txt testcopy.txt
+grep -i 'T-bone' bacon.txt testcopy.txt
+cat bacon.txt | grep -lic 'T-bone'
+cat bacon.txt | grep -lic 'T-bone' bacon.txt
+cat bacon.txt | grep -lic 'T-bone' test.txt
+cat bacon.txt | grep -lic 'bacon' test.txt
+cat bacon.txt | grep -lic 'bacon' test.txt
+cat bacon.txt | grep -lic test.txt
+cat bacon.txt | grep -lic 
+cat bacon.txt | grep -lic
+cat bacon.txt | grep -lic test.txt
+cat bacon.txt | grep -lic sdfs test.txt
+cat bacon.txt | grep -lic
+cat bacon.txt | grep -lic test
+cat bacon.txt | grep -lic test
+cat bacon.txt | grep -lic test
+cat bacon.txt | grep -lic test
+cat bacon.txt | grep -c test
+cat bacon.txt | grep -l test
+cat bacon.txt | grep -lic test
+grep -i 'T-bone' bacon.txt testcopy.txt
+grep -i 'T-bone' bacon.txt testcopy.txt
+grep -ci 'T-bone' bacon.txt testcopy.txt
+grep -ci 'T-boddne' bacon.txt testcopy.txt
+grep -i 'T-boddne' bacon.txt testcopy.txt
+grep -l 'T-boddne' bacon.txt testcopy.txt
+cat bacon.txt | grep -c 'asdf'
+cat bacon.txt | grep -c 'asdf'
+grep -l 'T-boddne' bacon.txt testcopy.txt
+grep -ci 'T-boddne' bacon.txt testcopy.txt
+grep -i bacon bacon.txt
+grep -i bacon bacon.txt test.txt
+grep -i bacon bacon.txt testcopy.txt valuable_notes.txt ls_output.txt

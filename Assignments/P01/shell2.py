@@ -977,9 +977,13 @@ def grep(parts):
         output["error"] = f"{Fore.RED}Error: 'grep' cannot process input and a parameter(s).{Style.RESET_ALL} \nRun 'grep --help' for more info."
         return output
     
-    if input and len(params) < 1:
+    if input and len(params) > 1:
         output["error"] = f"{Fore.RED}Error: 'grep' has input, but was also given a file to process. Must be one or the other.{Style.RESET_ALL} \nRun 'grep --help' for more info."
         return output
+    
+    if input and len(params) < 1:
+        output["error"] = f"{Fore.RED}Error: 'grep' needs a pattern to search the input for.{Style.RESET_ALL} \nRun 'grep --help' for more info."
+        return output        
     
     if len(params) > 50:
         output["error"] = f"{Fore.RED}Error: Params list too long.{Style.RESET_ALL} \nRun 'grep --help' for more info."
@@ -994,7 +998,17 @@ def grep(parts):
             
         # Else param is part of the pattern
         else:
+            if param.startswith(("'", '"')) and param.endswith(("'", '"')):
+                param = param[1:-1]
             pattern_parts.append(param)
+            
+    if len(pattern_parts) > 1:
+        output["error"] = f"{Fore.RED}Error: Only one pattern can be given, but recieved {pattern_parts}.{Style.RESET_ALL}"
+        return output
+    
+    if len(pattern_parts) == 0:
+        output["error"] = f"{Fore.RED}Error: No pattern was given.{Style.RESET_ALL}"
+        return output
             
     pattern = " ".join(pattern_parts)
     
@@ -1044,10 +1058,12 @@ def grep(parts):
         # If -c in flag, only return count of matches
         if "c" in flags:
             output["output"] = str(count_match)
+            return output
             
         # If line_match was filled, return it
-        elif line_match:
+        elif line_match != []:
             output["output"] = "\n".join(line_match)
+            return output
         else:
             output["error"] = f"{Fore.YELLOW}No matches found for '{pattern}'{Style.RESET_ALL}"
             
@@ -1079,6 +1095,8 @@ def grep(parts):
                     with open(path, 'r') as file_:
                         for line in file_:
                             
+                            highlighted = None
+                            
                             # Searching for pattern in line
                             match = re.search(re.escape(pattern), line, i_flag)
                                 
@@ -1099,7 +1117,7 @@ def grep(parts):
                                 count_match += 1
                                 
                             # If multiple files, include the file name in output
-                            if len(files) > 1 and "l" not in flags and "c" not in flags and highlighted not in line_match:
+                            if len(files) > 1 and "l" not in flags and "c" not in flags and highlighted and highlighted not in line_match:
                                 line_match.append(f"{Fore.MAGENTA}{file}{Style.RESET_ALL}: {highlighted}")
                                 
                             # If only one file, do not include that file name in output
@@ -1116,9 +1134,13 @@ def grep(parts):
             return output
                         
     # If -l flag, only return files that matched
-    if file_match:
+    if file_match != []:
         result = "\n".join(f"{Fore.MAGENTA}{f}{Style.RESET_ALL}" for f in file_match)
         output["output"] = result
+        return output
+    
+    elif file_match == [] and 'l' in flags:
+        output["output"] = None
         return output
     
     # If -c in flag, only return count of matches
@@ -1131,6 +1153,7 @@ def grep(parts):
                         
     else:
         output["error"] = f"{Fore.YELLOW}No matches found for '{pattern}'{Style.RESET_ALL}"
+        return output
             
     # return output
     return output
@@ -1995,10 +2018,15 @@ def more(parts):
                             line = line[columns:]
                         # Otherwise, just add it to the display buffer
                         display_buffer.append(line)
+            except PermissionError:
+                output["error"] = f"Error: Permission denied."
+                return output
             except FileNotFoundError:
                 output["error"] = f"Error: File {params} not found."
+                return output
             except Exception as e:
-                output["error"] = f"An unexpected error occurred: {e}"  
+                output["error"] = f"An unexpected error occurred: {e}"
+                return output
             
         else:
             output["error"] = f"Error: {file} could not be found. \nRun 'more --help' for more info."
