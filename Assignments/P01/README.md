@@ -106,8 +106,28 @@ Our shell will support the following command types:
 | `[program] < file`    | Redirects a file as input into a command            | Harika   |
 | `sort `               | Sorts contents of a file.                           | Cooper   |
 
-## Non-Working Components:
-- All commands have been completely implemented to the reach of our scope
+
+## Commands that malfunctioned:
+|Command               |      Error                 |     Solution |
+|------------------------------------------------------------------------------------------------|
+| _cd ~_               |   broke the shell      | If statement containing piping syntax was misaligned in code |                            
+| ll                   |   broke the shell      | "                                                           " |
+| cat bacon.txt | sort |   error with piping    | "                                                           " |
+| less h q / ?   |   breaks the shell     | added help buffer/created display buffer copy earlier to allow display  buffer reference swap | 
+| grep as as file.txt  |   grep was trying to process mul patterns |   only allow for a single patterns without flag |
+
+## Highs and Lows:
+- Highs
+  - Cooper
+    - The first time piping worked
+    - Finally figuring out the 'grep' command
+    - When our second presentation went well
+    - Adding the extra features and having them work
+- Lows
+  - Cooper
+    - Grep command kept failing
+    - Figuring out the arrow keys
+    - When the first presentation didn't go as expected
 
 ## Extras:
 - Color ls contents if they are directory or executable

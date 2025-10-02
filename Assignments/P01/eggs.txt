@@ -1,3 +1,0 @@
-bacon eggs
-eggs bacon
-test string
