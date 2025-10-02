@@ -108,8 +108,8 @@ Our shell will support the following command types:
 
 
 ## Commands that malfunctioned:
-|Command               |      Error                 |     Solution |
-|------------------------------------------------------------------------------------------------|
+|Command               |      Error             |     Solution |
+|----------------------|------------------------|---------------------------------------|
 | _cd ~_               |   broke the shell      | If statement containing piping syntax was misaligned in code |                            
 | ll                   |   broke the shell      | "                                                           " |
 | cat bacon.txt | sort |   error with piping    | "                                                           " |
