@@ -53,13 +53,16 @@ Our shell will support the following command types:
 - **Description**: Passes the output of one command as input to another command.
 - **Concepts**: Pipes, synchronous operations.
 
+
 ## Timeline:
 01 Sept 2025 - 30 Sept 2025
+
 
 ## Group Members:
 - Tim Haxton
 - Harika Vemulapalli
 - Cooper Wolf
+
 
 ## Files:
 | Files                 | Description                                         |
@@ -73,11 +76,13 @@ Our shell will support the following command types:
 | bacon                 | Text file used for testing commands.                |
 | valuable_notes.txt    | Contains notes and reminders for the project.       |
 
+
 ## Instructions:
 - Clone the repository or connect through GitHub CodeSpaces in VS Code
 - Locate the directory where the program exists
 - Run `shell2.py` in the terminal using command: `python3 shell2.py` or `python shell2.py`
 - A welcome message will be displayed as well as a prompt where you may begin execute the commands below
+
 
 ## Commands:
 | Command               | Description                                         | Author   |
@@ -108,26 +113,27 @@ Our shell will support the following command types:
 
 
 ## Commands that malfunctioned:
-|Command               |      Error             |     Solution |
-|----------------------|------------------------|---------------------------------------|
-| _cd ~_               |   broke the shell      | If statement containing piping syntax was misaligned in code |                            
-| ll                   |   broke the shell      | "                                                           " |
+|      Command         |        Error           |                         Solution                              |
+|----------------------|------------------------|---------------------------------------------------------------|
+| _cd ~_               |   broke the shell      | If statement containing piping syntax was misaligned in code  |
 | cat bacon.txt | sort |   error with piping    | "                                                           " |
-| less h q / ?   |   breaks the shell     | added help buffer/created display buffer copy earlier to allow display  buffer reference swap | 
-| grep as as file.txt  |   grep was trying to process mul patterns |   only allow for a single patterns without flag |
+| grep as as file.txt  |   grep processing multiple patterns |   only allow for a single patterns without flag  |
+| less h q / ?         |   breaks the shell     | added help buffer/created display buffer copy earlier to allow display  buffer reference swap | 
+
 
 ## Highs and Lows:
-- Highs
-  - Cooper
+- Cooper
+  - Highs
     - The first time piping worked
     - Finally figuring out the 'grep' command
     - When our second presentation went well
     - Adding the extra features and having them work
-- Lows
-  - Cooper
+- Cooper
+  - Lows
     - Grep command kept failing
     - Figuring out the arrow keys
     - When the first presentation didn't go as expected
+
 
 ## Extras:
 - Color ls contents if they are directory or executable
