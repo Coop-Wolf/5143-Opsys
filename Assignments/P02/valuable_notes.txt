@@ -10,3 +10,13 @@ Until 10/14:
 
 Future
     scheduler will be selected in the program arguments. 
+
+
+
+Logic and Rules to rememeber:
+    bursts are processed incremently not the overall process itself
+    scheduler can finish a burst and assign a burst in the same clock tick
+    process can only be moved to cpu from the ready queue
+    process can only be moved to IO from wait queue
+    processes cannot have back to back IO bursts
+    processes can have back to back CPU bursts

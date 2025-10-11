@@ -217,9 +217,11 @@ class Scheduler:
         self.wait_queue = collections.deque()
 
         # uses a list comprehension to create a list of CPU objects
+        # based on the number of CPUs entered by the user
         self.cpus = [CPU(cid=i, clock=self.clock) for i in range(num_cpus)]
 
         # uses a list comprehension to create a list of IODevice objects
+        # based on the number of IODevices entered by the user
         self.io_devices = [IODevice(did=i, clock=self.clock) for i in range(num_ios)]
 
         self.finished = []  # list of finished processes
@@ -366,9 +368,9 @@ class Scheduler:
             if proc:
                 burst = proc.current_burst()
 
-                # If the next burst is I/O, move to wait queue
-                # If no more bursts, move to finished
-                # If next burst is CPU, move to ready queue
+                # If there are bursts, move to ready queue
+                # Else, move to finished queue
+                # So this means IO cannot be back to back burst?
                 if burst:
                     proc.state = "ready"
                     self.ready_queue.append(proc)
