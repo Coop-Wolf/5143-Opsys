@@ -1,8 +1,7 @@
-import collections
 import csv
 import json
 import sys
-import cmd_pkg
+from cmd_pkg import *
 
 
 # ---------------------------------------
