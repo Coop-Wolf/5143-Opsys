@@ -111,6 +111,9 @@ if __name__ == "__main__":
     # Number of CPUs and IO devices
     cpus = args.get("cpus", 1)
     ios = args.get("ios", 1)
+    
+    # List to hold all processes
+    holding_list = []
 
     # Run the simulation
     clock = Clock()
@@ -124,9 +127,18 @@ if __name__ == "__main__":
     # Initialize scheduler and add processes
     sched = Scheduler(num_cpus=cpus, num_ios=ios, verbose=False)
 
-    # Add processes to scheduler
+    # # Add processes to scheduler
+    # for p in processes:
+    #     sched.add_process(p)
+    
+    # Add processes to holding queue
     for p in processes:
-        sched.add_process(p)
+        holding_list.append(p)
+        
+    # Add processes to scheduler when they arrive
+    for process in holding_list:
+        if clock == process.arrival_time:
+            sched.add_process(process)
 
     # Run the scheduler
     sched.run()

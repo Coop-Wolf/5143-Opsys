@@ -96,10 +96,14 @@ def generate_process(user_class, max_bursts=20):
             if random.random() < user_class["io_profile"]["io_ratio"]:
                 bursts.append({"io": generate_io_burst(user_class)})
             burst_count += 1
-
+            
+    # Assigning arrival time to each process
+    arrival_time = random.randint(0,75)
+    
     return {
         "pid": ppid,
         "class_id": user_class["class_id"],
+        "arrival_time": arrival_time,
         "priority": priority,
         "cpu_budget": cpu_budget,
         "cpu_used": cpu_used,
@@ -139,11 +143,12 @@ if __name__ == "__main__":
     # Generate 10 demo processes
     processes = generate_processes(user_classes, n=num_processes)
 
+    # Sorting processes by arrival time
+    processes = sorted(processes, key=lambda x: x["arrival_time"])
+
     # Pretty print
     for p in processes:
         print(json.dumps(p, indent=2))
-
-    # get_outfile_id
 
     # Save to file
     out_file = Path(f"../job_jsons/process_file_{generate_outfile_id()}.json")
