@@ -14,12 +14,13 @@ class Process:
         __str__(): user-friendly string representation
     """
 
-    def __init__(self, pid, bursts, priority=0):
+    def __init__(self, pid, bursts, priority=0, arrival_time=0):
         """Initialize process with pid, bursts, and priority"""
         self.pid = pid
         self.bursts = bursts[:]  # [{"cpu": X}, {"io": {...}}, ...]
         self.priority = priority
         self.state = "new"
+        self.arrival_time = arrival_time
 
     def current_burst(self):
         """Get the current burst"""

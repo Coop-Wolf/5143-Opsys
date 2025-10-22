@@ -4,6 +4,7 @@ from .iodevice import IODevice
 import collections
 import json
 import csv
+import config
 
 # ---------------------------------------
 class Scheduler:
@@ -264,6 +265,7 @@ class Scheduler:
             or self.wait_queue
             or any(cpu.is_busy() for cpu in self.cpus)
             or any(dev.is_busy() for dev in self.io_devices)
+            and len(self.finished) != config.process_counter
         ):
             self.step()
 

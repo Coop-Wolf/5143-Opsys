@@ -2,7 +2,7 @@ import csv
 import json
 import sys
 from cmd_pkg import *
-
+import config
 
 # ---------------------------------------
 # Load JSON into Process objects
@@ -50,7 +50,7 @@ def load_processes_from_json(filename="generated_processes.json", limit=None):
                     {"io": {"type": b["io"]["type"], "duration": b["io"]["duration"]}}
                 )
 
-        proc = Process(pid=p["pid"], bursts=bursts, priority=p["priority"])
+        proc = Process(pid=p["pid"], bursts=bursts, priority=p["priority"], arrival_time=p["arrival_time"])
         processes.append(proc)
 
     return processes
@@ -134,11 +134,22 @@ if __name__ == "__main__":
     # Add processes to holding queue
     for p in processes:
         holding_list.append(p)
-        
-    # Add processes to scheduler when they arrive
+
+    # Setting global process counter
+    config.process_counter = len(holding_list)
+    
     for process in holding_list:
-        if clock == process.arrival_time:
-            sched.add_process(process)
+        print(f"Process {process.pid} arrives at time {process.arrival_time}")
+        
+    # Add processes to ready_queue as they arrive
+    process_to_ready = 0
+    while process_to_ready != config.process_counter:
+        for process in holding_list:
+            if clock.now() == process.arrival_time:
+                 sched.add_process(process)
+                 process_to_ready += 1
+                 holding_list.remove(process)
+        clock.tick()
 
     # Run the scheduler
     sched.run()
