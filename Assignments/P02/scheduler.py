@@ -137,18 +137,15 @@ if __name__ == "__main__":
 
     # Setting global process counter
     config.process_counter = len(holding_list)
-    
-    for process in holding_list:
-        print(f"Process {process.pid} arrives at time {process.arrival_time}")
         
     # Add processes to ready_queue as they arrive
-    process_to_ready = 0
-    while process_to_ready != config.process_counter:
-        for process in holding_list:
+    holding_to_ready = 0
+    while holding_to_ready != config.process_counter:
+        for process in holding_list[:]:  # Create a copy of the list to avoid modification issues
             if clock.now() == process.arrival_time:
-                 sched.add_process(process)
-                 process_to_ready += 1
-                 holding_list.remove(process)
+                sched.add_process(process)
+                holding_to_ready += 1
+                holding_list.remove(process)
         clock.tick()
 
     # Run the scheduler

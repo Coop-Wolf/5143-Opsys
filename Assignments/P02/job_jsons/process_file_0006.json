@@ -63,7 +63,7 @@
   {
     "pid": "5",
     "class_id": "B",
-    "arrival_time": 18,
+    "arrival_time": 1,
     "priority": 8,
     "cpu_budget": 12,
     "cpu_used": 12,

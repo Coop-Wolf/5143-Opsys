@@ -1,6 +1,6 @@
 time,event,event_type,process,device,ready_queue,wait_queue,cpus,ios
 1,8 added to ready queue,enqueue,8,,['8'],[],[None],[None]
-18,5 added to ready queue,enqueue,5,,"['8', '5']",[],[None],[None]
+1,5 added to ready queue,enqueue,5,,"['8', '5']",[],[None],[None]
 31,7 added to ready queue,enqueue,7,,"['8', '5', '7']",[],[None],[None]
 34,4 added to ready queue,enqueue,4,,"['8', '5', '7', '4']",[],[None],[None]
 51,3 added to ready queue,enqueue,3,,"['8', '5', '7', '4', '3']",[],[None],[None]
