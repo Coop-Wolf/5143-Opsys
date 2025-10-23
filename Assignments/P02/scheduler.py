@@ -125,28 +125,28 @@ if __name__ == "__main__":
     )
 
     # Initialize scheduler and add processes
-    sched = Scheduler(num_cpus=cpus, num_ios=ios, verbose=False)
+    sched = Scheduler(num_cpus=cpus, num_ios=ios, verbose=False, processes=processes)
 
     # # Add processes to scheduler
     # for p in processes:
     #     sched.add_process(p)
     
-    # Add processes to holding queue
-    for p in processes:
-        holding_list.append(p)
+    # # Add processes to holding queue
+    # for p in processes:
+    #     holding_list.append(p)
 
-    # Setting global process counter
-    config.process_counter = len(holding_list)
+    # # Setting global process counter
+    # config.process_counter = len(holding_list)
         
-    # Add processes to ready_queue as they arrive
-    holding_to_ready = 0
-    while holding_to_ready != config.process_counter:
-        for process in holding_list[:]:  # Create a copy of the list to avoid modification issues
-            if clock.now() == process.arrival_time:
-                sched.add_process(process)
-                holding_to_ready += 1
-                holding_list.remove(process)
-        clock.tick()
+    # # Add processes to ready_queue as they arrive
+    # holding_to_ready = 0
+    # while holding_to_ready != config.process_counter:
+    #     for process in holding_list[:]:  # Create a copy of the list to avoid modification issues
+    #         if clock.now() == process.arrival_time:
+    #             sched.add_process(process)
+    #             holding_to_ready += 1
+    #             holding_list.remove(process)
+    #     clock.tick()
 
     # Run the scheduler
     sched.run()
