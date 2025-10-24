@@ -48,7 +48,7 @@ class Scheduler:
         self.log = []  # human-readable + snapshots
         self.events = []  # structured log for export
         self.verbose = verbose  # if True, print log entries to console
-        self.processes = processes  # raw input file for reference
+        self.processes = processes  # input file of processes
         self.qualtum = quantum  # time quantum for scheduling (if applicable)
 
     def add_process(self, process):
@@ -279,43 +279,34 @@ class Scheduler:
         Run the scheduler until all processes are finished
         Returns: None
         """
-        
-        #holding_list = []
-        
-        # Add processes to holding queue
-        #for p in self.processes:
-        #    holding_list.append(p)
 
         # Setting global process counter
-        #config.process_counter = len(holding_list)
         config.process_counter = len(self.processes)
-          
-        # Add processes to ready_queue as they arrive
-        holding_to_ready = 0
-        process_counter = 0
         
-        #while holding_to_ready != config.process_counter:
-        while self.processes:   
-            arriving_processes = [p for p in self.processes if p.arrival_time == self.clock.now()]
+        # Looping while there are still processes to add
+        while self.processes:
             
+            # Getting processes that arrive at the current time
+            arriving_processes = [p for p in self.processes if p.arrival_time == self.clock.now()]
+        
+            # Looping through arriving processes to add them to ready queue
             for process in arriving_processes:
-                    self.add_process(process)
-                    
-                    if (
-                            self.ready_queue
-                            or self.wait_queue
-                            or any(cpu.is_busy() for cpu in self.cpus)
-                            or any(dev.is_busy() for dev in self.io_devices)
-                            and len(self.finished) == process_counter
-                            ):
+                self.add_process(process)
+                self.processes.remove(process)
+                
+            # If there are processes to run or IO or any CPU/IO is busy, step    
+            if (
+                self.ready_queue
+                or self.wait_queue
+                or any(cpu.is_busy() for cpu in self.cpus)
+                or any(dev.is_busy() for dev in self.io_devices)
+                ):
 
-                        self.step()
-                    process_counter += 1  
-                    holding_to_ready += 1
-                    self.processes.remove(process)
-            print("processes left: ", len(self.processes))
-            print("Process Id left: ", [p.pid for p in self.processes])
-            self.clock.tick()
+                self.step()
+                
+            # If no processes are ready or waiting and all CPUs/IOs are idle, just tick the clock
+            else:
+                self.clock.tick()
 
         # Continue stepping while there are processes in ready/wait queues
         # or any CPU/IO device is busy

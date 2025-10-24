@@ -2,7 +2,7 @@
   {
     "pid": "2",
     "class_id": "B",
-    "arrival_time": 8,
+    "arrival_time": 1,
     "priority": 6,
     "cpu_budget": 17,
     "cpu_used": 17,
@@ -39,7 +39,7 @@
   {
     "pid": "4",
     "class_id": "A",
-    "arrival_time": 16,
+    "arrival_time": 1,
     "priority": 5,
     "cpu_budget": 37,
     "cpu_used": 37,
@@ -82,7 +82,7 @@
   {
     "pid": "3",
     "class_id": "C",
-    "arrival_time": 9,
+    "arrival_time": 19,
     "priority": 7,
     "cpu_budget": 30,
     "cpu_used": 30,

@@ -60,6 +60,40 @@ def generate_io_burst(user_class):
     return {"type": io_type, "duration": duration}
 
 
+def hybrid_arrivals(n, p_batch=0.4, centers=None, sigma=5, mean_inter=15, std_inter=3):
+    """
+    Generate hybrid-style process arrival times:
+    - Some processes arrive in bursts near defined centers (batch arrivals)
+    - Others arrive in a stream spaced by mean_inter ± std_inter
+    """
+    if centers is None:
+        centers = [10, 50, 100]
+
+    # Generate stream-style interarrival times
+    inter_arrivals = [max(1, int(round(random.gauss(mean_inter, std_inter)))) for _ in range(n * 2)]
+
+    # Convert interarrivals into cumulative times for realism
+    stream_times = []
+    current_time = 0
+    for inter in inter_arrivals:
+        current_time += inter
+        stream_times.append(current_time)
+    stream = iter(stream_times)
+
+    # Build hybrid list
+    times = []
+    for _ in range(n):
+        if random.random() < p_batch:
+            # Batched (clustered) arrival
+            c = random.choice(centers)
+            times.append(max(0, int(round(random.gauss(c, sigma)))))
+        else:
+            # Streamed arrival (spaced apart)
+            times.append(next(stream))
+
+    return sorted(times)
+
+
 # ----------------------------------------------------------
 # Generate one process until CPU budget is consumed
 # ----------------------------------------------------------
@@ -98,12 +132,12 @@ def generate_process(user_class, max_bursts=20):
             burst_count += 1
             
     # Assigning arrival time to each process
-    arrival_time = random.randint(0,75)
+    #arrival_time = random.randint(0,75)
     
     return {
         "pid": ppid,
         "class_id": user_class["class_id"],
-        "arrival_time": arrival_time,
+        #"arrival_time": arrival_time,
         "priority": priority,
         "cpu_budget": cpu_budget,
         "cpu_used": cpu_used,
@@ -119,10 +153,14 @@ def generate_processes(user_classes, n=100):
 
     total_rate = sum(cls["arrival_rate"] for cls in user_classes)
     weights = [cls["arrival_rate"] / total_rate for cls in user_classes]
+    
+    arrival_times = hybrid_arrivals(n)
 
-    for _ in range(n):
+    for i in range(n):
         user_class = random.choices(user_classes, weights=weights, k=1)[0]
         process = generate_process(user_class)
+        
+        process["arrival_time"] = arrival_times[i]
         processes.append(process)
 
     return processes
@@ -144,7 +182,7 @@ if __name__ == "__main__":
     processes = generate_processes(user_classes, n=num_processes)
 
     # Sorting processes by arrival time
-    processes = sorted(processes, key=lambda x: x["arrival_time"])
+    #processes = sorted(processes, key=lambda x: x["arrival_time"])
 
     # Pretty print
     for p in processes:

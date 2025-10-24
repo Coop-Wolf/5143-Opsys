@@ -1,8 +1,6 @@
-import csv
 import json
 import sys
 from cmd_pkg import *
-import config
 
 # ---------------------------------------
 # Load JSON into Process objects
@@ -121,32 +119,10 @@ if __name__ == "__main__":
 
     # Load processes from JSON file
     processes = load_processes_from_json(
-        f"./job_jsons/process_file_{str(file_num).zfill(4)}.json", limit=limit
-    )
+        f"./job_jsons/process_file_{str(file_num).zfill(4)}.json", limit=limit)
 
     # Initialize scheduler and add processes
     sched = Scheduler(num_cpus=cpus, num_ios=ios, verbose=False, processes=processes)
-
-    # # Add processes to scheduler
-    # for p in processes:
-    #     sched.add_process(p)
-    
-    # # Add processes to holding queue
-    # for p in processes:
-    #     holding_list.append(p)
-
-    # # Setting global process counter
-    # config.process_counter = len(holding_list)
-        
-    # # Add processes to ready_queue as they arrive
-    # holding_to_ready = 0
-    # while holding_to_ready != config.process_counter:
-    #     for process in holding_list[:]:  # Create a copy of the list to avoid modification issues
-    #         if clock.now() == process.arrival_time:
-    #             sched.add_process(process)
-    #             holding_to_ready += 1
-    #             holding_list.remove(process)
-    #     clock.tick()
 
     # Run the scheduler
     sched.run()
@@ -154,7 +130,7 @@ if __name__ == "__main__":
     # Print final log and stats
     print("\n--- Final Log ---")
     print(sched.timeline())
-    print(f"\nTime elapsed: {sched.clock.now()}")
+    print(f"\nTime elapsed: {sched.clock.now() - 1}")
     print(f"Finished: {[p.pid for p in sched.finished]}")
 
     # Export structured logs
