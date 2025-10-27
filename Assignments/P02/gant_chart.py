@@ -5,7 +5,7 @@ import matplotlib.patches as mpatches
 # ---------------------------------------
 # Load timeline.csv into Pandas
 # ---------------------------------------
-df = pd.read_csv("./timelines/timeline0006.csv")
+df = pd.read_csv("./timelines/timeline0008.csv")
 
 
 # Flatten CPU/IO columns (lists stored as strings → eval safely)
@@ -81,4 +81,9 @@ patches = [mpatches.Patch(color=col, label=proc) for proc, col in colors.items()
 ax.legend(handles=patches, bbox_to_anchor=(1.05, 1), loc="upper left")
 
 plt.tight_layout()
-plt.show()
+
+# for interactive environments, uncomment the next line to display the plot
+#plt.show()
+
+plt.savefig("./timelines/gantt_chart0008.png", dpi=300, bbox_inches='tight')
+print("Gantt chart saved to ./timelines/gantt_chart0008.png")
