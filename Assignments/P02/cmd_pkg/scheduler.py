@@ -29,7 +29,7 @@ class Scheduler:
         export_json(filename): export the structured log to a JSON file
         export_csv(filename): export the structured log to a CSV file"""
 
-    def __init__(self, num_cpus=1, num_ios=1, verbose=True, processes = None, quantum=None):
+    def __init__(self, num_cpus=1, num_ios=1, verbose=True, processes = None):
         self.clock = Clock()  # shared clock instance for all components Borg pattern
 
         # deque (double ended queue) for efficient pops from left
@@ -49,7 +49,6 @@ class Scheduler:
         self.events = []  # structured log for export
         self.verbose = verbose  # if True, print log entries to console
         self.processes = processes  # input file of processes
-        self.qualtum = quantum  # time quantum for scheduling (if applicable)
 
     def add_process(self, process):
         """
@@ -141,27 +140,7 @@ class Scheduler:
 
             # proc is the process that just finished its CPU burst or None
             proc = cpu.tick()
-            
-            # If a process is not finished, decrement its quantum
-            #if cpu.is_busy() and self.qualtum is not None and proc is None:
-                #cpu.current.quantum -= 1
                 
-                # # If quantum expired, preempt the process
-                # if cpu.current.quantum <= 0:
-                #     preempted_proc = cpu.current
-                #     cpu.current = None  # Free the CPU
-                #     preempted_proc.state = "ready"
-                #     self.ready_queue.append(preempted_proc)
-                    
-                #     # Log the preemption event
-                #     self._record(
-                #         f"{preempted_proc.pid} preempted from CPU → ready queue",
-                #         event_type="preempt_cpu",
-                #         proc=preempted_proc.pid,
-                #         device=f"CPU{cpu.cid}",
-                #     )
-                
-
             # If a process finished its CPU burst, handle it.
             # This means that proc is not None
             if proc:

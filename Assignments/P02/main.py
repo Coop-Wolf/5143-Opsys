@@ -110,8 +110,11 @@ if __name__ == "__main__":
     cpus = args.get("cpus", 1)
     ios = args.get("ios", 1)
     
-    # List to hold all processes
-    holding_list = []
+    # rr=true to use Round Robin
+    use_rr = str(args.get("rr", False)).lower() == "true"
+    # quantum size (default 4)
+    quantum = args.get("quantum", 4)
+
 
     # Run the simulation
     clock = Clock()
@@ -121,8 +124,24 @@ if __name__ == "__main__":
     processes = load_processes_from_json(
         f"./job_jsons/process_file_{str(file_num).zfill(4)}.json", limit=limit)
 
-    # Initialize scheduler and add processes
-    sched = Scheduler(num_cpus=cpus, num_ios=ios, verbose=False, processes=processes)
+    # Initialize scheduler
+    if use_rr:
+        print(f"Using Round Robin with quantum={quantum}")
+        sched = RoundRobinScheduler(
+            num_cpus=cpus,
+            num_ios=ios,
+            verbose=False,
+            processes=processes,
+            quantum=quantum
+        )
+    else:
+        print("Using Base Scheduler")
+        sched = Scheduler(
+            num_cpus=cpus,
+            num_ios=ios,
+            verbose=False,
+            processes=processes
+        )
 
     # Run the scheduler
     sched.run()
