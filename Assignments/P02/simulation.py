@@ -1,3 +1,5 @@
+# From ChatGPT import CHATGPT
+
 import pygame
 import pandas as pd
 import ast
@@ -6,6 +8,8 @@ import ast
 # Load timeline data
 # -----------------------------
 df = pd.read_csv("./timelines/timeline0008.csv")
+
+finished_queue = []
 
 def parse_list(s):
     try:
@@ -34,20 +38,35 @@ TEXT_COLOR = (255, 255, 255)
 boxes = {
     "ready": (50, 50, 250, 60),
     "wait": (600, 50, 250, 60),
+    "finished": (50, 400, 800, 60),
     "CPU0": (250, 150, 100, 100),
     "CPU1": (400, 150, 100, 100),
     "IO0": (250, 300, 100, 100),
     "IO1": (400, 300, 100, 100),
 }
 
-# Assign colors for processes
+# Ensure process column is string
+df["process"] = df["process"].astype(str)
+
+# Generate colors safely
 all_procs = sorted(set(df["process"].dropna()))
-PROCESS_COLORS = {p: pygame.Color("hsl(%d,100%%,50%%)" % (i*60 % 360)) for i, p in enumerate(all_procs)}
+import colorsys
+
+def generate_colors(n):
+    colors = []
+    for i in range(n):
+        hue = i / n
+        r, g, b = colorsys.hsv_to_rgb(hue, 1, 1)
+        colors.append((int(r*255), int(g*255), int(b*255)))
+    return colors
+
+color_list = generate_colors(len(all_procs))
+PROCESS_COLORS = {p: pygame.Color(*color_list[i]) for i, p in enumerate(all_procs)}
 
 # Process positions dictionary
 positions = {}  # proc_id -> current (x, y)
 target_positions = {}  # proc_id -> target (x, y)
-speed = 5  # pixels per frame
+speed = 15  # pixels per frame
 
 # -----------------------------
 # Helper functions
@@ -99,6 +118,20 @@ def update_targets(row):
         if proc is not None:
             target_positions[proc] = get_box_center(f"IO{i}")
             positions.setdefault(proc, target_positions[proc])
+    
+    # Move finished processes to the finished queue
+    if "finished all bursts" in row["event_type"]:
+        proc = str(int(float(row["process"])))
+        if proc not in finished_queue:
+            finished_queue.append(proc)
+
+    # Assign positions for finished queue
+    fq_positions = get_queue_positions("finished", finished_queue)
+    for proc, pos in zip(finished_queue, fq_positions):
+        target_positions[proc] = pos
+        positions.setdefault(proc, pos)
+
+
 
 def move_processes():
     """Move processes toward their target positions smoothly."""
@@ -122,10 +155,16 @@ def draw_processes():
 # -----------------------------
 # Main loop
 # -----------------------------
-frame = 0
+#frame = 0
 running = True
 frames_per_step = 15  # number of frames to move between time steps
 step_counter = 0
+
+sim_time = 1          # continuous simulation clock
+frame = 0             # index in timeline rows
+frames_per_tick = 2   # frames per 1 time unit
+tick_counter = 0      # counter for advancing sim_time
+
 
 while running:
     clock.tick(30)  # FPS
@@ -135,14 +174,16 @@ while running:
 
     screen.fill(BG)
 
-    if frame < len(df):
-        if step_counter == 0:
-            row = df.iloc[frame]
-            update_targets(row)
-        step_counter += 1
-        if step_counter >= frames_per_step:
-            step_counter = 0
-            frame += 1
+    tick_counter += 1
+    if tick_counter >= frames_per_tick:
+        sim_time += 1
+        tick_counter = 0
+
+    # Update target positions for all rows whose time == sim_time
+    while frame < len(df) and df.iloc[frame]["time"] <= sim_time:
+        update_targets(df.iloc[frame])
+        frame += 1
+
 
     # Draw boxes
     for name in boxes:
@@ -153,11 +194,10 @@ while running:
     draw_processes()
 
     # Draw current time
-    if frame < len(df):
-        t = df.iloc[frame]["time"]
-        font = pygame.font.SysFont(None, 36)
-        time_label = font.render(f"Time: {t}", True, TEXT_COLOR)
-        screen.blit(time_label, (WIDTH//2 - 50, 10))
+    font = pygame.font.SysFont(None, 36)
+    time_label = font.render(f"Time: {sim_time}", True, TEXT_COLOR)
+    screen.blit(time_label, (WIDTH//2 - 50, 10))
+
 
     pygame.display.flip()
 
