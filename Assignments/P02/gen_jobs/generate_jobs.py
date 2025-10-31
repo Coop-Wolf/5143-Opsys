@@ -4,7 +4,7 @@ import uuid
 from pathlib import Path
 import datetime  # Note: time module for timestamps
 import sys
-
+import random
 
 pid = 0
 
@@ -94,6 +94,45 @@ def hybrid_arrivals(n, p_batch=0.4, centers=None, sigma=5, mean_inter=15, std_in
     return sorted(times)
 
 
+def flow_arrivals(n, mean_inter=10, std_inter=3):
+    """
+    Generate arrival times for continuous flow:
+    Each process arrives after some interval (mean_inter ± std_inter).
+    """
+    current_time = 0
+    times = []
+    for _ in range(n):
+        inter = max(1, int(round(random.gauss(mean_inter, std_inter))))
+        current_time += inter
+        times.append(current_time)
+    return sorted(times)
+
+
+def batch_arrivals(n):
+    """
+    All processes arrive around a single time cluster.
+    (e.g., around time 50 ± 10)
+    """
+    mu = 50      # mean arrival time
+    sigma = 10   # standard deviation
+    times = [max(0, int(round(random.gauss(mu, sigma)))) for _ in range(n)]
+    return sorted(times)
+
+
+def generate_arrival_times(mode="hybrid", n=10):
+    """
+    Wrapper for selecting arrival time generation mode.
+    mode: 'hybrid', 'flow', or 'batch'
+    """
+    if mode == "flow":
+        return flow_arrivals(n)
+    elif mode == "batch":
+        return batch_arrivals(n)
+    else:
+        return hybrid_arrivals(n)
+
+
+
 # ----------------------------------------------------------
 # Generate one process until CPU budget is consumed
 # ----------------------------------------------------------
@@ -154,7 +193,8 @@ def generate_processes(user_classes, n=100):
     total_rate = sum(cls["arrival_rate"] for cls in user_classes)
     weights = [cls["arrival_rate"] / total_rate for cls in user_classes]
     
-    arrival_times = hybrid_arrivals(n)
+    #arrival_times = hybrid_arrivals(n)
+    arrival_times = generate_arrival_times(mode, n)
 
     for i in range(n):
         user_class = random.choices(user_classes, weights=weights, k=1)[0]
@@ -166,15 +206,59 @@ def generate_processes(user_classes, n=100):
     return processes
 
 
+def parse_value(value):
+    """
+    Try to convert string to appropriate type since everything read in from command line is a string
+    Args:
+        value: string value to parse
+    Returns:
+        value converted to bool, int, float, or original string
+    """
+    # Try boolean
+    if value.lower() in ("true", "false"):
+        return value.lower() == "true"
+    # Try int
+    try:
+        return int(value)
+    except ValueError:
+        pass
+    # Try float
+    try:
+        return float(value)
+    except ValueError:
+        pass
+    # Give up, return string
+    return value
+
+
+def argParse():
+    """Parse command line arguments into a dictionary
+    Returns:
+        dict of argument names to values
+    """
+    kwargs = {}
+    for arg in sys.argv[1:]:
+        if "=" in arg:
+            key, value = arg.split("=", 1)
+            kwargs[key] = parse_value(value)
+    return kwargs
+
+
 # ----------------------------------------------------------
 # Example usage
 # ----------------------------------------------------------
 if __name__ == "__main__":
+    
+    # Parse command line arguments
+    args = argParse()
 
-    if len(sys.argv) > 1:
-        num_processes = int(sys.argv[1])
-    else:
-        num_processes = 10
+    # Get parameters if they exist, else use defaults
+    # file_num is used to load different process files and save different timeline files
+    num_processes = args.get("num_processes", 10)
+
+    # Limit is used to restrict the number of processes loaded
+    # Looking for arrival_time = 'hybrid', 'flow', or 'batch'
+    mode = args.get("arrival_time", "hybrid")
 
     user_classes = load_user_classes("job_classes.json")
 
