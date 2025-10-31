@@ -102,8 +102,8 @@ def build_boxes(df):
     }
 
     # Base positions
-    cpu_start_x, cpu_y = 300, 150
-    io_start_x, io_y = 300, 300
+    cpu_start_x, cpu_y = 200, 150
+    io_start_x, io_y = 200, 300
     box_w, box_h = 100, 100
     gap = 150
 
@@ -381,6 +381,13 @@ def main():
     frames_per_tick = 20    # Adjust for speed of simulation
     tick_counter = 0        # Counts frames for timing
     running = True
+    paused = False
+    
+    # Button setup
+    inc_speed_btn = pygame.Rect(50, 212, 10, 10)
+    dec_speed_btn = pygame.Rect(60, 212, 10, 10)
+    inc_clock_btn = pygame.Rect(50, 250, 10, 10)
+    dec_clock_btn = pygame.Rect(60, 250, 10, 10)
 
 
     # Simulation Loop
@@ -389,49 +396,126 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                
+            if event.type == pygame.KEYDOWN:
+                # Timer speed controls
+                if event.key == pygame.K_w:
+                    # Increase timer speed
+                    speed = min(speed + 1, 150)
+                elif event.key == pygame.K_e:
+                    # Decrease timer speed
+                    speed = max(speed - 1, 1)
+                    
+                # Clock speed controls
+                elif event.key == pygame.K_s:
+                    # Increase timer speed
+                    frames_per_tick -= 1
+                elif event.key == pygame.K_d:
+                    # Decrease timer speed
+                    frames_per_tick += 1
+                    
+                # Stop Simulation
+                elif event.key == pygame.K_q:
+                    running = False
+                  
+                # Pause simulation
+                elif event.key == pygame.K_p:
+                    paused = not paused
+                
 
         # Clear screen
         screen.fill(BG)
-
-        # Update simulation time
-        tick_counter += 1
-        if tick_counter >= frames_per_tick:
-            sim_time += 1
-            tick_counter = 0
-            
-            # Update CPU quantums if RR
-            if RR:
-                update_quantum(cpu_quantum, cpu_process, quantum_value, cpu_count)
-
-        # Update target positions for all rows whose time == sim_time
-        while frame < len(df) and df.iloc[frame]["time"] <= sim_time:
-            update_targets(df.iloc[frame], boxes, positions, target_positions, finished_queue, 
-                         RR, cpu_process, cpu_quantum, quantum_value, cpu_count, io_count)
-            frame += 1
-
-        # Draw boxes
-        for name in boxes: 
-            draw_box(screen, boxes, name)
-
-        # Move and draw processes
-        move_processes(positions, target_positions, speed)
-        draw_processes(screen, positions, process_colors)
         
-        # Draw CPU quantum labels
-        if RR:
+        # Only update simulation if not paused
+        if not paused:
+
+            # Update simulation time
+            tick_counter += 1
+            if tick_counter >= frames_per_tick:
+                sim_time += 1
+                tick_counter = 0
+                
+                # Update CPU quantums if RR
+                if RR:
+                    update_quantum(cpu_quantum, cpu_process, quantum_value, cpu_count)
+
+            # Update target positions for all rows whose time == sim_time
+            while frame < len(df) and df.iloc[frame]["time"] <= sim_time:
+                update_targets(df.iloc[frame], boxes, positions, target_positions, finished_queue, 
+                             RR, cpu_process, cpu_quantum, quantum_value, cpu_count, io_count)
+                frame += 1
+
+            # Draw boxes
+            for name in boxes: 
+                draw_box(screen, boxes, name)
+
+            # Move and draw processes
+            move_processes(positions, target_positions, speed)
+            draw_processes(screen, positions, process_colors)
+            
+            # Draw CPU quantum labels
+            if RR:
+                font = pygame.font.SysFont(None, 20)
+                y_offset = 150
+                for cpu_name, remaining in cpu_quantum.items():
+                    label = font.render(f"{cpu_name} Quantum: {remaining}", True, TEXT_COLOR)
+                    screen.blit(label, (WIDTH - 200, y_offset))
+                    y_offset += 25
+
+            # Draw current time
+            font = pygame.font.SysFont(None, 36)
+            time_label = font.render(f"Time: {sim_time}", True, TEXT_COLOR)
+            screen.blit(time_label, (WIDTH//2 - 50, 10))
+            
+            # Draw Movement/Clock speed
             font = pygame.font.SysFont(None, 20)
-            y_offset = 150
-            for cpu_name, remaining in cpu_quantum.items():
-                label = font.render(f"{cpu_name} Quantum: {remaining}", True, TEXT_COLOR)
-                screen.blit(label, (WIDTH - 200, y_offset))
-                y_offset += 25
+            speed_label = font.render(f"Movement Speed: {speed}", True, TEXT_COLOR)
+            #screen.blit(speed_label, (WIDTH//2 - 50, 40))
+            screen.blit(speed_label, (35, 200))
+            
+            # Dashes for speeds
+            font = pygame.font.SysFont(None, 20)
+            speed_dash = font.render(f"---------------------------------", True, TEXT_COLOR)
+            screen.blit(speed_dash, (35, 210))
+            
+            font = pygame.font.SysFont(None, 20)
+            clock_dash = font.render(f"--------------------------", True, TEXT_COLOR)
+            screen.blit(clock_dash, (35, 280))
+            
+            font = pygame.font.SysFont(None, 20)
+            clock_label = font.render(f"Clock Speed: {frames_per_tick}", True, TEXT_COLOR)
+            #screen.blit(speed_label, (WIDTH//2 - 50, 60))
+            screen.blit(clock_label, (35, 270))
 
-        # Draw current time
-        font = pygame.font.SysFont(None, 36)
-        time_label = font.render(f"Time: {sim_time}", True, TEXT_COLOR)
-        screen.blit(time_label, (WIDTH//2 - 50, 10))
+            # Inc/Dec process speed
+            font = pygame.font.SysFont(None, 20)
+            inc_speed = font.render(f"w -increase", True, TEXT_COLOR)
+            screen.blit(inc_speed, (35, 220))
+           
+            font = pygame.font.SysFont(None, 20)
+            dec_speed = font.render(f"e -decrease", True, TEXT_COLOR)
+            screen.blit(dec_speed, (35, 235))
+            
+            # Inc/Dec clock speed
+            font = pygame.font.SysFont(None, 20)
+            inc_clock = font.render(f"s -increase", True, TEXT_COLOR)
+            screen.blit(inc_clock, (35, 290))
+           
+            font = pygame.font.SysFont(None, 20)
+            dec_clock = font.render(f"d -decrease", True, TEXT_COLOR)
+            screen.blit(dec_clock, (35, 305))
+            
+            # Quit/Pause keys
+            font = pygame.font.SysFont(None, 20)
+            inc_clock = font.render(f"q - Quit", True, TEXT_COLOR)
+            screen.blit(inc_clock, (35, 320))
+           
+            font = pygame.font.SysFont(None, 20)
+            dec_clock = font.render(f"p -Pause/Unpause", True, TEXT_COLOR)
+            screen.blit(dec_clock, (35, 335))
 
-        pygame.display.flip()
+
+            pygame.display.flip()
         
     pygame.quit()
 
