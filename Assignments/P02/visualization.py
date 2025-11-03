@@ -382,13 +382,6 @@ def main():
     tick_counter = 0        # Counts frames for timing
     running = True
     paused = False
-    
-    # Button setup
-    inc_speed_btn = pygame.Rect(50, 212, 10, 10)
-    dec_speed_btn = pygame.Rect(60, 212, 10, 10)
-    inc_clock_btn = pygame.Rect(50, 250, 10, 10)
-    dec_clock_btn = pygame.Rect(60, 250, 10, 10)
-
 
     # Simulation Loop
     while running:
@@ -397,11 +390,14 @@ def main():
             if event.type == pygame.QUIT:
                 running = False
                 
+            # Keyboard controls
             if event.type == pygame.KEYDOWN:
+                
                 # Timer speed controls
                 if event.key == pygame.K_w:
                     # Increase timer speed
                     speed = min(speed + 1, 150)
+                    
                 elif event.key == pygame.K_e:
                     # Decrease timer speed
                     speed = max(speed - 1, 1)
