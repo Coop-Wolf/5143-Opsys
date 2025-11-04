@@ -118,6 +118,15 @@ def batch_arrivals(n):
     times = [max(0, int(round(random.gauss(mu, sigma)))) for _ in range(n)]
     return sorted(times)
 
+def zero_arrivals(n):
+    '''
+    All processes arrive at time zero.
+    '''
+    
+    # Returning list of n number of 0's
+    zerolist = [0] * n
+    return zerolist
+
 
 def generate_arrival_times(mode="hybrid", n=10):
     """
@@ -128,8 +137,10 @@ def generate_arrival_times(mode="hybrid", n=10):
         return flow_arrivals(n)
     elif mode == "batch":
         return batch_arrivals(n)
-    else:
+    elif mode == "hybrid":
         return hybrid_arrivals(n)
+    else:
+        return zero_arrivals(n)
 
 
 
@@ -169,14 +180,10 @@ def generate_process(user_class, max_bursts=20):
             if random.random() < user_class["io_profile"]["io_ratio"]:
                 bursts.append({"io": generate_io_burst(user_class)})
             burst_count += 1
-            
-    # Assigning arrival time to each process
-    #arrival_time = random.randint(0,75)
     
     return {
         "pid": ppid,
         "class_id": user_class["class_id"],
-        #"arrival_time": arrival_time,
         "priority": priority,
         "cpu_budget": cpu_budget,
         "cpu_used": cpu_used,
@@ -204,6 +211,28 @@ def generate_processes(user_classes, n=100):
         processes.append(process)
 
     return processes
+
+
+def determine_load(dev_load):
+    '''
+    Determining which job classes file to
+    load depending on what user requested.
+    '''
+    
+    if dev_load == "cpu":
+        file = "job_classes_cpu_heavy.json"
+    elif dev_load == "io":
+        file = "job_classes_io_heavy.json"
+    elif dev_load == "balanced":
+        file = "job_classes_balanced.json"
+    elif dev_load == "net":
+        file = "job_classes_net_heavy.json"
+    elif dev_load == "dl":
+        file = "job_classes_dl_ul_heavy.json"
+    else:
+        file = "job_classes.json"
+
+    return file
 
 
 def parse_value(value):
@@ -258,15 +287,21 @@ if __name__ == "__main__":
 
     # Limit is used to restrict the number of processes loaded
     # Looking for arrival_time = 'hybrid', 'flow', or 'batch'
-    mode = args.get("arrival_time", "hybrid")
-
-    user_classes = load_user_classes("job_classes.json")
+    mode = args.get("arrival_time", "zero")
+    
+    # Getting user request
+    # cpu, io, balanced, net, dl
+    load = args.get("device_load", "default")
+    
+    # Getting file requested by user
+    file = determine_load(load)
+    
+    # Getting file to create processes
+    user_classes = load_user_classes(file)
 
     # Generate 10 demo processes
     processes = generate_processes(user_classes, n=num_processes)
 
-    # Sorting processes by arrival time
-    #processes = sorted(processes, key=lambda x: x["arrival_time"])
 
     # Pretty print
     for p in processes:

@@ -1,22 +1,18 @@
-Read in all processes into list or dictionary then pop when process time = current time. 
+Left to do:
 
-Need to get the full layout of the algorithm first before doing anything else.
-
-Until 10/14:
-    Get familiar with code.
-    Think about round robin technique
-
-
-
-Future
-    scheduler will be selected in the program arguments. 
+TEAM:
+1. SRTF
+2. Priority
+3. Simulation
+4. Write up (Inperpret Data, Calculate Information)
 
 
+Me:
+Add options that sets all arrival times to zero in jobs jen
 
-Logic and Rules to rememeber:
-    bursts are processed incremently not the overall process itself
-    scheduler can finish a burst and assign a burst in the same clock tick
-    process can only be moved to cpu from the ready queue
-    process can only be moved to IO from wait queue
-    processes cannot have back to back IO bursts
-    processes can have back to back CPU bursts
+
+Discussion Questions:
+
+Why is it valuable to separate the scheduler logic from the visualization layer?
+How could this design be extended to run two schedulers at once (for comparison)?
+What information should the visualizer not have access to, and why?
