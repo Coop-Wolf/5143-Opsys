@@ -1,18 +1,19 @@
+
+
 Left to do:
-
-TEAM:
-1. SRTF
-2. Priority
-3. Simulation
-4. Write up (Inperpret Data, Calculate Information)
-
-
-Me:
-Add options that sets all arrival times to zero in jobs jen
+    1. SRTF
+    2. Priority
+    3. Simulation
+        - Will need to create script that will run a bunch of different simulations
+        - with different parameters on different files, and output/display results
+        - needed for calculations.
+        - For every change made to the parameters, run every scheduler on it?
+    4. Analyze Results (Avg wait, Turnaround time, etc)
+    5. Write up
+    6. Discussion Questions
 
 
 Discussion Questions:
-
-Why is it valuable to separate the scheduler logic from the visualization layer?
-How could this design be extended to run two schedulers at once (for comparison)?
-What information should the visualizer not have access to, and why?
+    Why is it valuable to separate the scheduler logic from the visualization layer?
+    How could this design be extended to run two schedulers at once (for comparison)?
+    What information should the visualizer not have access to, and why?
