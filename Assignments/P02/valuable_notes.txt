@@ -1,7 +1,7 @@
 
 
 Left to do:
-    1. SRTF
+    1. SRTF DONE
     2. Priority
     3. Simulation
         - Will need to create script that will run a bunch of different simulations

@@ -1,6 +1,7 @@
 import json
 import sys
 from cmd_pkg import *
+from gen_jobs import generate_jobs
 
 # ---------------------------------------
 # Load JSON into Process objects
