@@ -2,7 +2,7 @@
 
 Left to do:
     1. SRTF DONE
-    2. Priority
+    2. Priority DONE
     3. Simulation
         - Will need to create script that will run a bunch of different simulations
         - with different parameters on different files, and output/display results
@@ -17,3 +17,7 @@ Discussion Questions:
     Why is it valuable to separate the scheduler logic from the visualization layer?
     How could this design be extended to run two schedulers at once (for comparison)?
     What information should the visualizer not have access to, and why?
+
+
+Keep in Mind:
+    

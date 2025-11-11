@@ -20,10 +20,10 @@ def generate_timestamp():
 # Generate a short unique ID for output files
 # ----------------------------------------------------------
 def generate_outfile_id():
-    with open("fid", "r") as f:
+    with open("gen_jobs/fid", "r") as f:
         fid = int(f.read().strip())
     new_fid = fid + 1
-    with open("fid", "w") as f:
+    with open("gen_jobs/fid", "w") as f:
         f.write(str(new_fid))
     return str(new_fid).zfill(4)
 
@@ -31,7 +31,7 @@ def generate_outfile_id():
 # ----------------------------------------------------------
 # Load user class templates
 # ----------------------------------------------------------
-def load_user_classes(file_path="job_classes.json"):
+def load_user_classes(file_path="gen_jobs/job_classes.json"):
     with open(file_path, "r") as f:
         return json.load(f)
 
@@ -118,6 +118,7 @@ def batch_arrivals(n):
     times = [max(0, int(round(random.gauss(mu, sigma)))) for _ in range(n)]
     return sorted(times)
 
+
 def zero_arrivals(n):
     '''
     All processes arrive at time zero.
@@ -194,7 +195,7 @@ def generate_process(user_class, max_bursts=20):
 # ----------------------------------------------------------
 # Generate N processes across classes
 # ----------------------------------------------------------
-def generate_processes(user_classes, n=100):
+def generate_processes(user_classes, n=100, mode="zero"):
     processes = []
 
     total_rate = sum(cls["arrival_rate"] for cls in user_classes)
@@ -220,19 +221,41 @@ def determine_load(dev_load):
     '''
     
     if dev_load == "cpu":
-        file = "job_classes_cpu_heavy.json"
+        file = "gen_jobs/job_classes_cpu_heavy.json"
     elif dev_load == "io":
-        file = "job_classes_io_heavy.json"
+        file = "gen_jobs/job_classes_io_heavy.json"
     elif dev_load == "balanced":
-        file = "job_classes_balanced.json"
+        file = "gen_jobs/job_classes_balanced.json"
     elif dev_load == "net":
-        file = "job_classes_net_heavy.json"
+        file = "gen_jobs/job_classes_net_heavy.json"
     elif dev_load == "dl":
-        file = "job_classes_dl_ul_heavy.json"
+        file = "gen_jobs/job_classes_dl_ul_heavy.json"
     else:
-        file = "job_classes.json"
+        file = "gen_jobs/job_classes.json"
 
     return file
+
+
+def generate_jobs_file(num_processes=10, arrival_time='zero', device_load='default'):
+    """Generates a job JSON file and returns its path."""
+    
+    file = determine_load(device_load)
+    user_classes = load_user_classes(file)
+
+    processes = generate_processes(user_classes, num_processes, arrival_time)
+    
+    # Save to file
+    out_file = Path(f"job_jsons/process_file_{generate_outfile_id()}.json")
+    #out_file.parent.mkdir(exist_ok=True)
+    with open(out_file, "w") as f:
+        json.dump(processes, f, indent=2)
+
+    print()
+    print(f"{len(processes)} processes with saved to {out_file}")
+    print(f"Processes properties: Arrival times: {arrival_time} | Device Load: {device_load}")
+    
+    
+    return str(out_file)
 
 
 def parse_value(value):
@@ -311,4 +334,7 @@ if __name__ == "__main__":
     out_file = Path(f"../job_jsons/process_file_{generate_outfile_id()}.json")
     with open(out_file, "w") as f:
         json.dump(processes, f, indent=2)
+        
+        
     print(f"\n✅ {len(processes)} processes saved to {out_file}")
+    print(f"Processes properties: Arrival times: {mode} | Device Load {load}.")
