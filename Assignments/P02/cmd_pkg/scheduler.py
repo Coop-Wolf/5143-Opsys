@@ -399,3 +399,17 @@ class Scheduler:
         )
         
         return stats    # allows you to write it to file
+    
+    def print_scheduler_stats_csv(self):
+        """Return scheduler statistics as a dictionary for CSV purposes."""
+        
+        stats = {
+            "Scheduler": self.name,
+            "Throughput": self.throughput,
+            "Average Response Time": self.avg_response_time,
+            "Context Switches": self.context_switches,
+            "CPU Utilization": self.cpu_utilization,
+            "Average Waiting Time": self.avg_waiting_time,
+            "Average Turnaround Time": self.avg_turnaround_time
+        }
+        return stats

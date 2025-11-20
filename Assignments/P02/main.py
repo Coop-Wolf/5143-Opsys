@@ -255,16 +255,16 @@ if __name__ == "__main__":
     stats = sched.print_scheduler_stats()
     print(stats)
     
-    # Write stats to a file
-    with open("FileNum26_Analysis.txt", "a") as f:
+    # Write stats to a text file
+    with open(f"FileNum{file_num}_Analysis.txt", "a") as f:
         f.write(stats)
         f.write("\n\n")
 
     # Export structured logs
-    if file_num:
-        sched.export_json(f"./timelines/timeline{str(timeline_count).zfill(4)}_{scheduler}_{file_num}.json")
-        sched.export_csv(f"./timelines/timeline{str(timeline_count).zfill(4)}_{scheduler}_{file_num}.csv")
-    else:
-        sched.export_json(f"./timelines/timeline{str(timeline_count).zfill(4)}_{scheduler}_{jobs_count}.json")
-        sched.export_csv(f"./timelines/timeline{str(timeline_count).zfill(4)}_{scheduler}_{jobs_count}.csv")
+    # if file_num:
+    #     sched.export_json(f"./timelines/timeline{str(timeline_count).zfill(4)}_{scheduler}_{file_num}.json")
+    #     sched.export_csv(f"./timelines/timeline{str(timeline_count).zfill(4)}_{scheduler}_{file_num}.csv")
+    # else:
+    #     sched.export_json(f"./timelines/timeline{str(timeline_count).zfill(4)}_{scheduler}_{jobs_count}.json")
+    #     sched.export_csv(f"./timelines/timeline{str(timeline_count).zfill(4)}_{scheduler}_{jobs_count}.csv")
     clock.reset()
