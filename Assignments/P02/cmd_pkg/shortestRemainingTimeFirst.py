@@ -38,6 +38,11 @@ class ShortestRemainingTimeFirst(Scheduler):
         Advance the scheduler by one time unit
         Returns: None
         """
+        for p in self.ready_queue:
+            p.wait_time += 1        # Increment wait time for processes in ready queue
+        for p in self.wait_queue:
+            p.io_time += 1          # Increment I/O time for processes in wait queue
+
         # Iterate over each CPU and tick (decrement burst time) by 1 if not idle
         for cpu in self.cpus:
 
@@ -82,6 +87,8 @@ class ShortestRemainingTimeFirst(Scheduler):
                 # No more bursts, process is finished
                 else:
                     proc.state = "finished"
+                    proc.finish_time = self.clock.now()
+                    proc.turnaround_time = proc.finish_time - proc.arrival_time
                     self.finished.append(proc)
 
                     # logs event of process finishing all bursts
@@ -131,6 +138,8 @@ class ShortestRemainingTimeFirst(Scheduler):
                 # else process is finished
                 else:
                     proc.state = "finished"
+                    proc.finish_time = self.clock.now()
+                    proc.turnaround_time = proc.finish_time - proc.arrival_time
                     self.finished.append(proc)
 
                     # logs event of process finishing all bursts
@@ -152,6 +161,11 @@ class ShortestRemainingTimeFirst(Scheduler):
 
                 # Assign process to CPU
                 cpu.assign(proc)
+                self.context_switches += 1
+                # Record process's first_run if it hasn't already been
+                if proc.first_run is None:
+                    proc.first_run = self.clock.now()
+                    proc.response_time = proc.first_run - proc.arrival_time
 
                 # Log the dispatch event
                 self._record(
@@ -188,6 +202,7 @@ class ShortestRemainingTimeFirst(Scheduler):
 
                     new_proc = self.ready_queue.popleft()
                     cpu.assign(new_proc)
+                    self.context_switches += 1
 
                     self._record(
                         f"{new_proc.pid} preempt ready queue → CPU{cpu.cid}",

@@ -1,4 +1,3 @@
-# ---------------------------------------
 class Process:
     """
     Represents a process with CPU and I/O bursts
@@ -21,6 +20,14 @@ class Process:
         self.priority = priority
         self.state = "new"
         self.arrival_time = arrival_time
+
+        self.wait_time = 0          # Total time spent waiting in wait queue or ready queue
+        self.io_time = 0            # Total I/O time used
+        self.finish_time = 0        # Time process finishes
+        self.cpu_time = 0           # Total CPU time used
+        self.first_run = None       # Clock time of first run
+        self.turnaround_time = 0    # Total time from arrival to completion
+        self.response_time = 0      # time from arrival to first run
 
     def current_burst(self):
         """Get the current burst"""

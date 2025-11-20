@@ -1,4 +1,3 @@
-# ---------------------------------------
 class CPU:
     """
     Represents a CPU device
@@ -18,6 +17,8 @@ class CPU:
         self.cid = cid
         self.clock = clock
         self.current = None
+        self.busy = 0
+        self.available = 0
 
     def is_busy(self):
         """Check if the CPU is currently busy"""
@@ -34,6 +35,7 @@ class CPU:
         Returns:
              the process if it finished its CPU burst, else None
         """
+        self.available += 1
         if not self.current:
             return None
         # Process the current burst
@@ -41,6 +43,7 @@ class CPU:
         # If it's a CPU burst, decrement its time
         if burst and "cpu" in burst:
             burst["cpu"] -= 1
+            self.busy += 1
             # If the burst is done, advance to the next one (could be CPU or IO or done)
             if burst["cpu"] == 0:
                 self.current.advance_burst()  # Move to the next burst

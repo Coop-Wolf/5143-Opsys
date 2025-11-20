@@ -49,6 +49,16 @@ class Scheduler:
         self.events = []  # structured log for export
         self.verbose = verbose  # if True, print log entries to console
         self.processes = processes  # input file of processes
+        
+        self.throughput = 0         # throughput time
+        self.total_time_run = 0     # total scheduler simulation time
+        self.context_switches = 0   # number of context switches
+        self.cpu_utilization = 0    # ratio of CPU time used to CPU time available
+        self.cpu_used = 0
+        self.cpu_available = 0
+        self.avg_waiting_time = 0
+        self.avg_turnaround_time = 0
+        self.avg_response_time = 0
 
     def add_process(self, process):
         """
@@ -135,6 +145,12 @@ class Scheduler:
         Advance the scheduler by one time unit
         Returns: None
         """
+        
+        for p in self.ready_queue:
+            p.wait_time += 1        # Increment wait time for processes in ready queue
+        for p in self.wait_queue:
+            p.io_time += 1          # Increment I/O time for processes in wait queue
+        
         # Iterate over each CPU and tick (decrement burst time) by 1 if not idle
         for cpu in self.cpus:
 
@@ -173,6 +189,8 @@ class Scheduler:
                 # No more bursts, process is finished
                 else:
                     proc.state = "finished"
+                    proc.finish_time = self.clock.now()
+                    proc.turnaround_time = proc.finish_time - proc.arrival_time
                     self.finished.append(proc)
 
                     # logs event of process finishing all bursts
@@ -206,6 +224,8 @@ class Scheduler:
                 # else process is finished
                 else:
                     proc.state = "finished"
+                    proc.finish_time = self.clock.now()
+                    proc.turnaround_time = proc.finish_time - proc.arrival_time
                     self.finished.append(proc)
 
                     # logs event of process finishing all bursts
@@ -227,6 +247,12 @@ class Scheduler:
 
                 # Assign process to CPU
                 cpu.assign(proc)
+                self.context_switches += 1
+                
+                # If first run, set response time
+                if proc.first_run is None:
+                    proc.first_run = self.clock.now()
+                    proc.response_time = proc.first_run - proc.arrival_time
 
                 # Log the dispatch event
                 self._record(
@@ -297,7 +323,24 @@ class Scheduler:
             and len(self.finished) != config.process_counter
         ):
             self.step()
-
+            
+        else:
+            for cpu in self.cpus:
+                self.cpu_used = cpu.busy
+                self.cpu_available = cpu.available
+            self.cpu_utilization = self.cpu_used / self.cpu_available
+            temp_wt = 0
+            temp_tt = 0
+            temp_rt = 0
+            for proc in self.finished:
+                temp_wt += proc.wait_time
+                temp_tt += proc.turnaround_time
+                temp_rt += proc.response_time
+            self.avg_waiting_time = temp_wt / len(self.finished)
+            self.avg_turnaround_time = temp_tt / len(self.finished)
+            self.avg_response_time = temp_rt / len(self.finished)
+            self.throughput=len(self.finished) / self.clock.now()
+            
     def timeline(self):
         """Return the human-readable log as a single string"""
         return "\n".join(self.log)
@@ -328,3 +371,19 @@ class Scheduler:
             writer.writerows(self.events)
         if self.verbose:
             print(f"✅ Timeline exported to {filename}")
+    
+    # ---- Statistics ----
+    def print_stats(self):
+        '''Print statistics for all finished processes'''
+        print("\n--- Process Statistics ---")
+        raw_data = []
+        for p in self.finished:
+            p.turnaround_time = p.end_time - p.start_time
+            raw_data.append(
+                f"[{p.pid}: Start={p.start_time}, Wait={p.wait_time}, Turnaround={p.turnaround_time} Run={p.runtime}, I/O={p.io_time}, InitCpuBurst={p.init_cpu_bursts}, InitIoBurst={p.init_io_bursts}, TotalBursts={p.TotalBursts}]"
+            )
+
+    def print_scheduler_stats(self):
+        '''Print pertinent scheduler statistics'''
+        print("\n--- Scheduler Statistics ---")
+        print(f"Throughput: {self.throughput:.5f}\nAverage Response Time: {self.avg_response_time:.2f}\nContext Switches: {self.context_switches}\nCPU Utilization: {self.cpu_utilization:.2f}\nAverage Waiting Time: {self.avg_waiting_time:.2f}\nAverage Turnaround Time: {self.avg_turnaround_time:.2f}")
