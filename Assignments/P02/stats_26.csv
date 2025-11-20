@@ -1,3 +1,8 @@
+Process File: 25,,,,,,,,
+IO Heavy,,,,,,,,
+Processes: 50,,,,,,,,
+Arrival Times: 0,,,,,,,,
+,,,,,,,,
 Configuration,Scheduler,Throughput,Avg Response Time,Context Switches,CPU Utilization,Avg Waiting Time,Avg Turnaround Time
 1 CPU 1 IO,First Come First Serve,0.03054,108.86,357,0.92,677.36,1285.76
 1 CPU 1 IO,Round Robin,0.02897,86.30,503,0.88,500.96,1232.36

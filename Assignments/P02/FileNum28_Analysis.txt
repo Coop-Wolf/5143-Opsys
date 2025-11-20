@@ -1,0 +1,214 @@
+Processes File:
+    50 processes
+    0 arrival times
+    net heavy
+
+
+
+    === Simulation with 1 CPU(s) and 1 IO device(s) ===
+
+        --- First Come First Serve Scheduler Statistics ---
+        Throughput: 0.02025
+        Average Response Time: 154.68
+        Context Switches: 380
+        CPU Utilization: 0.90
+        Average Waiting Time: 1242.02
+        Average Turnaround Time: 1948.72
+
+
+
+        --- Round Robin Scheduler Statistics ---
+        Throughput: 0.01944
+        Average Response Time: 93.84
+        Context Switches: 701
+        CPU Utilization: 0.86
+        Average Waiting Time: 987.08
+        Average Turnaround Time: 1930.00
+
+
+
+        --- Shortest Job First Scheduler Statistics ---
+        Throughput: 0.02028
+        Average Response Time: 401.24
+        Context Switches: 380
+        CPU Utilization: 0.90
+        Average Waiting Time: 634.58
+        Average Turnaround Time: 1565.76
+
+
+
+        --- Shortest Remaining Time First Scheduler Statistics ---
+        Throughput: 0.02028
+        Average Response Time: 371.14
+        Context Switches: 408
+        CPU Utilization: 0.90
+        Average Waiting Time: 621.92
+        Average Turnaround Time: 1584.82
+
+
+
+        --- Priority Scheduler Statistics ---
+        Throughput: 0.01983
+        Average Response Time: 1024.24
+        Context Switches: 380
+        CPU Utilization: 0.88
+        Average Waiting Time: 1052.60
+        Average Turnaround Time: 1514.60
+
+
+
+    === Simulation with 1 CPU(s) and 2 IO device(s) ===
+
+        --- First Come First Serve Scheduler Statistics ---
+        Throughput: 0.02243
+        Average Response Time: 154.68
+        Context Switches: 380
+        CPU Utilization: 1.00
+        Average Waiting Time: 1812.46
+        Average Turnaround Time: 1911.48
+
+
+
+        --- Round Robin Scheduler Statistics ---
+        Throughput: 0.02248
+        Average Response Time: 93.84
+        Context Switches: 701
+        CPU Utilization: 1.00
+        Average Waiting Time: 1694.30
+        Average Turnaround Time: 1799.66
+
+
+
+        --- Shortest Job First Scheduler Statistics ---
+        Throughput: 0.02204
+        Average Response Time: 557.12
+        Context Switches: 380
+        CPU Utilization: 0.98
+        Average Waiting Time: 1033.60
+        Average Turnaround Time: 1130.16
+
+
+
+        --- Shortest Remaining Time First Scheduler Statistics ---
+        Throughput: 0.02204
+        Average Response Time: 516.52
+        Context Switches: 411
+        CPU Utilization: 0.98
+        Average Waiting Time: 1053.98
+        Average Turnaround Time: 1150.62
+
+
+
+        --- Priority Scheduler Statistics ---
+        Throughput: 0.02236
+        Average Response Time: 1170.76
+        Context Switches: 380
+        CPU Utilization: 0.99
+        Average Waiting Time: 1214.66
+        Average Turnaround Time: 1310.20
+
+
+
+    === Simulation with 2 CPU(s) and 1 IO device(s) ===
+
+        --- First Come First Serve Scheduler Statistics ---
+        Throughput: 0.02039
+        Average Response Time: 75.14
+        Context Switches: 380
+        CPU Utilization: 0.28
+        Average Waiting Time: 225.12
+        Average Turnaround Time: 1715.74
+
+
+
+        --- Round Robin Scheduler Statistics ---
+        Throughput: 0.02008
+        Average Response Time: 45.96
+        Context Switches: 701
+        CPU Utilization: 0.27
+        Average Waiting Time: 234.30
+        Average Turnaround Time: 1749.68
+
+
+
+        --- Shortest Job First Scheduler Statistics ---
+        Throughput: 0.02039
+        Average Response Time: 123.22
+        Context Switches: 380
+        CPU Utilization: 0.27
+        Average Waiting Time: 167.80
+        Average Turnaround Time: 1706.58
+
+
+
+        --- Shortest Remaining Time First Scheduler Statistics ---
+        Throughput: 0.02039
+        Average Response Time: 118.88
+        Context Switches: 417
+        CPU Utilization: 0.30
+        Average Waiting Time: 162.94
+        Average Turnaround Time: 1709.34
+
+
+
+        --- Priority Scheduler Statistics ---
+        Throughput: 0.02033
+        Average Response Time: 249.06
+        Context Switches: 380
+        CPU Utilization: 0.27
+        Average Waiting Time: 252.14
+        Average Turnaround Time: 1665.78
+
+
+
+    === Simulation with 2 CPU(s) and 2 IO device(s) ===
+
+        --- First Come First Serve Scheduler Statistics ---
+        Throughput: 0.03978
+        Average Response Time: 75.14
+        Context Switches: 380
+        CPU Utilization: 0.86
+        Average Waiting Time: 583.62
+        Average Turnaround Time: 977.82
+
+
+
+        --- Round Robin Scheduler Statistics ---
+        Throughput: 0.03831
+        Average Response Time: 45.96
+        Context Switches: 701
+        CPU Utilization: 0.80
+        Average Waiting Time: 463.04
+        Average Turnaround Time: 969.48
+
+
+
+        --- Shortest Job First Scheduler Statistics ---
+        Throughput: 0.04003
+        Average Response Time: 193.36
+        Context Switches: 380
+        CPU Utilization: 0.85
+        Average Waiting Time: 302.94
+        Average Turnaround Time: 798.10
+
+
+
+        --- Shortest Remaining Time First Scheduler Statistics ---
+        Throughput: 0.04010
+        Average Response Time: 177.38
+        Context Switches: 435
+        CPU Utilization: 0.89
+        Average Waiting Time: 294.62
+        Average Turnaround Time: 802.92
+
+
+
+        --- Priority Scheduler Statistics ---
+        Throughput: 0.03971
+        Average Response Time: 488.66
+        Context Switches: 380
+        CPU Utilization: 0.85
+        Average Waiting Time: 512.54
+        Average Turnaround Time: 770.38
+
+
