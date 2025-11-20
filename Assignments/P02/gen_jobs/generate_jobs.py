@@ -354,7 +354,7 @@ if __name__ == "__main__":
         print(json.dumps(p, indent=2))
 
     # Save to file
-    out_file = Path(f"../job_jsons/process_file_{generate_outfile_id()}.json")
+    out_file = Path(f"../job_jsons/{load}/process_file_{generate_outfile_id()}.json")
     with open(out_file, "w") as f:
         json.dump(processes, f, indent=2)
         

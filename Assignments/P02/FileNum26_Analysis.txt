@@ -1,0 +1,6 @@
+Processes File:
+    50 processes
+    0 arrival times
+    io heavy
+
+    === Simulation with 1 CPU(s) and 1 IO device(s) ===

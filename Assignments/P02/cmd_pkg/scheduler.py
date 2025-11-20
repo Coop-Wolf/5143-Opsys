@@ -43,6 +43,8 @@ class Scheduler:
 
         # uses a list comprehension to create a list of IODevice objects
         self.io_devices = [IODevice(did=i, clock=self.clock) for i in range(num_ios)]
+        
+        self.name = "First Come First Serve"
 
         self.finished = []  # list of finished processes
         self.log = []  # human-readable + snapshots
@@ -384,6 +386,16 @@ class Scheduler:
             )
 
     def print_scheduler_stats(self):
-        '''Print pertinent scheduler statistics'''
-        print("\n--- Scheduler Statistics ---")
-        print(f"Throughput: {self.throughput:.5f}\nAverage Response Time: {self.avg_response_time:.2f}\nContext Switches: {self.context_switches}\nCPU Utilization: {self.cpu_utilization:.2f}\nAverage Waiting Time: {self.avg_waiting_time:.2f}\nAverage Turnaround Time: {self.avg_turnaround_time:.2f}")
+        """Return and print scheduler statistics."""
+        
+        stats = (
+            f"\n--- {self.name} Scheduler Statistics ---\n"
+            f"Throughput: {self.throughput:.5f}\n"
+            f"Average Response Time: {self.avg_response_time:.2f}\n"
+            f"Context Switches: {self.context_switches}\n"
+            f"CPU Utilization: {self.cpu_utilization:.2f}\n"
+            f"Average Waiting Time: {self.avg_waiting_time:.2f}\n"
+            f"Average Turnaround Time: {self.avg_turnaround_time:.2f}\n"
+        )
+        
+        return stats    # allows you to write it to file

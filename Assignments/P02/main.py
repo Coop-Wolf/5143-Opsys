@@ -140,6 +140,9 @@ if __name__ == "__main__":
     
     # quantum size (default 4)
     quantum = args.get("quantum", 4)
+    
+    # Want to print timeline
+    show = args.get("show", False)
 
     # Get parameters used for generating process file, if user wants
     # To generate file and simulate on it at the same time.
@@ -147,12 +150,21 @@ if __name__ == "__main__":
     arrival_time = args.get("arrival_time", "zero")
     device_load = args.get("device_load", "default")
     
+    # New folder structure for job jobs
+    # Here user with enter the folder name:
+    #   cpu, io, balanced, default, net, dl
+    path = args.get("path", None)
+    
 
     # If user gave a file_num to run simluation on, use it
     if file_num:
         
         # Load processes from JSON file
-        processes = load_processes_from_json(
+        if path:
+            processes = load_processes_from_json(
+            f"./job_jsons/{path}/process_file_{str(file_num).zfill(4)}.json", limit=limit)
+        else:
+            processes = load_processes_from_json(
             f"./job_jsons/process_file_{str(file_num).zfill(4)}.json", limit=limit)
         
     # User wants a process file to be generated for them
@@ -168,7 +180,7 @@ if __name__ == "__main__":
 
     # Initialize scheduler
     if scheduler.lower() == "rr":
-        print(f"Using Round Robin with quantum={quantum}")
+        print(f"Using Round Robin with quantum = {quantum}")
         sched = RoundRobinScheduler(
             num_cpus=cpus,
             num_ios=ios,
@@ -201,7 +213,7 @@ if __name__ == "__main__":
         aging_delta = args.get("aging_delta", 1)
         print(
             f"Using Priority scheduler "
-            f"(aging={aging}, interval={aging_interval}, delta={aging_delta})"
+            f"(aging={aging}, interval = {aging_interval}, delta = {aging_delta})"
         )
         sched = PriorityScheduler(
             num_cpus=cpus,
@@ -226,10 +238,12 @@ if __name__ == "__main__":
     sched.run()
 
     # Print final log and stats
-    print("\n--- Final Log ---")
-    print(sched.timeline())
-    print(f"\nTime elapsed: {sched.clock.now() - 1}")
-    print(f"Finished: {[p.pid for p in sched.finished]}")
+    # If user wants to see timeline printed to console
+    if show:
+        print("\n--- Final Log ---")
+        print(sched.timeline())
+        print(f"\nTime elapsed: {sched.clock.now() - 1}")
+        print(f"Finished: {[p.pid for p in sched.finished]}")
 
     # Increment count of timelines
     timeline_count = increment_timeline_count()
@@ -238,7 +252,13 @@ if __name__ == "__main__":
     jobs_count = get_gen_jobs_count()
     
     # Print scheduler stats
-    sched.print_scheduler_stats()
+    stats = sched.print_scheduler_stats()
+    print(stats)
+    
+    # Write stats to a file
+    with open("FileNum26_Analysis.txt", "a") as f:
+        f.write(stats)
+        f.write("\n\n")
 
     # Export structured logs
     if file_num:

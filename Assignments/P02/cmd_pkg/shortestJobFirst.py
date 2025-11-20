@@ -14,6 +14,7 @@ class ShortestJobFirst(Scheduler):
 
     def __init__(self, num_cpus=1, num_ios=1, verbose=True, processes=None):
         super().__init__(num_cpus=num_cpus, num_ios=num_ios, verbose=verbose, processes=processes)
+        self.name = "Shortest Job First"
         
     
     def add_process(self, process):
