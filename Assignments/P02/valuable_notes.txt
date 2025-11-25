@@ -14,4 +14,7 @@ Left to do:
 Discussion Questions:
     Why is it valuable to separate the scheduler logic from the visualization layer?
     How could this design be extended to run two schedulers at once (for comparison)?
+        The visualizer can accept two csv files and run them side by side on the screen.
     What information should the visualizer not have access to, and why?
+        The visualizer should not know or have access to how the different schedulers work
+        or what information they have, the visualizer should only know what to display.
