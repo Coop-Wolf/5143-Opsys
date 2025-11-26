@@ -256,7 +256,7 @@ if __name__ == "__main__":
     print(stats)
     
     # Write stats to a text file
-    with open(f"FileNum{file_num}_Analysis.txt", "a") as f:
+    with open(f"../analysis/FileNum{file_num}_Analysis.txt", "a") as f:
         f.write(stats)
         f.write("\n\n")
 

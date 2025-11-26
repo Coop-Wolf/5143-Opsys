@@ -1,0 +1,26 @@
+Process File: 28,                              ,           ,                  ,                 ,                ,                 ,                    , 
+Net Heavy       ,                              ,           ,                  ,                 ,                ,                 ,                    , 
+Processes: 50   ,                              ,           ,                  ,                 ,                ,                 ,                    , 
+Arrival Times: 0,                              ,           ,                  ,                 ,                ,                 ,                    , 
+                ,                              ,           ,                  ,                 ,                ,                 ,                    , 
+Configuration   , Scheduler                    , Throughput, Avg Response Time, Context Switches, CPU Utilization, Avg Waiting Time, Avg Turnaround Time
+1 CPU 1 IO      , First Come First Serve       , 0.02025   , 154.68           , 380             , 0.90           , 1242.02         , 1948.72
+1 CPU 1 IO      , Round Robin                  , 0.01944   , 93.84            , 701             , 0.86           , 987.08          , 1930.00
+1 CPU 1 IO      , Shortest Job First           , 0.02028   , 401.24           , 380             , 0.90           , 634.58          , 1565.76
+1 CPU 1 IO      , Shortest Remaining Time First, 0.02028   , 371.14           , 408             , 0.90           , 621.92          , 1584.82
+1 CPU 1 IO      , Priority                     , 0.01983   , 1024.24          , 380             , 0.88           , 1052.60         , 1514.60
+1 CPU 2 IO      , First Come First Serve       , 0.02243   , 154.68           , 380             , 1.00           , 1812.46         , 1911.48
+1 CPU 2 IO      , Round Robin                  , 0.02248   , 93.84            , 701             , 1.00           , 1694.30         , 1799.66
+1 CPU 2 IO      , Shortest Job First           , 0.02204   , 557.12           , 380             , 0.98           , 1033.60         , 1130.16
+1 CPU 2 IO      , Shortest Remaining Time First, 0.02204   , 516.52           , 411             , 0.98           , 1053.98         , 1150.62
+1 CPU 2 IO      , Priority                     , 0.02236   , 1170.76          , 380             , 0.99           , 1214.66         , 1310.20
+2 CPU 1 IO      , First Come First Serve       , 0.02039   , 75.14            , 380             , 0.28           , 225.12          , 1715.74
+2 CPU 1 IO      , Round Robin                  , 0.02008   , 45.96            , 701             , 0.27           , 234.30          , 1749.68
+2 CPU 1 IO      , Shortest Job First           , 0.02039   , 123.22           , 380             , 0.27           , 167.80          , 1706.58
+2 CPU 1 IO      , Shortest Remaining Time First, 0.02039   , 118.88           , 417             , 0.30           , 162.94          , 1709.34
+2 CPU 1 IO      , Priority                     , 0.02033   , 249.06           , 380             , 0.27           , 252.14          , 1665.78
+2 CPU 2 IO      , First Come First Serve       , 0.03978   , 75.14            , 380             , 0.86           , 583.62          , 977.82
+2 CPU 2 IO      , Round Robin                  , 0.03831   , 45.96            , 701             , 0.80           , 463.04          , 969.48
+2 CPU 2 IO      , Shortest Job First           , 0.04003   , 193.36           , 380             , 0.85           , 302.94          , 798.10
+2 CPU 2 IO      , Shortest Remaining Time First, 0.04010   , 177.38           , 435             , 0.89           , 294.62          , 802.92
+2 CPU 2 IO      , Priority                     , 0.03971   , 488.66           , 380             , 0.85           , 512.54          , 770.38

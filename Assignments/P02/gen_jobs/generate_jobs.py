@@ -353,11 +353,16 @@ if __name__ == "__main__":
     for p in processes:
         print(json.dumps(p, indent=2))
 
+    outfile_id = generate_outfile_id()
+
     # Save to file
-    out_file = Path(f"../job_jsons/{load}/process_file_{generate_outfile_id()}.json")
+    out_file = Path(f"../job_jsons/process_file_{outfile_id}.json")
     with open(out_file, "w") as f:
         json.dump(processes, f, indent=2)
-        
-        
     print(f"\n✅ {len(processes)} processes saved to {out_file}")
-    print(f"Processes properties: Arrival times: {mode} | Device Load {load}.")
+    print(f"Processes properties: Arrival times: {mode} | Device load {load}.")
+    
+    # Write stats to a text file
+    with open(f"../job_jsons/proccess_file_INFO.txt", "a") as f:
+        f.write(f"Process file {outfile_id} properties: {len(processes)} processes | Arrival times: {mode} | Device load {load}.")
+        f.write("\n\n")

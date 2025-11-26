@@ -1,6 +1,0 @@
-25 - cpu heavy, zero arrival time, 50 processes
-26 - io heavy, zero arrival time, 50 processes
-27 - dl heavy, zero arrival time, 50 processes
-28 - net heavy, zero arrival time, 50 processes
-29 - balanced , zero arrival time, 50 processes
-30 - default, zero arrival time, 50 processes
