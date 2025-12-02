@@ -1,0 +1,2 @@
+IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
+2,2,Shortest Remaining Time First,0.026096033402922755,89.36,474,0.6009438909281594,79.54,1092.5

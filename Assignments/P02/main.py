@@ -1,5 +1,6 @@
 import json
 import sys
+import csv
 from cmd_pkg import *
 from gen_jobs import generate_jobs
 
@@ -255,10 +256,35 @@ if __name__ == "__main__":
     stats = sched.print_scheduler_stats()
     print(stats)
     
+    
+    # Export stats to CSV file
+    csv_stats = sched.print_scheduler_stats_csv()  # get stats dictionary
+    
+    
     # Write stats to a text file
-    with open(f"../analysis/FileNum{file_num}_Analysis.txt", "a") as f:
-        f.write(stats)
-        f.write("\n\n")
+    if file_num:
+        # Write TXT
+        with open(f"./analysis/FileNum{file_num}_Analysis.txt", "a") as f:
+            f.write(stats)
+            f.write("\n\n")
+            
+        # Write CSV
+        with open(f"./analysis/FileNum{file_num}_Analysis.csv", "a", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=csv_stats.keys())
+            writer.writeheader()
+            writer.writerow(csv_stats)
+            
+    else:
+        # Write TXT
+        with open(f"./analysis/FileNum{jobs_count}_Analysis.txt", "a") as f:
+            f.write(stats)
+            f.write("\n\n")
+            
+        # Write CSV
+        with open(f"./analysis/FileNum{jobs_count}_Analysis.csv", "a", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=csv_stats.keys())
+            writer.writeheader()
+            writer.writerow(csv_stats)
 
     # Export structured logs
     # if file_num:

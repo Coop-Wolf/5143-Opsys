@@ -404,6 +404,8 @@ class Scheduler:
         """Return scheduler statistics as a dictionary for CSV purposes."""
         
         stats = {
+            "IO's": len(self.io_devices),
+            "CPU's": len(self.cpus),
             "Scheduler": self.name,
             "Throughput": self.throughput,
             "Average Response Time": self.avg_response_time,

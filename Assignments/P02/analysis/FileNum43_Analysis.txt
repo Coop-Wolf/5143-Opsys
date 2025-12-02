@@ -1,0 +1,10 @@
+
+--- Shortest Remaining Time First Scheduler Statistics ---
+Throughput: 0.02558
+Average Response Time: 54.66
+Context Switches: 478
+CPU Utilization: 0.66
+Average Waiting Time: 65.42
+Average Turnaround Time: 1117.94
+
+
