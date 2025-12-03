@@ -18,3 +18,12 @@ Discussion Questions:
     What information should the visualizer not have access to, and why?
         The visualizer should not know or have access to how the different schedulers work
         or what information they have, the visualizer should only know what to display.
+
+Next Push to PROD:
+    edit print_scheduler_stats_csv() function in base.py to include num ios and cpus
+    edit main by adding csv_stats variable and writing to csv file
+
+    Test Runs:
+        main is able to generate its own jobs file
+        run small simulation to check things are outputted to csv file.
+        generate another job from generate_jobs.py

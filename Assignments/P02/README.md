@@ -44,25 +44,3 @@ The goal of this project is to model how operating systems manage CPU and I/O sc
 | **config.py**          | Contains global configuration variables.                         |
 | **scheduler.py**       | The main driver script that runs the entire simulation.          |
 | **README.md**          | Project documentation and instructions.                          |
-
-
-## 🧩 Project Structure
-
-CPU-IO-Scheduler/
-├── cmd_pkg/
-│ ├── init.py
-│ ├── clock.py
-│ ├── cpu.py
-│ ├── iodevice.py
-│ ├── process.py
-│ └── scheduler.py
-│
-├── job_generator/
-├── job_jsons/
-├── timelines/
-│
-├── config.py
-├── scheduler.py
-└── README.md
-
-
