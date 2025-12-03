@@ -1,80 +1,21 @@
 IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 1,1,First Come First Serve,0.013904338153503892,88.92,191,0.7308120133481646,570.96,1306.96
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 1,1,Round Robin,0.013276686139139671,45.72,406,0.6978226234731811,491.16,1332.44
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 1,1,Shortest Job First,0.014164305949008499,204.8,191,0.7444759206798867,353.04,1111.48
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 1,1,Shortest Remaining Time First,0.014164305949008499,196.32,211,0.7444759206798867,361.84,1111.64
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 1,1,Priority,0.014124293785310734,359.6,191,0.7423728813559322,381.24,1105.88
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 2,1,First Come First Serve,0.019011406844106463,88.92,191,0.9992395437262357,972.04,1104.8
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 2,1,Round Robin,0.01876876876876877,45.72,406,0.9864864864864865,935.44,1078.28
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 2,1,Shortest Job First,0.018628912071535022,298.24,191,0.9791356184798807,611.68,738.88
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 2,1,Shortest Remaining Time First,0.018422991893883568,280.68,214,0.9683124539425203,612.6,743.56
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 2,1,Priority,0.01885369532428356,550.48,191,0.9909502262443439,612.56,747.16
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 1,2,First Come First Serve,0.01403705783267827,42.0,191,0.1982032565974172,129.04,1269.12
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 1,2,Round Robin,0.013804527885146328,21.88,406,0.16344561016013254,138.72,1282.88
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 1,2,Shortest Job First,0.014204545454545454,67.64,191,0.19715909090909092,98.0,1213.92
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 1,2,Shortest Remaining Time First,0.014188422247446084,67.36,206,0.19296254256526674,100.04,1204.56
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 1,2,Priority,0.014124293785310734,119.12,191,0.19887005649717515,121.84,1216.8
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 2,2,First Come First Serve,0.027085590465872156,42.0,191,0.628385698808234,244.76,664.88
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 2,2,Round Robin,0.02598752598752599,21.88,406,0.5706860706860707,217.68,677.28
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 2,2,Shortest Job First,0.027808676307007785,94.6,191,0.6629588431590656,164.32,567.16
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 2,2,Shortest Remaining Time First,0.02771618625277162,88.88,222,0.6707317073170732,163.08,570.88
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-2,2,Priority,0.027085590465872156,166.44,191,0.6143011917659805,182.64,576.04
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,1,First Come First Serve,0.013904338153503892,88.92,191,0.7308120133481646,570.96,1306.96
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,1,Round Robin,0.013276686139139671,45.72,406,0.6978226234731811,491.16,1332.44
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,1,Shortest Job First,0.014164305949008499,204.8,191,0.7444759206798867,353.04,1111.48
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,1,Shortest Remaining Time First,0.014164305949008499,196.32,211,0.7444759206798867,361.84,1111.64
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,1,Priority,0.014124293785310734,359.6,191,0.7423728813559322,381.24,1105.88
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-2,1,First Come First Serve,0.019011406844106463,88.92,191,0.9992395437262357,972.04,1104.8
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-2,1,Round Robin,0.01876876876876877,45.72,406,0.9864864864864865,935.44,1078.28
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-2,1,Shortest Job First,0.018628912071535022,298.24,191,0.9791356184798807,611.68,738.88
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-2,1,Shortest Remaining Time First,0.018422991893883568,280.68,214,0.9683124539425203,612.6,743.56
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-2,1,Priority,0.01885369532428356,550.48,191,0.9909502262443439,612.56,747.16
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,2,First Come First Serve,0.01403705783267827,42.0,191,0.1982032565974172,129.04,1269.12
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,2,Round Robin,0.013804527885146328,21.88,406,0.16344561016013254,138.72,1282.88
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,2,Shortest Job First,0.014204545454545454,67.64,191,0.19715909090909092,98.0,1213.92
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,2,Shortest Remaining Time First,0.014188422247446084,67.36,206,0.19296254256526674,100.04,1204.56
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,2,Priority,0.014124293785310734,119.12,191,0.19887005649717515,121.84,1216.8
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-2,2,First Come First Serve,0.027085590465872156,42.0,191,0.628385698808234,244.76,664.88
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-2,2,Round Robin,0.02598752598752599,21.88,406,0.5706860706860707,217.68,677.28
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-2,2,Shortest Job First,0.027808676307007785,94.6,191,0.6629588431590656,164.32,567.16
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-2,2,Shortest Remaining Time First,0.02771618625277162,88.88,222,0.6707317073170732,163.08,570.88
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
 2,2,Priority,0.027085590465872156,166.44,191,0.6143011917659805,182.64,576.04

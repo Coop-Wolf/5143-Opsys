@@ -3,6 +3,7 @@ import sys
 import csv
 from cmd_pkg import *
 from gen_jobs import generate_jobs
+import os
 
 # ---------------------------------------
 # Load JSON into Process objects
@@ -269,10 +270,16 @@ if __name__ == "__main__":
             f.write("\n\n")
             
         # Write CSV
+        file_exists = os.path.exists(f"./analysis/FileNum{file_num}_Analysis.csv")
+        write_header = not file_exists or os.path.getsize(f"./analysis/FileNum{file_num}_Analysis.csv") == 0
+        
         with open(f"./analysis/FileNum{file_num}_Analysis.csv", "a", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=csv_stats.keys())
-            writer.writeheader()
+            
+            if write_header:
+                writer.writeheader()
             writer.writerow(csv_stats)
+
             
     else:
         # Write TXT
@@ -281,9 +288,14 @@ if __name__ == "__main__":
             f.write("\n\n")
             
         # Write CSV
+        file_exists = os.path.exists(f"./analysis/FileNum{jobs_count}_Analysis.csv")
+        write_header = not file_exists or os.path.getsize(f"./analysis/FileNum{jobs_count}_Analysis.csv") == 0
+        
         with open(f"./analysis/FileNum{jobs_count}_Analysis.csv", "a", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=csv_stats.keys())
-            writer.writeheader()
+            
+            if write_header:
+                writer.writeheader()
             writer.writerow(csv_stats)
 
     # Export structured logs

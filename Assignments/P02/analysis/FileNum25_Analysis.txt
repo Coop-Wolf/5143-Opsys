@@ -210,3 +210,21 @@ Processes File:
         Average Turnaround Time: 1236.74
 
 
+
+--- First Come First Serve Scheduler Statistics ---
+Throughput: 0.01313
+Average Response Time: 175.56
+Context Switches: 404
+CPU Utilization: 0.76
+Average Waiting Time: 919.08
+Average Turnaround Time: 2822.56
+
+
+        --- First Come First Serve Scheduler Statistics ---
+        Throughput: 0.01313
+        Average Response Time: 175.56
+        Context Switches: 404
+        CPU Utilization: 0.76
+        Average Waiting Time: 919.08
+        Average Turnaround Time: 2822.56
+
