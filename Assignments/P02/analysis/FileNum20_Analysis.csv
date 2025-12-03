@@ -1,0 +1,6 @@
+Process File: 20,,,,,,,,
+IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
+10,8,Round Robin,0.02717391304347826,0.0,67,0.0,1.0,106.6
+10,8,Round Robin,0.02717391304347826,0.0,67,0.0,1.0,106.6
+10,8,Round Robin,0.02717391304347826,0.0,67,0.0,1.0,106.6
+10,8,Round Robin,0.02717391304347826,0.0,67,0.0,1.0,106.6

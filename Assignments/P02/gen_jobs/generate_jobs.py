@@ -363,6 +363,6 @@ if __name__ == "__main__":
     print(f"Processes properties: Arrival times: {mode} | Device load {load}.")
     
     # Write stats to a text file
-    with open(f"../job_jsons/proccess_file_INFO.txt", "a") as f:
+    with open(f"../job_jsons/process_file_INFO.txt", "a") as f:
         f.write(f"Process file {outfile_id} properties: {len(processes)} processes | Arrival times: {mode} | Device load {load}.")
         f.write("\n\n")

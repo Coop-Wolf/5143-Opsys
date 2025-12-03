@@ -1,0 +1,20 @@
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.08913
+Average Response Time: 1.78
+Context Switches: 1389
+CPU Utilization: 0.25
+Average Waiting Time: 43.87
+Average Turnaround Time: 130.16
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.08913
+Average Response Time: 1.78
+Context Switches: 1389
+CPU Utilization: 0.25
+Average Waiting Time: 43.87
+Average Turnaround Time: 130.16
+
+

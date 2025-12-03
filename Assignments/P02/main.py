@@ -150,24 +150,12 @@ if __name__ == "__main__":
     # To generate file and simulate on it at the same time.
     num_processes = args.get("num_processes", 10)
     arrival_time = args.get("arrival_time", "zero")
-    device_load = args.get("device_load", "default")
-    
-    # New folder structure for job jobs
-    # Here user with enter the folder name:
-    #   cpu, io, balanced, default, net, dl
-    path = args.get("path", None)
-    
+    device_load = args.get("device_load", "default")    
 
     # If user gave a file_num to run simluation on, use it
     if file_num:
-        
-        # Load processes from JSON file
-        if path:
-            processes = load_processes_from_json(
-            f"./job_jsons/{path}/process_file_{str(file_num).zfill(4)}.json", limit=limit)
-        else:
-            processes = load_processes_from_json(
-            f"./job_jsons/process_file_{str(file_num).zfill(4)}.json", limit=limit)
+        processes = load_processes_from_json(
+        f"./job_jsons/process_file_{str(file_num).zfill(4)}.json", limit=limit)
         
     # User wants a process file to be generated for them
     else:
@@ -273,10 +261,25 @@ if __name__ == "__main__":
         file_exists = os.path.exists(f"./analysis/FileNum{file_num}_Analysis.csv")
         write_header = not file_exists or os.path.getsize(f"./analysis/FileNum{file_num}_Analysis.csv") == 0
         
+        # Get process file information.
+        with open("./job_jsons/process_file_INFO.txt", "r") as file:
+            for line in file:
+                if f"Process file 00{file_num}" in line:
+                    parts = line.strip().split()
+                    proc_count = parts[4]
+                    arr_time = parts[9]
+                    dev_load = parts[13]
+        
         with open(f"./analysis/FileNum{file_num}_Analysis.csv", "a", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=csv_stats.keys())
             
+            # Write header if file doesn't exist or is empty
             if write_header:
+                f.write(f"Process File: {file_num},,,,,,,,\n")
+                f.write(f"Processes: {proc_count},,,,,,,,\n")
+                f.write(f"Device Load: {dev_load},,,,,,,,\n")
+                f.write(f"Arrival Times: {arr_time},,,,,,,,\n")
+                f.write(",,,,,,,,\n")
                 writer.writeheader()
             writer.writerow(csv_stats)
 
@@ -295,6 +298,7 @@ if __name__ == "__main__":
             writer = csv.DictWriter(f, fieldnames=csv_stats.keys())
             
             if write_header:
+                f.write(f"Process File: {jobs_count},Processes: {num_processes},Device Load: {device_load},Arrival Times: {arrival_time},,,,,\n")
                 writer.writeheader()
             writer.writerow(csv_stats)
 

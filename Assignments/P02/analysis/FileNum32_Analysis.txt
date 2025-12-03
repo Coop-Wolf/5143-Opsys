@@ -198,3 +198,153 @@ Average Waiting Time: 140.20
 Average Turnaround Time: 269.90
 
 
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+
+
+--- Round Robin Scheduler Statistics ---
+Throughput: 0.04975
+Average Response Time: 0.70
+Context Switches: 203
+CPU Utilization: 0.06
+Average Waiting Time: 1.70
+Average Turnaround Time: 121.40
+
+

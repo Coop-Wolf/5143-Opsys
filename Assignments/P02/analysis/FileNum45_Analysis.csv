@@ -1,0 +1,3 @@
+Process File: 45,Processes: 75,Device Load: io,Arrival Times: batch,,,,,
+IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
+10,8,Round Robin,0.18427518427518427,9.0,774,0.7142857142857143,110.86666666666666,178.14666666666668
