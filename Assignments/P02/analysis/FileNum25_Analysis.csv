@@ -1,2 +1,0 @@
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-1,1,First Come First Serve,0.013130252100840336,175.56,404,0.7570903361344538,919.08,2822.56

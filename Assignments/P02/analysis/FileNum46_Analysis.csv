@@ -1,4 +1,0 @@
-Process File: 46,Processes: 100,Device Load: default,Arrival Times: hybrid,,,,,
-IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
-10,8,Round Robin,0.08912655971479501,1.78,1389,0.2540106951871658,43.87,130.16
-10,8,Round Robin,0.08912655971479501,1.78,1389,0.2540106951871658,43.87,130.16
