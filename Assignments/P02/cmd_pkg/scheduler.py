@@ -407,11 +407,11 @@ class Scheduler:
             "IO's": len(self.io_devices),
             "CPU's": len(self.cpus),
             "Scheduler": self.name,
-            "Throughput": self.throughput,
-            "Average Response Time": self.avg_response_time,
+            "Throughput": f"{self.throughput:.5f}",
+            "Average Response Time": f"{self.avg_response_time:.2f}",
             "Context Switches": self.context_switches,
-            "CPU Utilization": self.cpu_utilization,
-            "Average Waiting Time": self.avg_waiting_time,
-            "Average Turnaround Time": self.avg_turnaround_time
+            "CPU Utilization": f"{self.cpu_utilization:.2f}",
+            "Average Waiting Time": f"{self.avg_waiting_time:.2f}",
+            "Average Turnaround Time": f"{self.avg_turnaround_time:.2f}"
         }
         return stats

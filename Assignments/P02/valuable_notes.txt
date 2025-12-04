@@ -22,6 +22,7 @@ Discussion Questions:
 Next Push to PROD:
     edit print_scheduler_stats_csv() function in base.py to include num ios and cpus
     edit main by adding csv_stats variable and writing to csv file
+    Change naming from FileNum to Jobs
 
     Test Runs:
         main is able to generate its own jobs file

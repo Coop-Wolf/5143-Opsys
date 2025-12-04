@@ -235,42 +235,39 @@ if __name__ == "__main__":
         print(f"\nTime elapsed: {sched.clock.now() - 1}")
         print(f"Finished: {[p.pid for p in sched.finished]}")
 
+    # Get scheduler stats
+    stats = sched.print_scheduler_stats()
+    print(stats)
+
     # Increment count of timelines
     timeline_count = increment_timeline_count()
     
     # Get count of generated jobs
     jobs_count = get_gen_jobs_count()
     
-    # Print scheduler stats
-    stats = sched.print_scheduler_stats()
-    print(stats)
-    
-    
-    # Export stats to CSV file
-    csv_stats = sched.print_scheduler_stats_csv()  # get stats dictionary
-    
+    # Get scheduler stats
+    csv_stats = sched.print_scheduler_stats_csv()
     
     # Write stats to a text file
     if file_num:
-        # Write TXT
-        with open(f"./analysis/FileNum{file_num}_Analysis.txt", "a") as f:
-            f.write(stats)
-            f.write("\n\n")
             
-        # Write CSV
-        file_exists = os.path.exists(f"./analysis/FileNum{file_num}_Analysis.csv")
-        write_header = not file_exists or os.path.getsize(f"./analysis/FileNum{file_num}_Analysis.csv") == 0
+        # Get path and check if file exists
+        path = f"./analysis/Jobs_{file_num}_Analysis.csv"
+        file_exists = os.path.exists(path)
+        write_header = not file_exists or os.path.getsize(path) == 0
+        
         
         # Get process file information.
-        with open("./job_jsons/process_file_INFO.txt", "r") as file:
+        with open(f"./job_jsons/process_file_INFO.txt", "r") as file:
             for line in file:
                 if f"Process file 00{file_num}" in line:
                     parts = line.strip().split()
                     proc_count = parts[4]
                     arr_time = parts[9]
                     dev_load = parts[13]
-        
-        with open(f"./analysis/FileNum{file_num}_Analysis.csv", "a", newline="") as f:
+                    
+        # Write CSV
+        with open(path, "a", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=csv_stats.keys())
             
             # Write header if file doesn't exist or is empty
@@ -283,22 +280,24 @@ if __name__ == "__main__":
                 writer.writeheader()
             writer.writerow(csv_stats)
 
-            
+    # User didn't give a file num, so using most recent generated job file
     else:
-        # Write TXT
-        with open(f"./analysis/FileNum{jobs_count}_Analysis.txt", "a") as f:
-            f.write(stats)
-            f.write("\n\n")
             
-        # Write CSV
-        file_exists = os.path.exists(f"./analysis/FileNum{jobs_count}_Analysis.csv")
-        write_header = not file_exists or os.path.getsize(f"./analysis/FileNum{jobs_count}_Analysis.csv") == 0
+        # Get path and check if file exists
+        path2 = f"./analysis/Jobs_{jobs_count}_Analysis.csv"
+        file_exists = os.path.exists(path2)
+        write_header = not file_exists or os.path.getsize(path2) == 0
         
-        with open(f"./analysis/FileNum{jobs_count}_Analysis.csv", "a", newline="") as f:
+        #Write CSV
+        with open(path2, "a", newline="") as f:
             writer = csv.DictWriter(f, fieldnames=csv_stats.keys())
             
             if write_header:
-                f.write(f"Process File: {jobs_count},Processes: {num_processes},Device Load: {device_load},Arrival Times: {arrival_time},,,,,\n")
+                f.write(f"Process File: {jobs_count},,,,,,,,\n")
+                f.write(f"Processes: {num_processes},,,,,,,,\n")
+                f.write(f"Device Load: {device_load},,,,,,,,\n")
+                f.write(f"Arrival Times: {arrival_time},,,,,,,,\n")
+                f.write(",,,,,,,,\n")
                 writer.writeheader()
             writer.writerow(csv_stats)
 
