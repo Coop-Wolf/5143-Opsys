@@ -260,7 +260,7 @@ if __name__ == "__main__":
         # Get process file information.
         with open(f"./job_jsons/process_file_INFO.txt", "r") as file:
             for line in file:
-                if f"Process file 00{file_num}" in line:
+                if f"Process file {str(file_num).zfill(4)}" in line:
                     parts = line.strip().split()
                     proc_count = parts[4]
                     arr_time = parts[9]

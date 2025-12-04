@@ -346,7 +346,7 @@ if __name__ == "__main__":
     user_classes = load_user_classes(file)
 
     # Generate 10 demo processes
-    processes = generate_processes(user_classes, n=num_processes)
+    processes = generate_processes(user_classes, n=num_processes, mode=mode)
 
 
     # Pretty print

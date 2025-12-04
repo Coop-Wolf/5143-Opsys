@@ -1,0 +1,456 @@
+[
+  {
+    "pid": "1",
+    "class_id": "C",
+    "priority": 6,
+    "cpu_budget": 27,
+    "cpu_used": 27,
+    "bursts": [
+      {
+        "cpu": 6
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 19
+        }
+      },
+      {
+        "cpu": 5
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "cpu": 8
+      },
+      {
+        "cpu": 2
+      }
+    ],
+    "arrival_time": 6
+  },
+  {
+    "pid": "2",
+    "class_id": "C",
+    "priority": 2,
+    "cpu_budget": 39,
+    "cpu_used": 39,
+    "bursts": [
+      {
+        "cpu": 8
+      },
+      {
+        "cpu": 7
+      },
+      {
+        "cpu": 5
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 17
+        }
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 6
+        }
+      },
+      {
+        "cpu": 7
+      }
+    ],
+    "arrival_time": 14
+  },
+  {
+    "pid": "3",
+    "class_id": "C",
+    "priority": 6,
+    "cpu_budget": 46,
+    "cpu_used": 46,
+    "bursts": [
+      {
+        "cpu": 7
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 17
+        }
+      },
+      {
+        "cpu": 7
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 17
+        }
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "cpu": 9
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 14
+        }
+      },
+      {
+        "cpu": 5
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 11
+        }
+      },
+      {
+        "cpu": 6
+      }
+    ],
+    "arrival_time": 25
+  },
+  {
+    "pid": "4",
+    "class_id": "C",
+    "priority": 2,
+    "cpu_budget": 44,
+    "cpu_used": 44,
+    "bursts": [
+      {
+        "cpu": 4
+      },
+      {
+        "cpu": 9
+      },
+      {
+        "cpu": 4
+      },
+      {
+        "cpu": 4
+      },
+      {
+        "cpu": 7
+      },
+      {
+        "cpu": 2
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 12
+        }
+      },
+      {
+        "cpu": 3
+      },
+      {
+        "cpu": 9
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 8
+        }
+      },
+      {
+        "cpu": 2
+      }
+    ],
+    "arrival_time": 30
+  },
+  {
+    "pid": "5",
+    "class_id": "C",
+    "priority": 4,
+    "cpu_budget": 54,
+    "cpu_used": 54,
+    "bursts": [
+      {
+        "cpu": 9
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 8
+        }
+      },
+      {
+        "cpu": 7
+      },
+      {
+        "cpu": 7
+      },
+      {
+        "cpu": 9
+      },
+      {
+        "cpu": 3
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 11
+        }
+      },
+      {
+        "cpu": 3
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 17
+        }
+      },
+      {
+        "cpu": 4
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 17
+        }
+      },
+      {
+        "cpu": 2
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 18
+        }
+      },
+      {
+        "cpu": 4
+      },
+      {
+        "cpu": 6
+      }
+    ],
+    "arrival_time": 40
+  },
+  {
+    "pid": "6",
+    "class_id": "C",
+    "priority": 6,
+    "cpu_budget": 37,
+    "cpu_used": 37,
+    "bursts": [
+      {
+        "cpu": 3
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 12
+        }
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "cpu": 7
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 16
+        }
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "cpu": 4
+      },
+      {
+        "cpu": 4
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 12
+        }
+      },
+      {
+        "cpu": 7
+      }
+    ],
+    "arrival_time": 50
+  },
+  {
+    "pid": "7",
+    "class_id": "C",
+    "priority": 4,
+    "cpu_budget": 37,
+    "cpu_used": 37,
+    "bursts": [
+      {
+        "cpu": 6
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 13
+        }
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "cpu": 8
+      },
+      {
+        "cpu": 5
+      },
+      {
+        "cpu": 8
+      },
+      {
+        "cpu": 4
+      }
+    ],
+    "arrival_time": 57
+  },
+  {
+    "pid": "8",
+    "class_id": "C",
+    "priority": 6,
+    "cpu_budget": 41,
+    "cpu_used": 41,
+    "bursts": [
+      {
+        "cpu": 5
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 16
+        }
+      },
+      {
+        "cpu": 9
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 19
+        }
+      },
+      {
+        "cpu": 8
+      },
+      {
+        "cpu": 7
+      }
+    ],
+    "arrival_time": 68
+  },
+  {
+    "pid": "9",
+    "class_id": "C",
+    "priority": 6,
+    "cpu_budget": 35,
+    "cpu_used": 35,
+    "bursts": [
+      {
+        "cpu": 2
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 17
+        }
+      },
+      {
+        "cpu": 4
+      },
+      {
+        "cpu": 5
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 12
+        }
+      },
+      {
+        "cpu": 2
+      },
+      {
+        "io": {
+          "type": "SOCKET_WRITE",
+          "duration": 14
+        }
+      },
+      {
+        "cpu": 6
+      },
+      {
+        "cpu": 7
+      },
+      {
+        "cpu": 5
+      },
+      {
+        "cpu": 4
+      }
+    ],
+    "arrival_time": 76
+  },
+  {
+    "pid": "10",
+    "class_id": "C",
+    "priority": 6,
+    "cpu_budget": 24,
+    "cpu_used": 24,
+    "bursts": [
+      {
+        "cpu": 5
+      },
+      {
+        "cpu": 5
+      },
+      {
+        "cpu": 7
+      },
+      {
+        "cpu": 4
+      },
+      {
+        "cpu": 2
+      },
+      {
+        "io": {
+          "type": "SOCKET_READ",
+          "duration": 15
+        }
+      },
+      {
+        "cpu": 1
+      }
+    ],
+    "arrival_time": 88
+  }
+]

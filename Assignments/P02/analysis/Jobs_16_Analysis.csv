@@ -1,0 +1,34 @@
+Process File: 16,,,,,,,,
+Processes: 50,,,,,,,,
+Device Load: io.,,,,,,,,
+Arrival Times: flow,,,,,,,,
+,,,,,,,,
+IO's,CPU's,Scheduler,Throughput,Average Response Time,Context Switches,CPU Utilization,Average Waiting Time,Average Turnaround Time
+1,1,First Come First Serve,0.03081,84.02,322,0.94,574.70,934.48
+2,1,First Come First Serve,0.03238,99.44,322,0.98,833.02,897.74
+1,2,First Come First Serve,0.03081,1.76,322,0.30,8.08,834.74
+2,2,First Come First Serve,0.06002,17.94,322,0.91,105.66,299.40
+1,1,Round Robin,0.03021,30.70,844,0.92,581.10,803.20
+1,1,Round Robin,0.03027,58.12,431,0.92,562.30,817.20
+1,1,Round Robin,0.03079,73.86,342,0.94,577.50,895.24
+2,1,Round Robin,0.03224,35.30,844,0.98,675.54,744.08
+2,1,Round Robin,0.03238,73.06,431,0.98,691.70,758.32
+2,1,Round Robin,0.03236,89.62,342,0.98,778.56,843.10
+1,2,Round Robin,0.03081,0.74,844,0.29,12.30,830.96
+1,2,Round Robin,0.03081,1.16,431,0.30,8.16,832.74
+1,2,Round Robin,0.03081,1.44,342,0.31,7.92,833.70
+2,2,Round Robin,0.05974,6.82,844,0.87,120.90,265.10
+2,2,Round Robin,0.05995,13.44,431,0.88,115.26,268.02
+2,2,Round Robin,0.06017,16.72,342,0.89,111.82,289.60
+1,1,Shortest Job First,0.03079,98.26,322,0.94,280.08,525.24
+2,1,Shortest Job First,0.03209,91.66,322,0.98,354.44,417.68
+1,2,Shortest Job First,0.03081,1.42,322,0.31,7.66,826.48
+2,2,Shortest Job First,0.05631,9.42,322,0.82,56.02,254.00
+1,1,Shortest Remaining Time First,0.03062,126.86,344,0.93,283.00,515.14
+2,1,Shortest Remaining Time First,0.03163,114.76,347,0.96,343.46,405.80
+1,2,Shortest Remaining Time First,0.03081,31.48,373,0.33,7.46,825.56
+2,2,Shortest Remaining Time First,0.05828,14.10,414,0.86,50.74,217.68
+1,1,Priority,0.03079,373.24,322,0.94,411.86,893.54
+2,1,Priority,0.03279,585.80,322,1.00,645.80,710.22
+1,2,Priority,0.03081,4.78,322,0.32,12.76,835.72
+2,2,Priority,0.05995,43.32,322,0.88,102.40,322.16
